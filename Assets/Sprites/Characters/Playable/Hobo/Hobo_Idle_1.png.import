@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wswqwap5d2s0"
-path="res://.godot/imported/Hobo_Idle_1.png-45ed46f70bbbd0bdd66dacfd75d59266.ctex"
+path="res://.godot/imported/Hobo_Idle_1.png-838981b8eafdc97129b9e7e530bc492c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/Playable/Hobo/Hobo_Idle_1.png"
-dest_files=["res://.godot/imported/Hobo_Idle_1.png-45ed46f70bbbd0bdd66dacfd75d59266.ctex"]
+source_file="res://Prelude/Assets/Sprites/Characters/Playable/Hobo/Hobo_Idle_1.png"
+dest_files=["res://.godot/imported/Hobo_Idle_1.png-838981b8eafdc97129b9e7e530bc492c.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://wiyibad5josu"
-path="res://.godot/imported/groundlvl1_2_2_ravine_big.png-6dca49a8947c1dd2f48322f66d486dcb.ctex"
+path="res://.godot/imported/groundlvl1_2_2_ravine_big.png-6e0fd1e10e62f2d28f9203ae3a22cf91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/Ground/Big/groundlvl1_2_2_ravine_big.png"
-dest_files=["res://.godot/imported/groundlvl1_2_2_ravine_big.png-6dca49a8947c1dd2f48322f66d486dcb.ctex"]
+source_file="res://Prelude/Assets/Sprites/Tiles/Ground/Big/groundlvl1_2_2_ravine_big.png"
+dest_files=["res://.godot/imported/groundlvl1_2_2_ravine_big.png-6e0fd1e10e62f2d28f9203ae3a22cf91.ctex"]
 
 [params]
 

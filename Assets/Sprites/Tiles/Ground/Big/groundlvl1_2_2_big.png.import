@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cegefnlb6xp7"
-path="res://.godot/imported/groundlvl1_2_2_big.png-56436c532db255f12d6c885f4107c28f.ctex"
+path="res://.godot/imported/groundlvl1_2_2_big.png-29dcab439450a3f684106d871139b1c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/Ground/Big/groundlvl1_2_2_big.png"
-dest_files=["res://.godot/imported/groundlvl1_2_2_big.png-56436c532db255f12d6c885f4107c28f.ctex"]
+source_file="res://Prelude/Assets/Sprites/Tiles/Ground/Big/groundlvl1_2_2_big.png"
+dest_files=["res://.godot/imported/groundlvl1_2_2_big.png-29dcab439450a3f684106d871139b1c0.ctex"]
 
 [params]
 

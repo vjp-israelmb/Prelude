@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://23yd0m7b7cch"
-path="res://.godot/imported/lava1-Sheet.png-9d563052999bf882785bc001e2f4ad06.ctex"
+path="res://.godot/imported/lava1-Sheet.png-ddb3751238514f0348b6d68d6c795448.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Tiles/Hazards/lava1-Sheet.png"
-dest_files=["res://.godot/imported/lava1-Sheet.png-9d563052999bf882785bc001e2f4ad06.ctex"]
+source_file="res://Prelude/Assets/Sprites/Tiles/Hazards/lava1-Sheet.png"
+dest_files=["res://.godot/imported/lava1-Sheet.png-ddb3751238514f0348b6d68d6c795448.ctex"]
 
 [params]
 
