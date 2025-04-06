@@ -15,14 +15,14 @@ public partial class Main : Node
 	// Referencias a los nodos
 	private CharacterBody2D player;
 	private Camera2D camera;
-	// private StaticBody2D ground;
+	private StaticBody2D ground;
 
 	public override void _Ready()
 	{
 		// Obtener referencias a los nodos
 		player = GetNode<CharacterBody2D>("Player");
 		camera = GetNode<Camera2D>("Camera2D");
-		// ground = GetNode<StaticBody2D>("ground");
+		ground = GetNode<StaticBody2D>("Ground");
 
 		NewGame();
 	}
@@ -35,14 +35,14 @@ public partial class Main : Node
 
 		// 🔹 Posicionar la cámara RELATIVAMENTE al jugador
 		camera.Position =CAM_START_OFFSET;
-		// ground.Position = Vector2.Zero;
+		ground.Position = Vector2.Zero;
 	}
 
 	  public override void _Process(double delta)
 	{
 		speed = START_SPEED;
 
-		// Mover dino y cámara en X
+		// Mover player y cámara en X
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
 	}
