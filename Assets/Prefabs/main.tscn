@@ -9,11 +9,12 @@
 script = ExtResource("1_00nml")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(30, -346)
 
 [node name="Ground" parent="." instance=ExtResource("4_pjs4v")]
-position = Vector2(-4, 45)
-scale = Vector2(13.88, 1)
+position = Vector2(933, -52)
+scale = Vector2(55.1037, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_2aw6c")]
-position = Vector2(-155, -156)
+position = Vector2(-476, -171)
 script = ExtResource("2_2aw6c")
