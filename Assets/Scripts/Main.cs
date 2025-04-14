@@ -27,8 +27,6 @@ public partial class Main : Node
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
 		
-		
-
 		NewGame();
 	}
 

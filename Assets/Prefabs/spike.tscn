@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch4hqit2ib5gg"]
+
+[ext_resource type="Texture2D" uid="uid://cgne8kwb56kd3" path="res://Assets/Sprites/Tiles/Hazards/Spikes/spikes1_big.png" id="1_b7i3i"]
+
+[sub_resource type="Animation" id="Animation_ugqql"]
+resource_name = "Sube_baja"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 112), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionPolygon2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 112), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_liwg0"]
+_data = {
+&"Sube_baja": SubResource("Animation_ugqql")
+}
+
+[node name="Spike" type="Area2D"]
+z_index = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 112)
+scale = Vector2(1, 1.04)
+texture = ExtResource("1_b7i3i")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 112)
+scale = Vector2(1, 1.04)
+polygon = PackedVector2Array(-104, -66.3462, -115, -33.6539, -127.5, 63, 129, 63.4615, 114, -38.4615, 104, -67.3077, 95, -38.4615, 87, 58.6539, 63, -67.3077, 46, 66.3462, 22, -62.5, 0, 62.5, -20, -68.2692, -41, 53.8462, -63, -63.4615, -83, 50, -94, -33.6539)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_liwg0")
+}
+autoplay = "Sube_baja"

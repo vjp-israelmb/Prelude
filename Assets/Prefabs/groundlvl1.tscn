@@ -16,7 +16,7 @@ texture = ExtResource("1_vkj4s")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(0, -27)
+position = Vector2(1, -28)
 scale = Vector2(0.98279, 0.394145)
 texture = ExtResource("2_laobk")
 
