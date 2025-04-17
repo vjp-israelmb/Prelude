@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://yglt2v0vsg5s"]
+[gd_scene load_steps=6 format=3 uid="uid://yglt2v0vsg5s"]
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
 [ext_resource type="Script" uid="uid://cv5ug1ipbr2as" path="res://Assets/Scripts/Player.cs" id="2_2aw6c"]
 [ext_resource type="PackedScene" uid="uid://k0o7io1kpmw0" path="res://Assets/Prefabs/vagabond.tscn" id="3_2aw6c"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
+[ext_resource type="PackedScene" uid="uid://ch4hqit2ib5gg" path="res://Assets/Prefabs/spike.tscn" id="5_pdc24"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_00nml")
@@ -18,3 +19,6 @@ scale = Vector2(55.1037, 1)
 [node name="Player" parent="." instance=ExtResource("3_2aw6c")]
 position = Vector2(-476, -171)
 script = ExtResource("2_2aw6c")
+
+[node name="Spike" parent="." instance=ExtResource("5_pdc24")]
+position = Vector2(-163, -90)

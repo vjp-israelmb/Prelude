@@ -237,7 +237,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_q2x37"]
 radius = 70.1142
 
-[node name="Knight" type="CharacterBody2D"]
+[node name="Knight" type="CharacterBody2D" groups=["Player"]]
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

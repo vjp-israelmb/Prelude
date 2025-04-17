@@ -84,7 +84,7 @@ animations = [{
 radius = 10.7955
 height = 126.0
 
-[node name="Frogrosso" type="StaticBody2D"]
+[node name="Frogrosso" type="StaticBody2D" groups=["Enemy"]]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7h0qu")

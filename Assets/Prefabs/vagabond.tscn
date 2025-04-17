@@ -1,6 +1,7 @@
-[gd_scene load_steps=58 format=3 uid="uid://k0o7io1kpmw0"]
+[gd_scene load_steps=63 format=3 uid="uid://k0o7io1kpmw0"]
 
 [ext_resource type="Texture2D" uid="uid://du5m15534oqh4" path="res://Assets/Sprites/Characters/Playable/Hobo/Death/Hobo_Death_big-Sheet.png" id="1_283q3"]
+[ext_resource type="Texture2D" uid="uid://d3b2o1of3y4fe" path="res://Assets/Sprites/Characters/Playable/Hobo/Hit/Hobo_Hit_big-Sheet.png" id="2_t1env"]
 [ext_resource type="Texture2D" uid="uid://dm2x0gpsf80rt" path="res://Assets/Sprites/Characters/Playable/Hobo/Idle/Hobo_Idle_big-Sheet.png" id="2_yd5h7"]
 [ext_resource type="Texture2D" uid="uid://bfar2lkmjhsvl" path="res://Assets/Sprites/Characters/Playable/Hobo/Jumping/Hobo_Jump_big-Sheet.png" id="3_t1env"]
 [ext_resource type="Texture2D" uid="uid://die6n6lmpiunt" path="res://Assets/Sprites/Characters/Playable/Hobo/Moving/Hobo_Moving_big-Sheet.png" id="4_732b5"]
@@ -64,6 +65,22 @@ region = Rect2(1638, 0, 126, 144)
 [sub_resource type="AtlasTexture" id="AtlasTexture_r6rrr"]
 atlas = ExtResource("1_283q3")
 region = Rect2(1764, 0, 126, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_732b5"]
+atlas = ExtResource("2_t1env")
+region = Rect2(0, 0, 126, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvpt7"]
+atlas = ExtResource("2_t1env")
+region = Rect2(126, 0, 126, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6u25"]
+atlas = ExtResource("2_t1env")
+region = Rect2(252, 0, 126, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgvb3"]
+atlas = ExtResource("2_t1env")
+region = Rect2(378, 0, 126, 144)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2vo2o"]
 atlas = ExtResource("2_yd5h7")
@@ -263,17 +280,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vpke1")
+"texture": SubResource("AtlasTexture_732b5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ioqiy")
+"texture": SubResource("AtlasTexture_uvpt7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_whww7")
+"texture": SubResource("AtlasTexture_i6u25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgvb3")
 }],
 "loop": true,
 "name": &"Hit",
-"speed": 4.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -402,14 +422,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6u25"]
 size = Vector2(102, 111)
 
-[node name="vagabond" type="CharacterBody2D"]
+[node name="vagabond" type="CharacterBody2D" groups=["Player"]]
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uvpt7")
 animation = &"Hit"
-frame = 1
-frame_progress = 0.946926
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7.5)

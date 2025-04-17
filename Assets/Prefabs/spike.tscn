@@ -35,7 +35,7 @@ _data = {
 &"Sube_baja": SubResource("Animation_ugqql")
 }
 
-[node name="Spike" type="Area2D"]
+[node name="Spike" type="Area2D" groups=["obstacle"]]
 z_index = -1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -53,3 +53,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_liwg0")
 }
 autoplay = "Sube_baja"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
