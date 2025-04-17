@@ -1,6 +1,7 @@
-[gd_scene load_steps=63 format=3 uid="uid://k0o7io1kpmw0"]
+[gd_scene load_steps=64 format=3 uid="uid://k0o7io1kpmw0"]
 
 [ext_resource type="Texture2D" uid="uid://du5m15534oqh4" path="res://Assets/Sprites/Characters/Playable/Hobo/Death/Hobo_Death_big-Sheet.png" id="1_283q3"]
+[ext_resource type="Script" uid="uid://cv5ug1ipbr2as" path="res://Assets/Scripts/Player.cs" id="1_t1env"]
 [ext_resource type="Texture2D" uid="uid://d3b2o1of3y4fe" path="res://Assets/Sprites/Characters/Playable/Hobo/Hit/Hobo_Hit_big-Sheet.png" id="2_t1env"]
 [ext_resource type="Texture2D" uid="uid://dm2x0gpsf80rt" path="res://Assets/Sprites/Characters/Playable/Hobo/Idle/Hobo_Idle_big-Sheet.png" id="2_yd5h7"]
 [ext_resource type="Texture2D" uid="uid://bfar2lkmjhsvl" path="res://Assets/Sprites/Characters/Playable/Hobo/Jumping/Hobo_Jump_big-Sheet.png" id="3_t1env"]
@@ -423,6 +424,7 @@ animations = [{
 size = Vector2(102, 111)
 
 [node name="vagabond" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_t1env")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

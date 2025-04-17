@@ -1,6 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://bjq74hnucmrdb"]
+[gd_scene load_steps=37 format=3 uid="uid://bjq74hnucmrdb"]
 
 [ext_resource type="Texture2D" uid="uid://dty8j8b43namg" path="res://Assets/Sprites/Characters/Playable/Knight/Big/Knight_Idle_big-Sheet.png" id="1_45vxs"]
+[ext_resource type="Script" uid="uid://cv5ug1ipbr2as" path="res://Assets/Scripts/Player.cs" id="1_qv1tp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aww7n"]
 atlas = ExtResource("1_45vxs")
@@ -238,6 +239,7 @@ animations = [{
 radius = 70.1142
 
 [node name="Knight" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_qv1tp")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

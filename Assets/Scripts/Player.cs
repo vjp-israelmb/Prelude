@@ -37,23 +37,46 @@ public partial class Player : CharacterBody2D
 	// Movimiento del personaje
 	public override void _PhysicsProcess(double delta)
 	{
+		// Si está en estado de golpe, reproducir hit y salir
+		if (isHit)
+		{
+			hitTimer -= delta;
+			if (hitTimer <= 0)
+				isHit = false;
+			return;
+		}
+
 		// Aplicar gravedad
 		Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
 
-		// Detectar si el jugador quiere saltar con su respectiva animacion
+		// Animaciones normales
 		if (IsOnFloor())
 		{
-			if(Input.IsActionJustPressed("jump_key") ){
+			if(Input.IsActionJustPressed("jump_key")){
 				Velocity = new Vector2(Velocity.X, -JUMP_SPEED);
 			}else{
 				anim.Play("Moving");
-			}			
-		}else
+			}
+		}
+		else
 		{
 			anim.Play("Jump");
 		}
-
 		// Aplicar el movimiento
 		MoveAndSlide();
+	}
+	
+	//variable para si es golpeado
+	private bool isHit = false;
+	//tiempo que hace la animacion
+	private double hitTimer = 0;
+	private const double HIT_DURATION = 0.5; // medio segundo
+
+	public void Hit()
+	{
+		GD.Print("Jugador recibió golpe de obstáculo");
+		isHit = true;
+		hitTimer = HIT_DURATION;
+		anim.Play("Hit");
 	}
 }

@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmnbnvqdxvy37"]
+[gd_scene load_steps=11 format=3 uid="uid://cmnbnvqdxvy37"]
 
 [ext_resource type="Texture2D" uid="uid://dhsv0qhnqasmn" path="res://Assets/Sprites/Tiles/Hazards/Lava/lava1-Sheet_big.png" id="1_2ody6"]
+[ext_resource type="Script" uid="uid://c1utxp0yphg6u" path="res://Assets/Scripts/Obstacle.cs" id="1_qm4ne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qm4ne"]
 atlas = ExtResource("1_2ody6")
@@ -55,6 +56,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dajaf"]
 
 [node name="Lava" type="Area2D" groups=["obstacle"]]
+script = ExtResource("1_qm4ne")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_mlr3f")
