@@ -37,7 +37,6 @@ _data = {
 }
 
 [node name="Spike" type="Area2D" groups=["obstacle"]]
-z_index = -1
 script = ExtResource("1_ugqql")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

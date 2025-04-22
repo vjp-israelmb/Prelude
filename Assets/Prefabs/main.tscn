@@ -1,18 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://yglt2v0vsg5s"]
+[gd_scene load_steps=5 format=3 uid="uid://yglt2v0vsg5s"]
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
+[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://k0o7io1kpmw0" path="res://Assets/Prefabs/vagabond.tscn" id="3_2aw6c"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_00nml")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(30, -346)
+[node name="Bg" parent="." instance=ExtResource("2_pjs4v")]
 
 [node name="Ground" parent="." instance=ExtResource("4_pjs4v")]
-position = Vector2(933, -52)
+z_index = 1
+position = Vector2(962, 620)
 scale = Vector2(55.1037, 1.48)
 
 [node name="Player" parent="." instance=ExtResource("3_2aw6c")]
-position = Vector2(-476, -171)
+position = Vector2(70, 491)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576.95, 325)

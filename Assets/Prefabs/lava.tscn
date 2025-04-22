@@ -56,6 +56,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dajaf"]
 
 [node name="Lava" type="Area2D" groups=["obstacle"]]
+z_index = 1
 script = ExtResource("1_qm4ne")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

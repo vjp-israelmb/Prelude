@@ -3,58 +3,46 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	// Gravedad del juego para que el jugador no flote al saltar
+	//Booleano para cuando es golepado
+	private bool isHit = false;
 	[Export]
 	public int GRAVITY { get; private set; } = 4200;
-	private AnimatedSprite2D anim;
-
-	// En lugar de un nodo, referenciamos una escena (tscn)
-	//[Export]
-	//public PackedScene ClaseScene { get; private set; }
-	//private CharacterBody2D claseInstance;
-
-	// Velocidad de salto
 	[Export]
 	public int JUMP_SPEED { get; private set; } = 1800;
 
-	 public override void _Ready()
+	private AnimatedSprite2D anim;
+	public int hp = 100;
+	public int armor = 0;
+	public bool isDead = false;
+	//Declaracion  de señal para la muerte del jugador
+	[Signal]
+	public delegate void PlayerDiedEventHandler();
+
+	public override void _Ready()
 	{
-		
-		anim=GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		//if (ClaseScene != null)
-		//{
-			//// Instancia la escena y la agrega como hijo de Player
-			//claseInstance = ClaseScene.Instantiate<CharacterBody2D>();
-			//AddChild(claseInstance);
-//
-			//// Asegura que herede la posición de Player
-			//claseInstance.Position = Vector2.Zero;
-		//}
+		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
+		if (Name.ToString().ToLower().Contains("knight"))
+		{
+			armor = 50;
+			GD.Print("🛡️ Caballero detectado. Armadura inicial: " + armor);
+		}
 	}
 
-	public Vector2 ScreenSize;
-
-	// Movimiento del personaje
 	public override void _PhysicsProcess(double delta)
 	{
-		// Si está en estado de golpe, reproducir hit y salir
-		if (isHit)
-		{
-			hitTimer -= delta;
-			if (hitTimer <= 0)
-				isHit = false;
-			return;
-		}
+		if (isDead || isHit) return; // No moverse si está muerto
 
-		// Aplicar gravedad
 		Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
 
-		// Animaciones normales
 		if (IsOnFloor())
 		{
-			if(Input.IsActionJustPressed("jump_key")){
+			if (Input.IsActionJustPressed("jump_key"))
+			{
 				Velocity = new Vector2(Velocity.X, -JUMP_SPEED);
-			}else{
+			}
+			else
+			{
 				anim.Play("Moving");
 			}
 		}
@@ -62,21 +50,54 @@ public partial class Player : CharacterBody2D
 		{
 			anim.Play("Jump");
 		}
-		// Aplicar el movimiento
+
 		MoveAndSlide();
 	}
-	
-	//variable para si es golpeado
-	private bool isHit = false;
-	//tiempo que hace la animacion
-	private double hitTimer = 0;
-	private const double HIT_DURATION = 0.5; // medio segundo
 
 	public void Hit()
 	{
-		GD.Print("Jugador recibió golpe de obstáculo");
-		isHit = true;
-		hitTimer = HIT_DURATION;
+		if (isDead || isHit) return;
+		isHit=true;
 		anim.Play("Hit");
+		anim.Play("Hit");
+		// Espera a que termine la animación antes de continuar
+		GetTree().CreateTimer(0.4).Timeout += () =>
+		{
+			isHit = false;
+		};
+		GD.Print("💥 Jugador golpeado");
+		if (armor>0){
+			armor-=25;
+		}else{
+			hp -= 25;
+		}
+		if (armor>0){
+			GD.Print("Armor restante: " + armor);
+		}else{
+			GD.Print("HP restante: " + hp);
+		}
+		if (hp <= 0)
+		{
+			Die();
+		}
+	}
+
+	private void Die()
+	{
+		isDead = true;
+		GD.Print("☠️ El jugador ha muerto");
+
+		anim.Play("Death");
+
+		// Esperar a que termine la animación para reiniciar
+		anim.AnimationFinished += OnDeathAnimationFinished;
+	}
+
+	private void OnDeathAnimationFinished()
+	{
+		if (anim.Animation == "Death")
+		{
+			EmitSignal(SignalName.PlayerDied); //Avisamos al Main
+		}
 	}
 }
