@@ -4,26 +4,34 @@ using System;
 public partial class Main : Node
 {
 	private bool gameOver = false;
-	// Obstáculos
+	// pre cargamos los Obstáculos
 	private PackedScene spikeScene = GD.Load<PackedScene>("res://Assets/Prefabs/spike.tscn");
 	private PackedScene lavaScene = GD.Load<PackedScene>("res://Assets/Prefabs/lava.tscn");
 	private PackedScene[] obstacles;
 	private double spawnTimer = 0;
+	//Intervalos en los que aparece los obstaculo
 	private const double SPAWN_INTERVAL = 3.0;
+	// Enemigos
+	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrosso.tscn");
+	private PackedScene[] enemies;
+	private double enemySpawnTimer = 0;
+	private const double ENEMY_SPAWN_INTERVAL = 5.0; // Cada 5 segundos
 	
 
 
 
 	// Posiciones iniciales del jugador,la cámara Y suelo
 	public static readonly Vector2 PLAYER_START_POS = new Vector2(70,491); //posicion inicial del jugador
-	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(962,620); 
+	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(962,620); //posicion inicial del suelo
 	public static readonly Vector2 CAM_START_OFFSET = new Vector2(576, 325); // Ajuste relativo al jugador
-	public static  Vector2 screen_size= new Vector2(576, 325);
+	public static  Vector2 screen_size= new Vector2(576, 325);//Tamaño de la pantalla
 
-	// Velocidades
+	//Puntuacion/Recorrido que lleva hecho el jugador 
+	private float score=0f;
+	// Velocidades del jugador
 	private float speed;
-	public const float START_SPEED = 500.0f;
-	public const float MAX_SPEED = 650.0f;
+	public const float START_SPEED = 700.0f;
+	public const float MAX_SPEED = 900.0f;
 
 	// Referencias a los nodos
 	private CharacterBody2D player;
@@ -50,8 +58,32 @@ public partial class Main : Node
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
 	}
+	//Spawn aleatoria de enemigos
+	public void SpawnRandomEnemy()
+	{
+		// Elegir aleatoriamente un enemigo
+		var random = new Random();
+		int index = random.Next(enemies.Length);
+		var scene = enemies[index];
 
+		// Instanciar el enemigo
+		var enemy = scene.Instantiate<Node2D>();
 
+		// Posición: justo fuera de la cámara, a la altura del suelo
+		float spawnX = camera.Position.X + Main.screen_size.X + 100; // un poquito más lejos
+		float spawnY = ground.Position.Y;
+
+		// (Opcional) Ajustar altura si quieres: ej. si es un enemigo que vuela
+		if (enemy.Name.ToString().ToLower().Contains("Eagearl")) // ejemplo de murciélago
+		{
+			spawnY -= 200; // que aparezca volando más arriba
+		}
+
+		enemy.Position = new Vector2(spawnX, spawnY);
+
+		AddChild(enemy);
+	}
+	//Spawn aleatoria de obstaculos
 	public void SpawnRandomObstacle()
 	{
 		// Elegir aleatoriamente un obstáculo
@@ -72,7 +104,7 @@ public partial class Main : Node
 			spawnY -= 100; // súbelo 40 px o lo que necesites
 		}
 
-		obstacle.Position = new Vector2(spawnX, spawnY);
+		obstacle.Position = new Vector2(spawnX,spawnY);
 
 		AddChild(obstacle);
 	}
@@ -93,6 +125,7 @@ public partial class Main : Node
 		//Si es juego acabado no pasa y no avanza la camara ni el jugador 
 		if (gameOver)
 		return;
+		
 		//Suma por cada frame del juego 
 		spawnTimer += delta;
 		//Si supera al intervalo  genera un obstaculo y reiniciamos el temporizador 
@@ -101,11 +134,21 @@ public partial class Main : Node
 			SpawnRandomObstacle();
 			spawnTimer = 0;
 		}
-		
+			if (enemySpawnTimer >= ENEMY_SPAWN_INTERVAL)
+		{
+			SpawnRandomEnemy();
+			enemySpawnTimer = 0;
+		}
 		speed = START_SPEED;
+
 		// Mover player y cámara en X
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
+		//Suma puntuacion
+		score+=10;
+		//GD.Print(score/10);
+		
+		
 		foreach (Node child in GetChildren())
 		{
 		// Solo nos interesa si está en el grupo "Obstacle"
@@ -114,7 +157,7 @@ public partial class Main : Node
 			//Convertimos a Node2D para poder acceder a su posición
 			Node2D obstacle = (Node2D)child;
 
-			// 📏 Si está más de 200px a la izquierda de la cámara, lo borramos
+			// Si está más de 200px a la izquierda de la cámara, lo borramos
 			if (obstacle.Position.X < camera.Position.X - 800)
 			{
 				obstacle.QueueFree();

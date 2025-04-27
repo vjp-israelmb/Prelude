@@ -298,6 +298,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_732b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hn2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjdgd")
+}],
+"loop": true,
+"name": &"Hit_Enemy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_2vo2o")
 }, {
 "duration": 1.0,
@@ -424,13 +438,14 @@ animations = [{
 size = Vector2(102, 111)
 
 [node name="vagabond" type="CharacterBody2D" groups=["Player"]]
+rotation = -0.0140264
 script = ExtResource("1_t1env")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2, -68.4962)
 scale = Vector2(0.968254, 0.994296)
 sprite_frames = SubResource("SpriteFrames_uvpt7")
-animation = &"Death"
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -60)

@@ -11,7 +11,8 @@ public partial class Player : CharacterBody2D
 	public int JUMP_SPEED { get; private set; } = 1800;
 
 	private AnimatedSprite2D anim;
-	public int hp = 100;
+	private AnimationPlayer animPlayer;
+	public int hp = 1;
 	public int armor = 0;
 	public bool isDead = false;
 	//Declaracion  de señal para la muerte del jugador
@@ -25,14 +26,21 @@ public partial class Player : CharacterBody2D
 		if (Name.ToString().ToLower().Contains("knight"))
 		{
 			armor = 50;
-			GD.Print("🛡️ Caballero detectado. Armadura inicial: " + armor);
+			GD.Print("Caballero detectado. Armadura inicial: " + armor);
 		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (isDead || isHit) return; // No moverse si está muerto
-
+		if (!isDead && isHit) return; // si está golpeado pero no muerto, no hacer animaciones normales
+		
+		//Si está muerto, solo aplicar gravedad
+		if (isDead)
+		{
+			Velocity = new Vector2(0, Velocity.Y + (float)(GRAVITY * delta)); 
+			MoveAndSlide();
+			return;
+		}
 		Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
 
 		if (IsOnFloor())
@@ -53,10 +61,22 @@ public partial class Player : CharacterBody2D
 
 		MoveAndSlide();
 	}
+	public void Knockback()
+	{
+		GD.Print("Jugador empujado hacia atrás!");
+
+		// Activar la animación de retroceso
+		if (anim != null)
+		{
+			animPlayer.Play("Knockback");
+			anim.Play("Hit_Enemy"); //AnimatedSprite2D  y AnimationPlayer
+			
+		}
+	}
 
 	public void Hit()
 	{
-		if (isDead || isHit) return;
+		if (isHit) return;
 		isHit=true;
 		anim.Play("Hit");
 		anim.Play("Hit");
@@ -65,11 +85,11 @@ public partial class Player : CharacterBody2D
 		{
 			isHit = false;
 		};
-		GD.Print("💥 Jugador golpeado");
+		GD.Print("Jugador golpeado");
 		if (armor>0){
-			armor-=25;
+			armor-=1;
 		}else{
-			hp -= 25;
+			hp -= 1;
 		}
 		if (armor>0){
 			GD.Print("Armor restante: " + armor);
@@ -85,10 +105,9 @@ public partial class Player : CharacterBody2D
 	private void Die()
 	{
 		isDead = true;
-		GD.Print("☠️ El jugador ha muerto");
-
+		GD.Print("El jugador ha muerto");
+		
 		anim.Play("Death");
-
 		// Esperar a que termine la animación para reiniciar
 		anim.AnimationFinished += OnDeathAnimationFinished;
 	}
