@@ -34,6 +34,7 @@ public partial class Main : Node
 	public const float MAX_SPEED = 900.0f;
 
 	// Referencias a los nodos
+	private TextureProgressBar progress;
 	private CharacterBody2D player;
 	private Camera2D camera;
 	private StaticBody2D ground;
@@ -43,8 +44,10 @@ public partial class Main : Node
 	public override void _Ready()
 	{	//Obtener tamaño de la pantalla
 		screen_size=DisplayServer.WindowGetSize();
-		
 		// Obtener referencias a los nodos
+		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
+		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel 
+		progress.Value = 0;	
 		player = GetNode<CharacterBody2D>("Player");
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
@@ -73,8 +76,8 @@ public partial class Main : Node
 		float spawnX = camera.Position.X + Main.screen_size.X + 100; // un poquito más lejos
 		float spawnY = ground.Position.Y;
 
-		// (Opcional) Ajustar altura si quieres: ej. si es un enemigo que vuela
-		if (enemy.Name.ToString().ToLower().Contains("Eagearl")) // ejemplo de murciélago
+		//Si es volador lo ubicamos un poco mas arriba 
+		if (enemy.Name.ToString().ToLower().Contains("Eagearl")) // ejemplo de Eagearl
 		{
 			spawnY -= 200; // que aparezca volando más arriba
 		}
@@ -114,7 +117,7 @@ public partial class Main : Node
 		// Posicionar al jugador en su punto de inicio
 		player.Position = PLAYER_START_POS;
 		player.Velocity = Vector2.Zero;
-
+		progress.Value=0;
 		// 🔹 Posicionar la cámara RELATIVAMENTE al jugador
 		camera.Position =CAM_START_OFFSET;
 		ground.Position =GROUND_INITIAL_POS;
@@ -146,9 +149,8 @@ public partial class Main : Node
 		camera.Position += new Vector2(speed * (float)delta, 0);
 		//Suma puntuacion
 		score+=10;
-		//GD.Print(score/10);
-		
-		
+		//suma de progreso en el nivel 
+		progress.Value=score;		
 		foreach (Node child in GetChildren())
 		{
 		// Solo nos interesa si está en el grupo "Obstacle"

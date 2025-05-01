@@ -3,6 +3,8 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	//Para obtener las funciones del HeartBar.cs
+	private HeartBar heartBar;
 	//Booleano para cuando es golepado
 	private bool isHit = false;
 	[Export]
@@ -12,20 +14,21 @@ public partial class Player : CharacterBody2D
 
 	private AnimatedSprite2D anim;
 	private AnimationPlayer animPlayer;
-	public int hp = 1;
+	public int hp = 6;
 	public int armor = 0;
 	public bool isDead = false;
 	//Declaracion  de señal para la muerte del jugador
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
-
+	
 	public override void _Ready()
 	{
 		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-
+		heartBar = GetNode<HeartBar>("OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
+		heartBar.UpdateHearts(hp);
 		if (Name.ToString().ToLower().Contains("knight"))
 		{
-			armor = 50;
+			armor = 6;
 			GD.Print("Caballero detectado. Armadura inicial: " + armor);
 		}
 	}
@@ -90,6 +93,11 @@ public partial class Player : CharacterBody2D
 			armor-=1;
 		}else{
 			hp -= 1;
+			// Actualiza los corazones en pantalla
+			if (heartBar != null)
+				{
+				heartBar.UpdateHearts(hp);
+				}
 		}
 		if (armor>0){
 			GD.Print("Armor restante: " + armor);

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwc17p1nr00v4"]
+
+[ext_resource type="Texture2D" uid="uid://cbd01j1vwe7y4" path="res://Assets/Sprites/UI/Levelbar/Levelbar_Outline_big.png" id="1_b7up3"]
+[ext_resource type="Texture2D" uid="uid://nnyfpji05fmp" path="res://Assets/Sprites/UI/Levelbar/Levelbar_Bar_big.png" id="2_jtjtf"]
+
+[node name="ProgressLeverBar" type="CanvasLayer"]
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 154.0
+offset_bottom = 40.0
+max_value = 1000.0
+texture_over = ExtResource("1_b7up3")
+texture_progress = ExtResource("2_jtjtf")

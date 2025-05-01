@@ -1,0 +1,90 @@
+[gd_scene load_steps=14 format=3 uid="uid://jjpq6n6he1yc"]
+
+[ext_resource type="Texture2D" uid="uid://dd6drue5q6j5a" path="res://Assets/Sprites/Characters/Enemies/Maggot Brian/Idle/Maggot Brian_big-Sheet.png" id="1_b3abe"]
+[ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_mgea1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qp0i6"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(0, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kv6s"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(111, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6luqt"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(222, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tix6a"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(333, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1oq3"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(444, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2rfi"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(555, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dsi0v"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(666, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a714m"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(777, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdifq"]
+atlas = ExtResource("1_b3abe")
+region = Rect2(888, 0, 111, 111)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5gpj5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qp0i6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kv6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6luqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tix6a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1oq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2rfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsi0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a714m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdifq")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6cpsk"]
+radius = 50.0
+height = 128.0
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_mgea1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5gpj5")
+animation = &"Idle"
+frame_progress = 0.724023
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6cpsk")
