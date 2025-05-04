@@ -13,6 +13,7 @@ public partial class Main : Node
 	private const double SPAWN_INTERVAL = 3.0;
 	// Enemigos
 	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrosso.tscn");
+	private PackedScene eagearl = GD.Load<PackedScene>("res://Assets/Prefabs/eagearl.tscn");
 	private PackedScene[] enemies;
 	private double enemySpawnTimer = 0;
 	private const double ENEMY_SPAWN_INTERVAL = 5.0; // Cada 5 segundos
@@ -60,6 +61,7 @@ public partial class Main : Node
 		
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
+		enemies = new PackedScene[] { frogrosso };
 	}
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
@@ -74,16 +76,17 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100; // un poquito más lejos
-		float spawnY = ground.Position.Y;
+		float spawnY = ground.Position.Y - 100;
 
 		//Si es volador lo ubicamos un poco mas arriba 
 		if (enemy.Name.ToString().ToLower().Contains("Eagearl")) // ejemplo de Eagearl
 		{
-			spawnY -= 200; // que aparezca volando más arriba
+			 spawnY -= 100; // que aparezca volando más arriba
 		}
 
 		enemy.Position = new Vector2(spawnX, spawnY);
 
+		GD.Print("Enemigo Spawneado");
 		AddChild(enemy);
 	}
 	//Spawn aleatoria de obstaculos
@@ -131,6 +134,7 @@ public partial class Main : Node
 		
 		//Suma por cada frame del juego 
 		spawnTimer += delta;
+		enemySpawnTimer += delta;
 		//Si supera al intervalo  genera un obstaculo y reiniciamos el temporizador 
 		if (spawnTimer >= SPAWN_INTERVAL)
 		{
@@ -165,7 +169,18 @@ public partial class Main : Node
 				obstacle.QueueFree();
 				GD.Print("obstaculo liberado");
 			}
-		}
+		}else if (child.IsInGroup("enemy"))
+			{
+				//Convertimos a Node2D para poder acceder a su posición
+				Node2D obstacle = (Node2D)child;
+
+				// Si está más de 200px a la izquierda de la cámara, lo borramos
+				if (obstacle.Position.X < camera.Position.X - 800)
+				{
+					obstacle.QueueFree();
+					GD.Print("enemigo liberado");
+				}
+			}
 		}
 		// generacion de suelo unico de manera indefinida
 		if (camera.Position.X - ground.Position.X > screen_size.X * 1.3){

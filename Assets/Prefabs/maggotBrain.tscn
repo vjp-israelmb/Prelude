@@ -1,7 +1,24 @@
-[gd_scene load_steps=14 format=3 uid="uid://jjpq6n6he1yc"]
+[gd_scene load_steps=19 format=3 uid="uid://jjpq6n6he1yc"]
 
 [ext_resource type="Texture2D" uid="uid://dd6drue5q6j5a" path="res://Assets/Sprites/Characters/Enemies/Maggot Brian/Idle/Maggot Brian_big-Sheet.png" id="1_b3abe"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_mgea1"]
+[ext_resource type="Texture2D" uid="uid://b5ae3dj2m3s4o" path="res://Assets/Sprites/Characters/Enemies/Maggot Brian/Hit/Maggot Brian_Hit_big-Sheet.png" id="2_8vwpa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23j4q"]
+atlas = ExtResource("2_8vwpa")
+region = Rect2(0, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms6dw"]
+atlas = ExtResource("2_8vwpa")
+region = Rect2(111, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpk4y"]
+atlas = ExtResource("2_8vwpa")
+region = Rect2(222, 0, 111, 111)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1pgq"]
+atlas = ExtResource("2_8vwpa")
+region = Rect2(333, 0, 111, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qp0i6"]
 atlas = ExtResource("1_b3abe")
@@ -41,6 +58,23 @@ region = Rect2(888, 0, 111, 111)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5gpj5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23j4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ms6dw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpk4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1pgq")
+}],
+"loop": true,
+"name": &"Hit",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qp0i6")
@@ -83,8 +117,7 @@ script = ExtResource("1_mgea1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5gpj5")
-animation = &"Idle"
-frame_progress = 0.724023
+animation = &"Hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6cpsk")

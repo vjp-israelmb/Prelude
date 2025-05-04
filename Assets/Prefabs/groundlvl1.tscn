@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dflj07vt83gme" path="res://Assets/Sprites/Tiles/Ground/Grass/groundlvl1_1_3.png" id="2_laobk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkj4s"]
-size = Vector2(84, 55)
+size = Vector2(82, 56)
 
 [node name="Ground" type="StaticBody2D"]
 texture_repeat = 2
@@ -16,10 +16,10 @@ texture = ExtResource("1_vkj4s")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(1, -28)
+position = Vector2(0, -28)
 scale = Vector2(0.98279, 0.394145)
 texture = ExtResource("2_laobk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6.5)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vkj4s")

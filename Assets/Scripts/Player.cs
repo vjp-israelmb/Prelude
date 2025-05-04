@@ -9,6 +9,7 @@ public partial class Player : CharacterBody2D
 	private bool isHit = false;
 	[Export]
 	public int GRAVITY { get; private set; } = 4200;
+	
 	[Export]
 	public int JUMP_SPEED { get; private set; } = 1800;
 
@@ -45,9 +46,11 @@ public partial class Player : CharacterBody2D
 			return;
 		}
 		Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
-
+		
 		if (IsOnFloor())
 		{
+			if(Velocity.Y>0f)
+			{
 			if (Input.IsActionJustPressed("jump_key"))
 			{
 				Velocity = new Vector2(Velocity.X, -JUMP_SPEED);
@@ -55,6 +58,12 @@ public partial class Player : CharacterBody2D
 			else
 			{
 				anim.Play("Moving");
+			}
+			
+			}
+			else
+			{
+				anim.Play("Idle");
 			}
 		}
 		else

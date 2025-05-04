@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://v6iaieeeyinj" path="res://Assets/Sprites/UI/Lifebar/Lifebar.png" id="1_y24n2"]
 [ext_resource type="Texture2D" uid="uid://cssyjasdyy2nf" path="res://Assets/Sprites/UI/Lifebar/Lifebar-Sheet_big.png" id="2_nt3iw"]
-[ext_resource type="Script" uid="uid://b0v4lbgtlmb1n" path="res://Assets/Prefabs/HeartBar.cs" id="2_y24n2"]
+[ext_resource type="Script" uid="uid://b0v4lbgtlmb1n" path="res://Assets/Scripts/HeartBar.cs" id="2_y24n2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13djj"]
 atlas = ExtResource("2_nt3iw")

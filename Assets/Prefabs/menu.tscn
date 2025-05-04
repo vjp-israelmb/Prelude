@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2aor17ovkrxm"]
+
+[ext_resource type="Script" uid="uid://dh5q6q42s7dbx" path="res://Assets/Scripts/Menu.cs" id="1_71n16"]
+[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="1_ivhqf"]
+[ext_resource type="PackedScene" uid="uid://k0o7io1kpmw0" path="res://Assets/Prefabs/vagabond.tscn" id="2_x2irg"]
+[ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="3_71n16"]
+[ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_x2irg"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_8acst"]
+
+[node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_71n16")
+
+[node name="Bg" parent="." instance=ExtResource("1_ivhqf")]
+
+[node name="CharacterSelector" type="Node2D" parent="."]
+
+[node name="vagabond" parent="CharacterSelector" instance=ExtResource("2_x2irg")]
+position = Vector2(430, 345)
+GRAVITY = 0
+
+[node name="Knight" parent="CharacterSelector" instance=ExtResource("3_71n16")]
+position = Vector2(625, 280)
+GRAVITY = 0
+JUMP_SPEED = 0
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 431.0
+offset_top = 434.0
+offset_right = 531.0
+offset_bottom = 465.0
+scale = Vector2(2.74598, 2.64466)
+text = "Start Game"
+icon = SubResource("ViewportTexture_8acst")
+
+[node name="Ground" parent="." instance=ExtResource("4_x2irg")]
+visible = false
+position = Vector2(549, 372)
+scale = Vector2(4.63975, 0.872515)
+
+[connection signal="mouse_entered" from="CharacterSelector/vagabond" to="CharacterSelector/vagabond" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="CharacterSelector/Knight" to="CharacterSelector/Knight" method="_on_mouse_entered"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
