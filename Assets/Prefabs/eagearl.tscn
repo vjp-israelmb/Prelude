@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://bxkklay00dkgx"]
 
-[ext_resource type="Texture2D" uid="uid://cdtwlm21rpd" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="1_k41ie"]
+[ext_resource type="Texture2D" uid="uid://b381sgbgblww3" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="1_k41ie"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7s7l1"]
 atlas = ExtResource("1_k41ie")
@@ -143,8 +143,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_we5an"]
-size = Vector2(177, 124)
+[sub_resource type="CircleShape2D" id="CircleShape2D_k41ie"]
+radius = 88.0511
 
 [node name="Eagearl" type="Area2D"]
 
@@ -155,5 +155,5 @@ animation = &"Idle"
 frame_progress = 0.942204
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.5, 3)
-shape = SubResource("RectangleShape2D_we5an")
+position = Vector2(1, -17)
+shape = SubResource("CircleShape2D_k41ie")
