@@ -9,7 +9,9 @@ public partial class Enemy : Area2D
 		if (body.IsInGroup("Player"))
 		{
 			GD.Print("¡Jugador chocado con enemigo!");
-			(body as Player)?.Knockback(); // Llamamos al Knockback del Player
+			// (body as Player)?.Knockback(); // Llamamos al Knockback del Player
+			// Cambiar a la escena combate
+			GetTree().ChangeScene("res://scenes/CombatManager.tscn");
 		}
 	}
 }

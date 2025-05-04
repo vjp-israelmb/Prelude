@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://djgu43i0mti72"]
+
+[ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
+[ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="2_qsdfg"]
+
+[node name="Combat" type="Node2D"]
+
+[node name="BgContainer" type="Node2D" parent="."]
+script = ExtResource("1_b1qmc")
+
+[node name="CombatUI" type="CanvasLayer" parent="."]
+
+[node name="Mano" type="HBoxContainer" parent="CombatUI"]
+anchors_preset = -1
+anchor_left = 0.078
+anchor_top = 0.724
+anchor_right = 0.909
+anchor_bottom = 0.891
+offset_left = 2.144
+offset_top = -0.152039
+offset_right = -0.168091
+offset_bottom = -5.36804
+
+[node name="HeartBar" parent="CombatUI" instance=ExtResource("2_qsdfg")]
