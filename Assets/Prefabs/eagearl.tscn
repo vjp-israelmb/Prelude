@@ -1,6 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://bxkklay00dkgx"]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [ext_resource type="Texture2D" uid="uid://dpdttdyf88mfo" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
 [ext_resource type="Texture2D" uid="uid://cdtwlm21rpd" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="1_k41ie"]
 =======
@@ -22,6 +23,9 @@ region = Rect2(384, 0, 192, 126)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ytil"]
 atlas = ExtResource("1_7s7l1")
 region = Rect2(576, 0, 192, 126)
+=======
+[ext_resource type="Texture2D" uid="uid://b381sgbgblww3" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="1_k41ie"]
+>>>>>>> 620c84b296d1d14415b0655f073e46b7239d8cdc
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7s7l1"]
 atlas = ExtResource("1_k41ie")
