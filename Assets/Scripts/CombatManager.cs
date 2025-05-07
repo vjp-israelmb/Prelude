@@ -47,22 +47,28 @@ public partial class CombatManager : Node
 	private void DrawHand(int num)
 	{
 		hand.Clear();
-		handContainer.Clear();
 
 		for (int i = 0; i < num; i++)
 		{
 			if (deck.Count > 0)
 			{
+				// Escoge una carta aleatoria de la baraja
 				Card card = deck[GD.RandRange(0, deck.Count - 1)];
-				hand.Add(card);
+				
+				// Verifica que la cantidad de la carta no sea cero
+				if (card.Quantity > 0)
+				{
+					hand.Add(card);
+					card.Quantity--;  // Disminuye la cantidad de la carta
 
-				// Instanciar un botón para cada carta
-				var button = (Button)GD.Load("res://scenes/CardButton.tscn").Instance();
-				var cardButton = button as CardButton;
-				cardButton.SetCard(card);
-				Array container = new Array(){ card };
-				cardButton.Connect("pressed", this, nameof(OnCardPressed), container);
-				handContainer.AddChild(cardButton);
+					// Instanciar un botón para cada carta
+					var button = (Button)GD.Load("res://scenes/CardButton.tscn").Instance();
+					var cardButton = button as CardButton;
+					cardButton.SetCard(card);
+					Array container = new Array(){ card };
+					cardButton.Connect("pressed", this, nameof(OnCardPressed), container);
+					handContainer.AddChild(cardButton);
+				}
 			}
 		}
 	}
@@ -86,16 +92,25 @@ public partial class CombatManager : Node
 	// Aplicar el efecto de la carta (daño, curación, etc.)
 	private void ApplyCardEffect(Card card)
 	{
-		if (card.Damage > 0)
+		// Si la carta tiene daño, lo aplica
+		if (card.Type == "damage" && card.LevelEffect > 0)
 		{
-			enemyHealth -= card.Damage;
-			GD.Print($"El enemigo recibió {card.Damage} de daño. Salud enemiga: {enemyHealth}");
+			enemyHealth -= card.LevelEffect;
+			GD.Print($"El enemigo recibió {card.LevelEffect} de daño. Salud enemiga: {enemyHealth}");
 		}
 
-		if (card.Heal > 0)
+		// Si la carta tiene curación, la aplica
+		if (card.Type == "heal" && card.LevelEffect > 0)
 		{
-			playerHealth += card.Heal;
-			GD.Print($"El jugador se curó {card.Heal}. Salud del jugador: {playerHealth}");
+			playerHealth += card.LevelEffect;
+			GD.Print($"El jugador se curó {card.LevelEffect}. Salud del jugador: {playerHealth}");
+		}
+
+		// Si la carta tiene armadura, la aplica
+		if (card.Type == "armor" && card.LevelEffect > 0)
+		{
+			playerHealth += card.LevelEffect;  // Ejemplo: puede ser un bono de vida por armadura
+			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {playerHealth}");
 		}
 
 		// Actualizar la interfaz

@@ -2,77 +2,91 @@
 
 [resource]
 data = {
-"Guerrero": [{
-"effect": "Realiza X cantidad de daño.",
-"levelEffect": 0.0,
-"name": "Golpe de Sable",
-"type": "damage"
-}, {
-"effect": "Suma X cantidad de armadura.",
-"levelEffect": 0.0,
-"name": "Alzad Escudos",
-"type": "armor"
-}, {
-"effect": "Realiza un ataque contundente causando X daño y noqueando.",
-"levelEffect": 0.0,
-"name": "Mamporrazo",
-"type": "damage_stun"
-}, {
-"effect": "Cura X cantidad de vida.",
-"levelEffect": 0.0,
-"name": "Vendas",
-"type": "heal"
-}, {
-"effect": "Duplica la cantidad de armadura actual.",
-"levelEffect": 0.0,
-"name": "Reforjado",
-"type": "armor_double"
-}, {
-"effect": "Suma X cantidad de armadura. Si tienes X cantidad de armadura, se duplica.",
-"levelEffect": 0.0,
-"name": "Escudo Blindado",
-"type": "armor_double_condition"
-}],
-"Vagabundo": [{
-"effect": "Obtienes una carta al azar. Cuando se activa, pierde 1 nivel.",
-"levelEffect": -1.0,
-"name": "Hurgar",
-"type": "activate"
-}, {
-"effect": "Cura X cantidad de vida.",
-"levelEffect": 0.0,
-"name": "Paloma Muerta",
-"type": "heal"
-}, {
-"effect": "Realiza X cantidad de daño, pero solo se puede usar a nivel 5.",
-"levelEffect": 0.0,
-"minLevelRequired": 5.0,
-"name": "Hadouken",
-"type": "damage"
-}, {
-"effect": "Realiza X cantidad de daño. Si tienes Hurgar en la mano, la activa.",
-"levelEffect": 0.0,
-"name": "Dame 1 Leuro",
-"type": "damage_activate"
-}, {
-"effect": "Cura X cantidad de vida. Si tienes Hurgar en la mano, la activa.",
-"levelEffect": 0.0,
-"name": "Sobras",
-"type": "heal_activate"
-}, {
-"effect": "Suma X cantidad de armadura.",
-"levelEffect": 0.0,
-"name": "Castillo de Cartón",
-"type": "armor"
-}, {
-"effect": "Suma X cantidad de armadura. Si tienes Hurgar en la mano, la activa.",
-"levelEffect": 0.0,
-"name": "Contenedor Móvil",
-"type": "armor_activate"
-}, {
-"effect": "Causa X daño y luego reemplazas esta carta por Hurgar.",
-"levelEffect": 0.0,
-"name": "Crisis de Cartón",
-"type": "damage_replace"
-}]
+	"Guerrero": [{
+		"effect": "Realiza X cantidad de daño.",
+		"levelEffect": 0.0,
+		"name": "Golpe de Sable",
+		"type": "damage",
+		"quantity": 1
+	}, {
+		"effect": "Suma X cantidad de armadura.",
+		"levelEffect": 0.0,
+		"name": "Alzad Escudos",
+		"type": "armor",
+		"quantity": 1
+	}, {
+		"effect": "Realiza un ataque contundente causando X daño y noqueando.",
+		"levelEffect": 0.0,
+		"name": "Mamporrazo",
+		"type": "damage_stun",
+		"quantity": 1
+	}, {
+		"effect": "Cura X cantidad de vida.",
+		"levelEffect": 0.0,
+		"name": "Vendas",
+		"type": "heal",
+		"quantity": 1
+	}, {
+		"effect": "Duplica la cantidad de armadura actual.",
+		"levelEffect": 0.0,
+		"name": "Reforjado",
+		"type": "armor_double",
+		"quantity": 1
+	}, {
+		"effect": "Suma X cantidad de armadura. Si tienes X cantidad de armadura, se duplica.",
+		"levelEffect": 0.0,
+		"name": "Escudo Blindado",
+		"type": "armor_double_condition",
+		"quantity": 1
+	}],
+	"Vagabundo": [{
+		"effect": "Obtienes una carta al azar. Cuando se activa, pierde 1 nivel.",
+		"levelEffect": -1.0,
+		"name": "Hurgar",
+		"type": "activate",
+		"quantity": 1
+	}, {
+		"effect": "Cura X cantidad de vida.",
+		"levelEffect": 0.0,
+		"name": "Paloma Muerta",
+		"type": "heal",
+		"quantity": 1
+	}, {
+		"effect": "Realiza X cantidad de daño, pero solo se puede usar a nivel 5.",
+		"levelEffect": 0.0,
+		"minLevelRequired": 5.0,
+		"name": "Hadouken",
+		"type": "damage",
+		"quantity": 1
+	}, {
+		"effect": "Realiza X cantidad de daño. Si tienes Hurgar en la mano, la activa.",
+		"levelEffect": 0.0,
+		"name": "Dame 1 Leuro",
+		"type": "damage_activate",
+		"quantity": 1
+	}, {
+		"effect": "Cura X cantidad de vida. Si tienes Hurgar en la mano, la activa.",
+		"levelEffect": 0.0,
+		"name": "Sobras",
+		"type": "heal_activate",
+		"quantity": 1
+	}, {
+		"effect": "Suma X cantidad de armadura.",
+		"levelEffect": 0.0,
+		"name": "Castillo de Cartón",
+		"type": "armor",
+		"quantity": 1
+	}, {
+		"effect": "Suma X cantidad de armadura. Si tienes Hurgar en la mano, la activa.",
+		"levelEffect": 0.0,
+		"name": "Contenedor Móvil",
+		"type": "armor_activate",
+		"quantity": 1
+	}, {
+		"effect": "Causa X daño y luego reemplazas esta carta por Hurgar.",
+		"levelEffect": 0.0,
+		"name": "Crisis de Cartón",
+		"type": "damage_replace",
+		"quantity": 1
+	}]
 }
