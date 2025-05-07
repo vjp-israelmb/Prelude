@@ -1,29 +1,26 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public class CombatManager : Node
+public partial class CombatManager : Node
 {
-	// Referencia al contenedor donde instanciar el fondo
-	private Node2D backgroundContainer = GetNode<Node2D>("BgContainer");
-
-	// Referencias a la interfaz
-	[OnReadyGet("CombatUI/Mano")]
+	private Node2D backgroundContainer;
 	private HBoxContainer handContainer;
-	
-	// Mazo de cartas y mano del jugador
+	private CardLoader loader;
 	private List<Card> deck = new List<Card>();
 	private List<Card> hand = new List<Card>();
 
-	// Salud del jugador y enemigo
 	private int playerHealth = 100;
 	private int enemyHealth = 100;
 
 	public override void _Ready()
 	{
 		// Instanciar el fondo
-		var background = (PackedScene)GD.Load("res://Prefabs/bg.tscn");
-		Node backgroundInstance = background.Instance();
-		backgroundContainer.AddChild(backgroundInstance);
+		backgroundContainer = GetNode<Node2D>("BgContainer");
+		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
+
+		// Instanciar el loader de cartas
+		loader = new CardLoader();
 
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
@@ -33,32 +30,40 @@ public class CombatManager : Node
 	// Función para cargar las cartas del mazo
 	private void LoadDeck()
 	{
-		allDecks = loader.LoadCardsFromFile();
+		var allDecks = loader.LoadCardsFromFile();
 
-		// Por ejemplo, cargar las cartas de la baraja 'Vagabundo'
-		deck = allDecks["Vagabundo"];
-		
-		// Mostrar las cartas en la interfaz, repartir cartas, etc.
-		GD.Print($"Cartas del Vagabundo: {vagabundoDeck.Count}");
+		// Cargar las cartas de la baraja 'Vagabundo'
+		if (allDecks.ContainsKey("Vagabundo"))
+		{
+			deck = allDecks["Vagabundo"];
+		}
+		else
+		{
+			GD.PrintErr("No se encontró el mazo 'Vagabundo' en el archivo JSON.");
+		}
 	}
 
 	// Función para repartir cartas
 	private void DrawHand(int num)
 	{
 		hand.Clear();
-		handContainer.ClearChildren();
+		handContainer.Clear();
 
 		for (int i = 0; i < num; i++)
 		{
-			Card card = deck[GD.RandRange(0, deck.Count - 1)];
-			hand.Add(card);
+			if (deck.Count > 0)
+			{
+				Card card = deck[GD.RandRange(0, deck.Count - 1)];
+				hand.Add(card);
 
-			// Instanciar un botón para cada carta
-			var button = (Button)GD.Load("res://scenes/CardButton.tscn").Instance();
-			var cardButton = button as CardButton;
-			cardButton.SetCard(card);
-			cardButton.Connect("pressed", this, nameof(OnCardPressed), new Array() { card });
-			handContainer.AddChild(cardButton);
+				// Instanciar un botón para cada carta
+				var button = (Button)GD.Load("res://scenes/CardButton.tscn").Instance();
+				var cardButton = button as CardButton;
+				cardButton.SetCard(card);
+				Array container = new Array(){ card };
+				cardButton.Connect("pressed", this, nameof(OnCardPressed), container);
+				handContainer.AddChild(cardButton);
+			}
 		}
 	}
 
@@ -71,7 +76,10 @@ public class CombatManager : Node
 		ApplyCardEffect(card);
 
 		// Eliminar la carta de la mano
-		handContainer.GetChild(0).QueueFree();  // Eliminar la carta de la UI
+		if (handContainer.GetChildCount() > 0)
+		{
+			handContainer.GetChild(0).QueueFree();  // Eliminar la carta de la UI
+		}
 		hand.Remove(card);
 	}
 
@@ -97,12 +105,13 @@ public class CombatManager : Node
 	// Actualizar la interfaz de salud
 	private void UpdateUI()
 	{
-		// Aquí puedes actualizar las barras de vida o algún otro indicador
+		// Aquí puedes actualizar las barras de vida o algún otro indicador visual
 		GD.Print($"Salud del jugador: {playerHealth}, Salud del enemigo: {enemyHealth}");
 	}
-	
+
 	private void EndCombat()
 	{
+		handContainer.Clear();
 		// Regresar al juego principal
 		GetTree().ChangeScene("res://scenes/main.tscn");
 	}
