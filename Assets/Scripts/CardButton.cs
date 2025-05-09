@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CardButton : Button
+public partial class CardButton : Button
 {
 	public Card Card { get; set; }
 
