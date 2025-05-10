@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://k0o7io1kpmw0"]
+[gd_scene load_steps=67 format=3 uid="uid://k0o7io1kpmw0"]
 
 [ext_resource type="Texture2D" uid="uid://du5m15534oqh4" path="res://Assets/Sprites/Characters/Playable/Hobo/Death/Hobo_Death_big-Sheet.png" id="1_283q3"]
 [ext_resource type="Script" uid="uid://cv5ug1ipbr2as" path="res://Assets/Scripts/Player.cs" id="1_t1env"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dm2x0gpsf80rt" path="res://Assets/Sprites/Characters/Playable/Hobo/Idle/Hobo_Idle_big-Sheet.png" id="2_yd5h7"]
 [ext_resource type="Texture2D" uid="uid://bfar2lkmjhsvl" path="res://Assets/Sprites/Characters/Playable/Hobo/Jumping/Hobo_Jump_big-Sheet.png" id="3_t1env"]
 [ext_resource type="Texture2D" uid="uid://die6n6lmpiunt" path="res://Assets/Sprites/Characters/Playable/Hobo/Moving/Hobo_Moving_big-Sheet.png" id="4_732b5"]
+[ext_resource type="AudioStream" uid="uid://4l1gp8i8cucs" path="res://Assets/VFX/Hobo_Jump.mp3" id="7_732b5"]
+[ext_resource type="AudioStream" uid="uid://cbvuslhfgwjju" path="res://Assets/VFX/Hobo_Hurt.mp3" id="8_ioqiy"]
+[ext_resource type="AudioStream" uid="uid://cod4ow2mtsl6k" path="res://Assets/VFX/Hobo_Death.mp3" id="9_whww7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpke1"]
 atlas = ExtResource("1_283q3")
@@ -445,10 +448,18 @@ script = ExtResource("1_t1env")
 position = Vector2(2, -68.4962)
 scale = Vector2(0.968254, 0.994296)
 sprite_frames = SubResource("SpriteFrames_uvpt7")
-animation = &"Idle"
+animation = &"Moving"
 autoplay = "Idle"
-frame_progress = 0.838894
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -60)
 shape = SubResource("RectangleShape2D_i6u25")
+
+[node name="AudioJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_732b5")
+
+[node name="AudioHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ioqiy")
+
+[node name="AudioDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_whww7")

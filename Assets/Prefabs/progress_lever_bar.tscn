@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cbd01j1vwe7y4" path="res://Assets/Sprites/UI/Levelbar/Levelbar_Outline_big.png" id="1_b7up3"]
 [ext_resource type="Texture2D" uid="uid://nnyfpji05fmp" path="res://Assets/Sprites/UI/Levelbar/Levelbar_Bar_big.png" id="2_jtjtf"]
 
-[node name="ProgressLeverBar" type="CanvasLayer"]
+[node name="ProgressLeverBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="ProgressBar" type="TextureProgressBar" parent="."]
 offset_right = 154.0

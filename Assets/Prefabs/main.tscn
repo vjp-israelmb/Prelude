@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://yglt2v0vsg5s"]
+[gd_scene load_steps=9 format=3 uid="uid://yglt2v0vsg5s"]
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
 [ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_pdc24"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_ptjad"]
+[ext_resource type="PackedScene" uid="uid://botkbd42vfkkn" path="res://Assets/Prefabs/menu_pause.tscn" id="7_a4abk"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
 script/source = "using Godot;
@@ -54,6 +55,7 @@ public partial class HeartBar : Node
 
 [node name="Main" type="Node"]
 script = ExtResource("1_00nml")
+playerScene = ExtResource("3_2aw6c")
 
 [node name="Bg" parent="." instance=ExtResource("2_pjs4v")]
 
@@ -62,21 +64,24 @@ z_index = 1
 position = Vector2(962, 620)
 scale = Vector2(55.1037, 1.48)
 
-[node name="Player" parent="." instance=ExtResource("3_2aw6c")]
-position = Vector2(61, 567)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576.95, 325)
 
+[node name="MenuPause" parent="." instance=ExtResource("7_a4abk")]
+visible = false
+
 [node name="OnGame" type="CanvasLayer" parent="."]
+layer = -1
 scale = Vector2(0.645, 0.645)
 transform = Transform2D(0.645, 0, 0, 0.645, 0, 0)
-
-[node name="Progress" parent="OnGame" instance=ExtResource("6_ptjad")]
-offset = Vector2(78.415, 0)
-scale = Vector2(0.645, 0.645)
-transform = Transform2D(0.645, 0, 0, 0.645, 78.415, 0)
 
 [node name="HeartBar" parent="OnGame" instance=ExtResource("5_pdc24")]
 scale = Vector2(0.645, 0.645)
 script = SubResource("CSharpScript_ptjad")
+
+[node name="Progress" parent="OnGame" instance=ExtResource("6_ptjad")]
+offset_left = 117.829
+offset_top = 18.6047
+offset_right = 117.829
+offset_bottom = 18.6047
+scale = Vector2(0.645, 0.645)

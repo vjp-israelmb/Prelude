@@ -3,6 +3,10 @@ using System;
 
 public partial class Main : Node
 {
+	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
+	//Jugador actual 
+
+	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
 	private PackedScene spikeScene = GD.Load<PackedScene>("res://Assets/Prefabs/spike.tscn");
@@ -39,6 +43,8 @@ public partial class Main : Node
 	private CharacterBody2D player;
 	private Camera2D camera;
 	private StaticBody2D ground;
+	private CanvasLayer menuOnGame;
+	private CanvasLayer menuOnPause;
 	
 	
 	
@@ -47,21 +53,34 @@ public partial class Main : Node
 		screen_size=DisplayServer.WindowGetSize();
 		// Obtener referencias a los nodos
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
+		menuOnGame = GetNode<CanvasLayer>("OnGame");
+		menuOnPause = GetNode<CanvasLayer>("MenuPause");
 		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
+		//Cargamos jugador seleccionado 
+		LoadPlayer();
 		player = GetNode<CharacterBody2D>("Player");
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
-		
-		//Conectamos la señal de muerte
-		if (player.HasSignal("PlayerDied")) 
-		{
-			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
-		}	
-		
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
-		enemies = new PackedScene[] { frogrosso };
+		enemies = new PackedScene[] { frogrosso,eagearl };
+	}
+	//Carga jugador 
+	 private void LoadPlayer()
+	{
+		// 1. Cargar escena del personaje (o usar valor por defecto)
+		 playerScene = Global.SelectedCharacter ?? GD.Load<PackedScene>("res://Assets/Prefabs/vagabond.tscn");
+		// 2. Instanciar
+		player = playerScene.Instantiate<CharacterBody2D>();
+		player.Name = "Player"; // Nombre consistente		
+		// 3. Añadir a la escena
+		AddChild(player);
+		// 4. Conectar señal   muerte
+		if (player.HasSignal("PlayerDied"))
+		{
+			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
+		}
 	}
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
@@ -79,14 +98,12 @@ public partial class Main : Node
 		float spawnY = ground.Position.Y - 100;
 
 		//Si es volador lo ubicamos un poco mas arriba 
-		if (enemy.Name.ToString().ToLower().Contains("Eagearl")) // ejemplo de Eagearl
+		if (enemy.Name.ToString().ToLower().Contains("eagearl")) // ejemplo de Eagearl
 		{
-			 spawnY -= 100; // que aparezca volando más arriba
+			 spawnY -= 200; // que aparezca volando más arriba
 		}
-
 		enemy.Position = new Vector2(spawnX, spawnY);
-
-		GD.Print("Enemigo Spawneado");
+		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
 	}
 	//Spawn aleatoria de obstaculos
@@ -127,10 +144,20 @@ public partial class Main : Node
 	}
 
 	  public override void _Process(double delta)
-	{	
+	  {	
 		//Si es juego acabado no pasa y no avanza la camara ni el jugador 
 		if (gameOver)
 		return;
+		//Pausa el juego cuando se pulsa escape(En el caso del ordenador)
+		  if (Input.IsActionJustPressed("pause_key"))
+		  {
+			menuOnPause.Visible=!gamePaused;
+			gamePaused = !gamePaused;
+			menuOnGame.Visible=!gamePaused;
+		 }
+
+		if (gamePaused)
+		return; // No procesamos nada si está en pausa
 		
 		//Suma por cada frame del juego 
 		spawnTimer += delta;
@@ -149,27 +176,18 @@ public partial class Main : Node
 		speed = START_SPEED;
 
 		// Mover player y cámara en X
+		if(gameOver==false){
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
 		//Suma puntuacion
 		score+=10;
+		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
 		foreach (Node child in GetChildren())
 		{
-		// Solo nos interesa si está en el grupo "Obstacle"
-		if (child.IsInGroup("obstacle"))
-		{
-			//Convertimos a Node2D para poder acceder a su posición
-			Node2D obstacle = (Node2D)child;
-
-			// Si está más de 200px a la izquierda de la cámara, lo borramos
-			if (obstacle.Position.X < camera.Position.X - 800)
-			{
-				obstacle.QueueFree();
-				GD.Print("obstaculo liberado");
-			}
-		}else if (child.IsInGroup("enemy"))
+			// Solo nos interesa si está en el grupo "Obstacle"
+			if (child.IsInGroup("obstacle"))
 			{
 				//Convertimos a Node2D para poder acceder a su posición
 				Node2D obstacle = (Node2D)child;
@@ -178,25 +196,37 @@ public partial class Main : Node
 				if (obstacle.Position.X < camera.Position.X - 800)
 				{
 					obstacle.QueueFree();
-					GD.Print("enemigo liberado");
+					GD.Print("obstaculo liberado");
 				}
-			}
+				}else if (child.IsInGroup("Enemy"))
+				{
+					//Convertimos a Node2D para poder acceder a su posición
+					Node2D enemy = (Node2D)child;
+
+					// Si está más de 200px a la izquierda de la cámara, lo borramos
+					if (enemy.Position.X < camera.Position.X - 800)
+					{
+						enemy.QueueFree();
+						GD.Print("enemigo liberado");
+					}
+				}
 		}
 		// generacion de suelo unico de manera indefinida
-		if (camera.Position.X - ground.Position.X > screen_size.X * 1.3){
+		if (camera.Position.X - ground.Position.X > screen_size.X * 1.3)
+		{
 			 GD.Print("Reposicionando el suelo");
 			//Creo una variable nueva y se lo asigno al suelo actual 
 			Vector2 newGroundPos = ground.Position;
 			newGroundPos.X += screen_size.X;
 			ground.Position = newGroundPos;
 		}
-	}
+	  }
 	//Muerte del jugador 
 	private void OnPlayerDeath()
 	{
 		gameOver = true;
 		// Espera 1.5 segundos para que la animación se vea
-		GetTree().CreateTimer(1.5).Timeout += () =>
+		GetTree().CreateTimer(0.5).Timeout += () =>
 		{
 			GetTree().ReloadCurrentScene();
 		};

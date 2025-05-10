@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://botkbd42vfkkn"]
+
+[node name="MenuPause" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 246.0
+offset_top = 38.0
+offset_right = 617.0
+offset_bottom = 143.0
+scale = Vector2(1.57333, 1.8)
+text = "Game Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
