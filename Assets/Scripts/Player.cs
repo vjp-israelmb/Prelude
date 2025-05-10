@@ -3,8 +3,9 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	//Para obtener las funciones del HeartBar.cs
-	private HeartBar heartBar;
+	//Para obtener la animacion del corazon
+	private Node2D heartBar;
+	private AnimatedSprite2D heart;
 	//Booleano para cuando es golepado
 	private bool isHit = false;
 	[Export]
@@ -21,12 +22,42 @@ public partial class Player : CharacterBody2D
 	//Declaracion  de señal para la muerte del jugador
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
-	
+	//Funcion para hacer las animaciones de la vida del jugador 
+	public void UpdateHeart(int currentHp)
+	{
+		if (heart == null)
+		{
+			GD.PrintErr("Heart no está asignado.");
+			return;
+		}
+
+		string animName = "";
+
+		if (currentHp >= 6)
+			animName = "Full";
+		else if (currentHp == 1)
+			animName = "Lose4";
+		else if (currentHp <= 0)
+			animName = "Lose6";
+		else
+			animName = $"Lose{6 - currentHp}";
+
+		if (heart.SpriteFrames.HasAnimation(animName))
+		{
+			heart.Play(animName);
+			GD.Print($"Reproduciendo animación: {animName}");
+		}
+		else
+		{
+			GD.PrintErr($"La animación '{animName}' no existe en el AnimatedSprite2D.");
+		}
+	}
 	public override void _Ready()
 	{
 		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		heartBar = GetNode<HeartBar>("OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
-		heartBar.UpdateHearts(hp);
+		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
+		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
+		UpdateHeart(hp);
 		if (Name.ToString().ToLower().Contains("knight"))
 		{
 			armor = 6;
@@ -103,9 +134,9 @@ public partial class Player : CharacterBody2D
 		}else{
 			hp -= 1;
 			// Actualiza los corazones en pantalla
-			if (heartBar != null)
+			if (heart != null)
 				{
-				heartBar.UpdateHearts(hp);
+				UpdateHeart(hp);
 				}
 		}
 		if (armor>0){

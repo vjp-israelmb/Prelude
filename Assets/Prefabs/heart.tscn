@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://cokn6sjj0pf6c"]
+[gd_scene load_steps=12 format=3 uid="uid://cokn6sjj0pf6c"]
 
 [ext_resource type="Texture2D" uid="uid://v6iaieeeyinj" path="res://Assets/Sprites/UI/Lifebar/Lifebar.png" id="1_y24n2"]
 [ext_resource type="Texture2D" uid="uid://cssyjasdyy2nf" path="res://Assets/Sprites/UI/Lifebar/Lifebar-Sheet_big.png" id="2_nt3iw"]
-[ext_resource type="Script" uid="uid://b0v4lbgtlmb1n" path="res://Assets/Scripts/HeartBar.cs" id="2_y24n2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13djj"]
 atlas = ExtResource("2_nt3iw")
@@ -10,30 +9,6 @@ region = Rect2(585, 0, 117, 99)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nt3iw"]
 atlas = ExtResource("1_y24n2")
-region = Rect2(0, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lhbdy"]
-atlas = ExtResource("2_nt3iw")
-region = Rect2(585, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dkp31"]
-atlas = ExtResource("2_nt3iw")
-region = Rect2(468, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uwgry"]
-atlas = ExtResource("2_nt3iw")
-region = Rect2(351, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lg3el"]
-atlas = ExtResource("2_nt3iw")
-region = Rect2(234, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4we0p"]
-atlas = ExtResource("2_nt3iw")
-region = Rect2(117, 0, 117, 99)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krr6y"]
-atlas = ExtResource("2_nt3iw")
 region = Rect2(0, 0, 117, 99)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nk67e"]
@@ -66,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_13djj")
 }],
-"loop": true,
+"loop": false,
 "name": &"Empty",
 "speed": 5.0
 }, {
@@ -74,32 +49,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nt3iw")
 }],
-"loop": true,
+"loop": false,
 "name": &"Full",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lhbdy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dkp31")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uwgry")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lg3el")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4we0p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_krr6y")
-}],
-"loop": true,
-"name": &"Gain",
-"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -107,59 +59,61 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2ols2")
+}],
+"loop": false,
+"name": &"Lose1",
+"speed": 2.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ols2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajbv6")
+}],
+"loop": false,
+"name": &"Lose2",
+"speed": 2.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ajbv6")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rymyq")
+}],
+"loop": false,
+"name": &"Lose3",
+"speed": 2.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rymyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jw1c")
+}],
+"loop": true,
+"name": &"Lose4",
+"speed": 2.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5jw1c")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b8dku")
 }],
-"loop": true,
-"name": &"Lose",
-"speed": 7.0
+"loop": false,
+"name": &"Lose6",
+"speed": 2.0
 }]
 
-[node name="HeartBar" type="CanvasLayer"]
-script = ExtResource("2_y24n2")
+[node name="HeartBar" type="Node2D"]
 
-[node name="Heart1" type="AnimatedSprite2D" parent="."]
-position = Vector2(58, 51)
+[node name="Heart" type="AnimatedSprite2D" parent="."]
+position = Vector2(98.74, 84.28)
+scale = Vector2(1.81641, 1.79232)
 sprite_frames = SubResource("SpriteFrames_13djj")
 animation = &"Full"
-script = ExtResource("2_y24n2")
-
-[node name="Heart2" type="AnimatedSprite2D" parent="."]
-position = Vector2(170, 51)
-sprite_frames = SubResource("SpriteFrames_13djj")
-animation = &"Full"
-script = ExtResource("2_y24n2")
-
-[node name="Heart3" type="AnimatedSprite2D" parent="."]
-position = Vector2(281, 50)
-sprite_frames = SubResource("SpriteFrames_13djj")
-animation = &"Full"
-script = ExtResource("2_y24n2")
-
-[node name="Heart4" type="AnimatedSprite2D" parent="."]
-position = Vector2(392, 50)
-sprite_frames = SubResource("SpriteFrames_13djj")
-animation = &"Full"
-script = ExtResource("2_y24n2")
-
-[node name="Heart5" type="AnimatedSprite2D" parent="."]
-position = Vector2(503, 50)
-sprite_frames = SubResource("SpriteFrames_13djj")
-animation = &"Full"
-script = ExtResource("2_y24n2")
-
-[node name="Heart6" type="AnimatedSprite2D" parent="."]
-position = Vector2(614, 50)
-sprite_frames = SubResource("SpriteFrames_13djj")
-animation = &"Full"
-script = ExtResource("2_y24n2")
+autoplay = "Full"
