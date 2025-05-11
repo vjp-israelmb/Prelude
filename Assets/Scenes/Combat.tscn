@@ -1,147 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://djgu43i0mti72"]
+[gd_scene load_steps=5 format=3 uid="uid://djgu43i0mti72"]
 
+[ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="2_qsdfg"]
+[ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="3_qsdfg"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_dvk75"]
+[sub_resource type="CSharpScript" id="CSharpScript_ikiw1"]
 script/source = "using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class CombatManager : Node
+public partial class HeartBar : Node
 {
-	private Node2D backgroundContainer;
-	private HBoxContainer handContainer;
-	private CardLoader loader;
-	private List<Card> deck = new List<Card>();
-	private List<Card> hand = new List<Card>();
-
-	private int playerHealth = 100;
-	private int enemyHealth = 100;
+	// Referencias a cada corazón
+	private List<AnimatedSprite2D> hearts = new();
 
 	public override void _Ready()
 	{
-		// Instanciar el fondo
-		backgroundContainer = GetNode<Node2D>(\"BgContainer\");
-		handContainer = GetNode<HBoxContainer>(\"CombatUI/Mano\");
-
-		// Instanciar el loader de cartas
-		loader = new CardLoader();
-
-		// Cargar el mazo y repartir cartas
-		LoadDeck();
-		DrawHand(5);
-	}
-
-	// Función para cargar las cartas del mazo
-	private void LoadDeck()
-	{
-		var allDecks = loader.LoadCardsFromFile();
-
-		// Cargar las cartas de la baraja 'Vagabundo'
-		if (allDecks.ContainsKey(\"Vagabundo\"))
+		// Buscar todos los corazones por nombre fijo
+		for (int i = 1; i <= 6; i++)
 		{
-			deck = allDecks[\"Vagabundo\"];
-		}
-		else
-		{
-			GD.PrintErr(\"No se encontró el mazo 'Vagabundo' en el archivo JSON.\");
+			string name = i == 1 ? \"Heart\" : $\"Heart{i}\";
+			var heart = GetNode<AnimatedSprite2D>($\"../{name}\");
+			hearts.Add(heart);
 		}
 	}
-
-	// Función para repartir cartas
-	private void DrawHand(int num)
+	public void UpdateHearts(int currentHp)
 	{
-		hand.Clear();
-
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < hearts.Count; i++)
 		{
-			if (deck.Count > 0)
+			if (i < currentHp)
 			{
-				// Escoge una carta aleatoria de la baraja
-				Card card = deck[GD.RandRange(0, deck.Count - 1)];
-				
-				// Verifica que la cantidad de la carta no sea cero
-				if (card.Quantity > 0)
-				{
-					hand.Add(card);
-					card.Quantity--;  // Disminuye la cantidad de la carta
-
-					// Instanciar un botón para cada carta
-					var button = (Button)GD.Load(\"res://scenes/CardButton.tscn\").Instance();
-					var cardButton = button as CardButton;
-					cardButton.SetCard(card);
-					Array container = new Array(){ card };
-					cardButton.Connect(\"pressed\", this, nameof(OnCardPressed), container);
-					handContainer.AddChild(cardButton);
-				}
+				hearts[i].Play(\"Gain\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Full\");
+			}
+			else
+			{
+				hearts[i].Play(\"Lose\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Empty\");
 			}
 		}
 	}
 
-	// Lógica cuando el jugador presiona una carta
-	private void OnCardPressed(Card card)
+	private async void SetAnimationAfter(AnimatedSprite2D heart, string animName)
 	{
-		GD.Print($\"Carta jugada: {card.Name}\");
-
-		// Aplicar el efecto de la carta
-		ApplyCardEffect(card);
-
-		// Eliminar la carta de la mano
-		if (handContainer.GetChildCount() > 0)
-		{
-			handContainer.GetChild(0).QueueFree();  // Eliminar la carta de la UI
-		}
-		hand.Remove(card);
-	}
-
-	// Aplicar el efecto de la carta (daño, curación, etc.)
-	private void ApplyCardEffect(Card card)
-	{
-		// Si la carta tiene daño, lo aplica
-		if (card.Type == \"damage\" && card.LevelEffect > 0)
-		{
-			enemyHealth -= card.LevelEffect;
-			GD.Print($\"El enemigo recibió {card.LevelEffect} de daño. Salud enemiga: {enemyHealth}\");
-		}
-
-		// Si la carta tiene curación, la aplica
-		if (card.Type == \"heal\" && card.LevelEffect > 0)
-		{
-			playerHealth += card.LevelEffect;
-			GD.Print($\"El jugador se curó {card.LevelEffect}. Salud del jugador: {playerHealth}\");
-		}
-
-		// Si la carta tiene armadura, la aplica
-		if (card.Type == \"armor\" && card.LevelEffect > 0)
-		{
-			playerHealth += card.LevelEffect;  // Ejemplo: puede ser un bono de vida por armadura
-			GD.Print($\"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {playerHealth}\");
-		}
-
-		// Actualizar la interfaz
-		UpdateUI();
-	}
-
-	// Actualizar la interfaz de salud
-	private void UpdateUI()
-	{
-		// Aquí puedes actualizar las barras de vida o algún otro indicador visual
-		GD.Print($\"Salud del jugador: {playerHealth}, Salud del enemigo: {enemyHealth}\");
-	}
-
-	private void EndCombat()
-	{
-		handContainer.Clear();
-		// Regresar al juego principal
-		GetTree().ChangeScene(\"res://scenes/main.tscn\");
+		await ToSignal(heart, \"animation_finished\");
+		heart.Play(animName);
 	}
 }
 "
 
 [node name="Combat" type="Node2D"]
+script = ExtResource("1_b1qmc")
 
 [node name="BgContainer" type="Node2D" parent="."]
-script = SubResource("CSharpScript_dvk75")
 
 [node name="CombatUI" type="CanvasLayer" parent="."]
 
@@ -156,4 +67,18 @@ offset_top = -0.152039
 offset_right = -0.168091
 offset_bottom = -5.36804
 
-[node name="HeartBar" parent="CombatUI" instance=ExtResource("2_qsdfg")]
+[node name="OnGame" type="CanvasLayer" parent="CombatUI"]
+layer = -1
+scale = Vector2(0.645, 0.645)
+transform = Transform2D(0.645, 0, 0, 0.645, 0, 0)
+
+[node name="HeartBar" parent="CombatUI/OnGame" instance=ExtResource("2_qsdfg")]
+scale = Vector2(0.645, 0.645)
+script = SubResource("CSharpScript_ikiw1")
+
+[node name="Progress" parent="CombatUI/OnGame" instance=ExtResource("3_qsdfg")]
+offset_left = 117.829
+offset_top = 18.6047
+offset_right = 117.829
+offset_bottom = 18.6047
+scale = Vector2(0.645, 0.645)

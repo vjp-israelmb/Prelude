@@ -28,6 +28,10 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
 	
+	public int getHp()
+	{
+		return hp;
+	}
 	//Funcion para hacer las animaciones de la vida del jugador 
 	public void UpdateHeart(int currentHp)
 	{

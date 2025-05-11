@@ -64,7 +64,7 @@ public partial class Main : Node
 		ground = GetNode<StaticBody2D>("Ground");
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
-		enemies = new PackedScene[] { frogrosso,eagearl };
+		enemies = new PackedScene[] { frogrosso, eagearl};
 	}
 	//Carga jugador 
 	 private void LoadPlayer()
@@ -95,7 +95,8 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100; // un poquito más lejos
-		float spawnY = ground.Position.Y - 100;
+		float spawnY = ground.Position.Y;
+		spawnY -= 100;
 
 		//Si es volador lo ubicamos un poco mas arriba 
 		if (enemy.Name.ToString().ToLower().Contains("eagearl")) // ejemplo de Eagearl
