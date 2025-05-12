@@ -27,7 +27,7 @@ public partial class CombatManager : Node
 		loader = new CardLoader();
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
-		DrawHand(5);
+		DrawHand(6);
 		GD.Print($"Error");
 		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
 		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
@@ -65,7 +65,7 @@ public partial class CombatManager : Node
 				if (card.Quantity > 0)
 				{
 					hand.Add(card);
-					card.Quantity--;
+					//card.Quantity--;
 
 					// Instanciar el botón de la carta
 					var buttonScene = GD.Load<PackedScene>("res://Assets/Scenes/CardButton.tscn");
@@ -87,24 +87,26 @@ public partial class CombatManager : Node
 		ApplyCardEffect(card);
 
 		// Eliminar la carta de la UI
-		for (int i = 0; i < handContainer.GetChildCount(); i++)
+		if (card.LevelEffect == 0)
 		{
-			var child = handContainer.GetChild(i);
-			if (child is CardButton cb && cb.GetCard() == card)
+			for (int i = 0; i < handContainer.GetChildCount(); i++)
 			{
-				cb.QueueFree();
-				break;
+				var child = handContainer.GetChild(i);
+				if (child is CardButton cb && cb.GetCard() == card)
+				{
+					cb.QueueFree();
+					break;
+				}
 			}
+			hand.Remove(card);
 		}
-
-		hand.Remove(card);
 	}
 
 	private void ApplyCardEffect(Card card)
 	{
 		if (card.Type == "damage" && card.LevelEffect > 0)
 		{
-			enemyHealth -= card.LevelEffect;
+			enemyHealth -= card.Quantity;
 			GD.Print($"El enemigo recibió {card.LevelEffect} de daño. Salud enemiga: {enemyHealth}");
 		}
 
@@ -116,10 +118,11 @@ public partial class CombatManager : Node
 
 		if (card.Type == "armor" && card.LevelEffect > 0)
 		{
-			playerHealth += card.LevelEffect;
+			playerHealth += card.Quantity;
 			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {playerHealth}");
 		}
 
+		card.LevelEffect -= card.LevelEffect;
 		UpdateUI();
 	}
 
