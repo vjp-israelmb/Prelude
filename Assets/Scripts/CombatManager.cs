@@ -25,16 +25,16 @@ public partial class CombatManager : Node
 
 		// Instanciar el loader de cartas
 		loader = new CardLoader();
-		
+		// Cargar el mazo y repartir cartas
+		LoadDeck();
+		DrawHand(5);
+		GD.Print($"Error");
 		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
 		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
 		GD.Print($"Error");
 		playerHealth = player.getHp();
 		player.UpdateHeart(playerHealth);
 		GD.Print($"Error" + playerHealth);
-		// Cargar el mazo y repartir cartas
-		LoadDeck();
-		DrawHand(5);
 	}
 
 	private void LoadDeck()

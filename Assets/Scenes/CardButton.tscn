@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="1_1mylj"]
 [ext_resource type="Texture2D" uid="uid://dqaut4v6g4tey" path="res://Assets/Sprites/Cards/Hobo_Cards/Hobo_Cards_Template.png" id="2_6n4pe"]
 
-[node name="CardButton" type="Node2D"]
-
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button"]
 offset_right = 56.0
 offset_bottom = 76.0
 icon = ExtResource("2_6n4pe")
