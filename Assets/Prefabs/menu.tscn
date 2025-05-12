@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2aor17ovkrxm"]
+[gd_scene load_steps=7 format=3 uid="uid://d2aor17ovkrxm"]
 
 [ext_resource type="Script" uid="uid://dh5q6q42s7dbx" path="res://Assets/Scripts/Menu.cs" id="1_71n16"]
 [ext_resource type="PackedScene" uid="uid://k0o7io1kpmw0" path="res://Assets/Prefabs/vagabond.tscn" id="2_x2irg"]
 [ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="3_71n16"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_x2irg"]
+[ext_resource type="Texture2D" uid="uid://8fvdyoanm3jf" path="res://Assets/Sprites/UI/Logo/DLYH_Logo.png" id="5_71n16"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x2irg"]
 radius = 73.0068
@@ -31,6 +32,7 @@ shape = SubResource("CircleShape2D_x2irg")
 [node name="Knight" parent="CharacterSelector" instance=ExtResource("3_71n16")]
 position = Vector2(616, 352)
 input_pickable = true
+GRAVITY = 0
 
 [node name="Area2D" type="Area2D" parent="CharacterSelector/Knight"]
 
@@ -53,6 +55,11 @@ text = "Start Game"
 visible = false
 position = Vector2(549, 372)
 scale = Vector2(4.63975, 0.872515)
+
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(548, 88)
+scale = Vector2(0.544258, 0.449653)
+texture = ExtResource("5_71n16")
 
 [connection signal="mouse_entered" from="CharacterSelector/vagabond/Area2D" to="." method="_on_vagabond_mouse_entered"]
 [connection signal="mouse_entered" from="CharacterSelector/Knight/Area2D" to="." method="_on_knigth_mouse_entered"]

@@ -64,12 +64,18 @@ public partial class Player : CharacterBody2D
 	}
 	public override void _Ready()
 	{
-		audioJump=GetNode<AudioStreamPlayer>("AudioJump");
-		audioHit=GetNode<AudioStreamPlayer>("AudioHit");
-		audioDeath=GetNode<AudioStreamPlayer>("AudioDeath");
-		anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
-		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
+		
+
+		try {
+			audioJump = GetNode<AudioStreamPlayer>("AudioJump");
+			audioHit = GetNode<AudioStreamPlayer>("AudioHit");
+			audioDeath = GetNode<AudioStreamPlayer>("AudioDeath");
+			anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+			heartBar = GetNode<Node2D>("../OnGame/HeartBar");
+			heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
+		} catch (Exception e) {
+			GD.PrintErr("Error accediendo a nodos: ", e.Message);
+		}
 		UpdateHeart(hp);
 		if (Global.SelectedCharacter.ResourcePath=="res://Assets/Prefabs/Knigth.tscn")
 		{
@@ -102,17 +108,27 @@ public partial class Player : CharacterBody2D
 			}
 			else
 			{
-				anim.Play("Moving");
+				try{
+					anim.Play("Moving");
+				}catch(NullReferenceException x){
+				}
+				
 			}
 			}
 			else
 			{
-				anim.Play("Idle");
+				try{
+					anim.Play("Idle");
+				}catch(NullReferenceException x){
+				}
+				
 			}
 		}
 		else
 		{
-			anim.Play("Jump");
+			try{
+			anim.Play("Jump");}catch(NullReferenceException x){	
+			}
 		}
 
 		MoveAndSlide();
