@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Main : Node
+public partial class Main2 : Node
 {
 	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
 	//Jugador actual 
@@ -120,7 +120,7 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+9.5f;
+		float spawnY = ground.Position.Y+25;
 
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))

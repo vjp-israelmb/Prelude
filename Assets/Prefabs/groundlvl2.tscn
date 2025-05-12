@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpp71c0gqex1k"]
+
+[ext_resource type="Texture2D" uid="uid://c86w8wlu8d060" path="res://Assets/Sprites/Tiles/Ground/Stone_Floor/stonefloor2.png" id="1_mgbos"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkj4s"]
+size = Vector2(82, 40)
+
+[node name="Ground" type="StaticBody2D"]
+texture_repeat = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+scale = Vector2(0.98279, 0.942438)
+texture = ExtResource("1_mgbos")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vkj4s")

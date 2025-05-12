@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://t7cqyyyk8q2e"]
+
+[ext_resource type="Script" uid="uid://iqsmldc028ox" path="res://Assets/Scripts/Main2.cs" id="1_tpt61"]
+[ext_resource type="PackedScene" uid="uid://c1mplsa184cjm" path="res://Assets/Prefabs/bg2.tscn" id="2_tpt61"]
+[ext_resource type="PackedScene" uid="uid://cpp71c0gqex1k" path="res://Assets/Prefabs/groundlvl2.tscn" id="3_pih06"]
+[ext_resource type="PackedScene" uid="uid://botkbd42vfkkn" path="res://Assets/Prefabs/menu_pause.tscn" id="4_kqtrx"]
+[ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_u4yiy"]
+[ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_voihx"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
+script/source = "using Godot;
+using System;
+using System.Collections.Generic;
+
+public partial class HeartBar : Node
+{
+	// Referencias a cada corazón
+	private List<AnimatedSprite2D> hearts = new();
+
+	public override void _Ready()
+	{
+		// Buscar todos los corazones por nombre fijo
+		for (int i = 1; i <= 6; i++)
+		{
+			string name = i == 1 ? \"Heart\" : $\"Heart{i}\";
+			var heart = GetNode<AnimatedSprite2D>($\"../{name}\");
+			hearts.Add(heart);
+		}
+	}
+	public void UpdateHearts(int currentHp)
+	{
+		for (int i = 0; i < hearts.Count; i++)
+		{
+			if (i < currentHp)
+			{
+				hearts[i].Play(\"Gain\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Full\");
+			}
+			else
+			{
+				hearts[i].Play(\"Lose\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Empty\");
+			}
+		}
+	}
+
+	private async void SetAnimationAfter(AnimatedSprite2D heart, string animName)
+	{
+		await ToSignal(heart, \"animation_finished\");
+		heart.Play(animName);
+	}
+}
+"
+
+[node name="Main" type="Node"]
+script = ExtResource("1_tpt61")
+
+[node name="Bg2" parent="." instance=ExtResource("2_tpt61")]
+
+[node name="Ground" parent="." instance=ExtResource("3_pih06")]
+z_index = 1
+position = Vector2(987, 605)
+scale = Vector2(55.08, 1.88)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576.95, 325)
+
+[node name="MenuPause" parent="." instance=ExtResource("4_kqtrx")]
+visible = false
+
+[node name="OnGame" type="CanvasLayer" parent="."]
+layer = -1
+scale = Vector2(0.645, 0.645)
+transform = Transform2D(0.645, 0, 0, 0.645, 0, 0)
+
+[node name="HeartBar" parent="OnGame" instance=ExtResource("5_u4yiy")]
+scale = Vector2(0.645, 0.645)
+script = SubResource("CSharpScript_ptjad")
+
+[node name="Progress" parent="OnGame" instance=ExtResource("6_voihx")]
+offset_left = 117.829
+offset_top = 18.6047
+offset_right = 117.829
+offset_bottom = 18.6047
+scale = Vector2(0.645, 0.645)
