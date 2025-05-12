@@ -1,43 +1,66 @@
 [gd_scene load_steps=7 format=3 uid="uid://d2aor17ovkrxm"]
 
 [ext_resource type="Script" uid="uid://dh5q6q42s7dbx" path="res://Assets/Scripts/Menu.cs" id="1_71n16"]
-[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="1_ivhqf"]
 [ext_resource type="PackedScene" uid="uid://k0o7io1kpmw0" path="res://Assets/Prefabs/vagabond.tscn" id="2_x2irg"]
 [ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="3_71n16"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_x2irg"]
+[ext_resource type="Texture2D" uid="uid://8fvdyoanm3jf" path="res://Assets/Sprites/UI/Logo/DLYH_Logo.png" id="5_71n16"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_8acst"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2irg"]
+radius = 73.0068
 
-[node name="Menu" type="CanvasLayer"]
+[node name="Menu" type="CanvasLayer" node_paths=PackedStringArray("vagabondArea", "knightArea", "startButton")]
 script = ExtResource("1_71n16")
-
-[node name="Bg" parent="." instance=ExtResource("1_ivhqf")]
+vagabondArea = NodePath("CharacterSelector/vagabond/Area2D")
+knightArea = NodePath("CharacterSelector/Knight/Area2D")
+startButton = NodePath("StartButton")
 
 [node name="CharacterSelector" type="Node2D" parent="."]
+z_index = 100
 
 [node name="vagabond" parent="CharacterSelector" instance=ExtResource("2_x2irg")]
 position = Vector2(430, 345)
+input_pickable = true
 GRAVITY = 0
+
+[node name="Area2D" type="Area2D" parent="CharacterSelector/vagabond"]
+
+[node name="ZonaPersonaje" type="CollisionShape2D" parent="CharacterSelector/vagabond/Area2D"]
+position = Vector2(2.81331, -57.9662)
+shape = SubResource("CircleShape2D_x2irg")
 
 [node name="Knight" parent="CharacterSelector" instance=ExtResource("3_71n16")]
-position = Vector2(625, 280)
+position = Vector2(616, 352)
+input_pickable = true
 GRAVITY = 0
-JUMP_SPEED = 0
+
+[node name="Area2D" type="Area2D" parent="CharacterSelector/Knight"]
+
+[node name="ZonaPersonaje" type="CollisionShape2D" parent="CharacterSelector/Knight/Area2D"]
+position = Vector2(4.99998, -59)
+shape = SubResource("CircleShape2D_x2irg")
 
 [node name="StartButton" type="Button" parent="."]
+z_index = 12
+texture_filter = 2
+texture_repeat = 1
 offset_left = 431.0
 offset_top = 434.0
 offset_right = 531.0
 offset_bottom = 465.0
 scale = Vector2(2.74598, 2.64466)
 text = "Start Game"
-icon = SubResource("ViewportTexture_8acst")
 
 [node name="Ground" parent="." instance=ExtResource("4_x2irg")]
 visible = false
 position = Vector2(549, 372)
 scale = Vector2(4.63975, 0.872515)
 
-[connection signal="mouse_entered" from="CharacterSelector/vagabond" to="CharacterSelector/vagabond" method="_on_mouse_entered"]
-[connection signal="mouse_entered" from="CharacterSelector/Knight" to="CharacterSelector/Knight" method="_on_mouse_entered"]
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(548, 88)
+scale = Vector2(0.544258, 0.449653)
+texture = ExtResource("5_71n16")
+
+[connection signal="mouse_entered" from="CharacterSelector/vagabond/Area2D" to="." method="_on_vagabond_mouse_entered"]
+[connection signal="mouse_entered" from="CharacterSelector/Knight/Area2D" to="." method="_on_knigth_mouse_entered"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

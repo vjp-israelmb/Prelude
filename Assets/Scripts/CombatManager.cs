@@ -9,8 +9,12 @@ public partial class CombatManager : Node
 	private CardLoader loader;
 	private List<Card> deck = new List<Card>();
 	private List<Card> hand = new List<Card>();
-
-	private int playerHealth = 100;
+	
+	private Player player;
+	//Para obtener la animacion del corazon
+	private Node2D heartBar;
+	private AnimatedSprite2D heart;
+	private int playerHealth;
 	private int enemyHealth = 100;
 
 	public override void _Ready()
@@ -21,18 +25,22 @@ public partial class CombatManager : Node
 
 		// Instanciar el loader de cartas
 		loader = new CardLoader();
-
+		
+		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
+		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
+		GD.Print($"Error");
+		playerHealth = player.getHp();
+		player.UpdateHeart(playerHealth);
+		GD.Print($"Error" + playerHealth);
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
 		DrawHand(5);
 	}
 
-	// Función para cargar las cartas del mazo
 	private void LoadDeck()
 	{
 		var allDecks = loader.LoadCardsFromFile();
 
-		// Cargar las cartas de la baraja 'Vagabundo'
 		if (allDecks.ContainsKey("Vagabundo"))
 		{
 			deck = allDecks["Vagabundo"];
@@ -43,7 +51,6 @@ public partial class CombatManager : Node
 		}
 	}
 
-	// Función para repartir cartas
 	private void DrawHand(int num)
 	{
 		hand.Clear();
@@ -52,82 +59,84 @@ public partial class CombatManager : Node
 		{
 			if (deck.Count > 0)
 			{
-				// Escoge una carta aleatoria de la baraja
-				Card card = deck[GD.RandRange(0, deck.Count - 1)];
-				
-				// Verifica que la cantidad de la carta no sea cero
+				int index = (int)GD.RandRange(0, deck.Count - 1);
+				Card card = deck[index];
+
 				if (card.Quantity > 0)
 				{
 					hand.Add(card);
-					card.Quantity--;  // Disminuye la cantidad de la carta
+					card.Quantity--;
 
-					// Instanciar un botón para cada carta
-					var button = (Button)GD.Load("res://scenes/CardButton.tscn").Instance();
-					var cardButton = button as CardButton;
+					// Instanciar el botón de la carta
+					var buttonScene = GD.Load<PackedScene>("res://Assets/Scenes/CardButton.tscn");
+					var cardButton = buttonScene.Instantiate<CardButton>();
 					cardButton.SetCard(card);
-					Array container = new Array(){ card };
-					cardButton.Connect("pressed", this, nameof(OnCardPressed), container);
+
+					cardButton.Pressed += () => OnCardPressed(card);
+
 					handContainer.AddChild(cardButton);
 				}
 			}
 		}
 	}
 
-	// Lógica cuando el jugador presiona una carta
 	private void OnCardPressed(Card card)
 	{
 		GD.Print($"Carta jugada: {card.Name}");
 
-		// Aplicar el efecto de la carta
 		ApplyCardEffect(card);
 
-		// Eliminar la carta de la mano
-		if (handContainer.GetChildCount() > 0)
+		// Eliminar la carta de la UI
+		for (int i = 0; i < handContainer.GetChildCount(); i++)
 		{
-			handContainer.GetChild(0).QueueFree();  // Eliminar la carta de la UI
+			var child = handContainer.GetChild(i);
+			if (child is CardButton cb && cb.GetCard() == card)
+			{
+				cb.QueueFree();
+				break;
+			}
 		}
+
 		hand.Remove(card);
 	}
 
-	// Aplicar el efecto de la carta (daño, curación, etc.)
 	private void ApplyCardEffect(Card card)
 	{
-		// Si la carta tiene daño, lo aplica
 		if (card.Type == "damage" && card.LevelEffect > 0)
 		{
 			enemyHealth -= card.LevelEffect;
 			GD.Print($"El enemigo recibió {card.LevelEffect} de daño. Salud enemiga: {enemyHealth}");
 		}
 
-		// Si la carta tiene curación, la aplica
 		if (card.Type == "heal" && card.LevelEffect > 0)
 		{
-			playerHealth += card.LevelEffect;
+				playerHealth += card.LevelEffect;
 			GD.Print($"El jugador se curó {card.LevelEffect}. Salud del jugador: {playerHealth}");
 		}
 
-		// Si la carta tiene armadura, la aplica
 		if (card.Type == "armor" && card.LevelEffect > 0)
 		{
-			playerHealth += card.LevelEffect;  // Ejemplo: puede ser un bono de vida por armadura
+			playerHealth += card.LevelEffect;
 			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {playerHealth}");
 		}
 
-		// Actualizar la interfaz
 		UpdateUI();
 	}
 
-	// Actualizar la interfaz de salud
 	private void UpdateUI()
 	{
-		// Aquí puedes actualizar las barras de vida o algún otro indicador visual
 		GD.Print($"Salud del jugador: {playerHealth}, Salud del enemigo: {enemyHealth}");
 	}
 
 	private void EndCombat()
 	{
-		handContainer.Clear();
-		// Regresar al juego principal
-		GetTree().ChangeScene("res://scenes/main.tscn");
+		// Eliminar todos los botones hijos de handContainer
+		foreach (Node child in handContainer.GetChildren())
+		{
+			child.QueueFree();
+		}
+
+		// Cambiar de escena al juego principal
+		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
 	}
 }

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CardButton : Button
+public partial class CardButton : Button
 {
 	public Card Card { get; set; }
 
@@ -9,5 +9,10 @@ public class CardButton : Button
 	{
 		this.Card = card;
 		Text = card.Name;  // El texto del botón es el nombre de la carta
+	}
+	
+	public Card GetCard()
+	{
+		return Card;
 	}
 }

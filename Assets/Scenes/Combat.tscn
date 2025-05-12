@@ -1,12 +1,58 @@
-[gd_scene load_steps=3 format=3 uid="uid://djgu43i0mti72"]
+[gd_scene load_steps=5 format=3 uid="uid://djgu43i0mti72"]
 
 [ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="2_qsdfg"]
+[ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="3_qsdfg"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_ikiw1"]
+script/source = "using Godot;
+using System;
+using System.Collections.Generic;
+
+public partial class HeartBar : Node
+{
+	// Referencias a cada corazón
+	private List<AnimatedSprite2D> hearts = new();
+
+	public override void _Ready()
+	{
+		// Buscar todos los corazones por nombre fijo
+		for (int i = 1; i <= 6; i++)
+		{
+			string name = i == 1 ? \"Heart\" : $\"Heart{i}\";
+			var heart = GetNode<AnimatedSprite2D>($\"../{name}\");
+			hearts.Add(heart);
+		}
+	}
+	public void UpdateHearts(int currentHp)
+	{
+		for (int i = 0; i < hearts.Count; i++)
+		{
+			if (i < currentHp)
+			{
+				hearts[i].Play(\"Gain\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Full\");
+			}
+			else
+			{
+				hearts[i].Play(\"Lose\");
+				CallDeferred(nameof(SetAnimationAfter), hearts[i], \"Empty\");
+			}
+		}
+	}
+
+	private async void SetAnimationAfter(AnimatedSprite2D heart, string animName)
+	{
+		await ToSignal(heart, \"animation_finished\");
+		heart.Play(animName);
+	}
+}
+"
 
 [node name="Combat" type="Node2D"]
+script = ExtResource("1_b1qmc")
 
 [node name="BgContainer" type="Node2D" parent="."]
-script = ExtResource("1_b1qmc")
 
 [node name="CombatUI" type="CanvasLayer" parent="."]
 
@@ -21,4 +67,18 @@ offset_top = -0.152039
 offset_right = -0.168091
 offset_bottom = -5.36804
 
-[node name="HeartBar" parent="CombatUI" instance=ExtResource("2_qsdfg")]
+[node name="OnGame" type="CanvasLayer" parent="CombatUI"]
+layer = -1
+scale = Vector2(0.645, 0.645)
+transform = Transform2D(0.645, 0, 0, 0.645, 0, 0)
+
+[node name="HeartBar" parent="CombatUI/OnGame" instance=ExtResource("2_qsdfg")]
+scale = Vector2(0.645, 0.645)
+script = SubResource("CSharpScript_ikiw1")
+
+[node name="Progress" parent="CombatUI/OnGame" instance=ExtResource("3_qsdfg")]
+offset_left = 117.829
+offset_top = 18.6047
+offset_right = 117.829
+offset_bottom = 18.6047
+scale = Vector2(0.645, 0.645)

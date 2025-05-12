@@ -2,62 +2,71 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class CardLoader : Node
+public partial class CardLoader : Node
 {
-	// Esta función carga las cartas desde el archivo JSON
 	public Dictionary<string, List<Card>> LoadCardsFromFile()
 	{
 		var cardDecks = new Dictionary<string, List<Card>>();
 
-		// Leer el archivo JSON
-		var file = new File();
-		if (file.FileExists("res://Resources/cards.json"))
+		if (FileAccess.FileExists("res://Assets/Resources/cards.json"))
 		{
 			try
 			{
-				file.Open("res://Resources/cards.json", File.ModeFlags.Read);
-				var fileContent = file.GetAsText();
-				file.Close();
+				using var file = FileAccess.Open("res://Assets/Resources/cards.json", FileAccess.ModeFlags.Read);
+				string fileContent = file.GetAsText();
 
-				// Parsear el archivo JSON
-				var json = JSON.Parse(fileContent);
-				if (json is Godot.Collections.Dictionary jsonObject)
+				var json = Json.ParseString(fileContent);
+				
+				if (json.VariantType == Variant.Type.Dictionary)
 				{
-					foreach (KeyValuePair<object, object> deckEntry in jsonObject)
+					var jsonObject = (Godot.Collections.Dictionary)json;
+
+					foreach (var deckEntry in jsonObject)
 					{
-						string deckName = (string)deckEntry.Key;
-						var deckData = (Godot.Collections.Array)deckEntry.Value;
+						string deckName = deckEntry.Key.ToString();
 
-						List<Card> deckCards = new List<Card>();
-						foreach (Godot.Collections.Dictionary cardData in deckData)
+						if (deckEntry.Value.VariantType == Variant.Type.Array)
 						{
-							// Crear una carta a partir de los datos
-							string cardName = (string)cardData["name"];
-							string cardEffect = (string)cardData["effect"];
-							int levelEffect = Convert.ToInt32(cardData["levelEffect"]);
-							string cardType = (string)cardData["type"];
-							int minLevelRequired = cardData.ContainsKey("minLevelRequired") ? Convert.ToInt32(cardData["minLevelRequired"]) : 0;
+							var deckData = (Godot.Collections.Array)deckEntry.Value;
 
-							Card card = new Card(cardName, cardEffect, levelEffect, cardType, minLevelRequired);
-							deckCards.Add(card);
+							List<Card> deckCards = new List<Card>();
+							foreach (Variant cardVariant in deckData)
+							{
+								if (cardVariant.VariantType == Variant.Type.Dictionary)
+								{
+									var cardData = (Godot.Collections.Dictionary)cardVariant;
+
+									string cardName = cardData["name"].ToString();
+									string cardEffect = cardData["effect"].ToString();
+									int levelEffect = StringExtensions.ToInt(cardData["levelEffect"].ToString().Replace(".0", ""));
+									string cardType = cardData["type"].ToString();
+									int quantity = cardData.ContainsKey("quantity")
+										? StringExtensions.ToInt(cardData["quantity"].ToString().Replace(".0", "")) : 0;
+									int minLevelRequired = cardData.ContainsKey("minLevelRequired")
+										? StringExtensions.ToInt(cardData["minLevelRequired"].ToString().Replace(".0", "")) : 1;
+									
+									Card card = new Card(cardName, cardEffect, levelEffect, cardType, quantity, minLevelRequired);
+									deckCards.Add(card);
+								}
+							}
+
+							cardDecks[deckName] = deckCards;
 						}
-
-						cardDecks.Add(deckName, deckCards);
 					}
 				}
 				else
 				{
-					GD.PrintErr("Error al parsear el JSON.");
+					GD.PrintErr("Error: el JSON no tiene un formato válido de diccionario.");
 				}
 			}
 			catch (Exception e)
 			{
-				GD.PrintErr($"Error al leer o parsear el archivo JSON: {e.Message}");
+				GD.PrintErr($"Error al leer o parsear el JSON: {e.Message}");
 			}
 		}
 		else
 		{
-			GD.PrintErr("El archivo de cartas no existe.");
+			GD.PrintErr("El archivo de cartas no existe en la ruta indicada.");
 		}
 
 		return cardDecks;
