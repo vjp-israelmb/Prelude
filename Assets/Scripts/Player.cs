@@ -21,7 +21,7 @@ public partial class Player : CharacterBody2D
 
 	private AnimatedSprite2D anim;
 	private AnimationPlayer animPlayer;
-	public int hp = 6;
+	public int hp = 1;
 	public int hpActual;
 	public int armor = 0;
 	public bool isDead = false;
@@ -29,18 +29,6 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
 	
-	public int getHp()
-	{
-		return Global.hpActual;
-	}
-	public Node2D getHeartBar()
-	{
-		return this.heartBar;
-	}
-	public AnimatedSprite2D getHeart()
-	{
-		return this.heart;
-	}
 	//Funcion para hacer las animaciones de la vida del jugador 
 	public void UpdateHeart(int currentHp)
 	{
@@ -170,7 +158,7 @@ public partial class Player : CharacterBody2D
 		double hitDuration = (anim.SpriteFrames.GetFrameCount("Hit") / anim.SpriteFrames.GetAnimationSpeed("Hit"))/anim.SpeedScale;
 		
 		// 3. Esperar animación + margen de seguridad
-		await ToSignal(GetTree().CreateTimer(hitDuration + 0.25f), "timeout");
+		await ToSignal(GetTree().CreateTimer(hitDuration), "timeout");
 
 		// 4. Reset seguro (evita que quede en estado intermedio)
 		if (anim.IsPlaying() && anim.Animation == "Hit")
@@ -203,18 +191,17 @@ public partial class Player : CharacterBody2D
 	private void Die()
 	{
 		isDead = true;
+
+		// ✋ Detener movimiento inmediato
+		GRAVITY = 0;
+		SetProcess(false); // Detiene _Process si lo usas
+		SetPhysicsProcess(false); // Detiene _PhysicsProcess si lo usas
 		GD.Print("El jugador ha muerto");
 		audioDeath.Play();
 		anim.Play("Death");
 		// Esperar a que termine la animación para reiniciar
-		anim.AnimationFinished += OnDeathAnimationFinished;
+		EmitSignal(SignalName.PlayerDied); //Avisamos al Main
 	}
 
-	private void OnDeathAnimationFinished()
-	{
-		if (anim.Animation == "Death")
-		{
-			EmitSignal(SignalName.PlayerDied); //Avisamos al Main
-		}
-	}
+
 }

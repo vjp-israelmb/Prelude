@@ -120,7 +120,7 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+9.5f;
+		float spawnY = ground.Position.Y+9.7f;
 
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
@@ -146,9 +146,6 @@ public partial class Main : Node
 
 	  public override void _Process(double delta)
 	  {	
-		//Si es juego acabado no pasa y no avanza la camara ni el jugador 
-		if (gameOver)
-		return;
 		//Pausa el juego cuando se pulsa escape(En el caso del ordenador)
 		  if (Input.IsActionJustPressed("pause_key"))
 		  {
@@ -177,11 +174,14 @@ public partial class Main : Node
 		speed = START_SPEED;
 
 		// Mover player y cámara en X
-		if(gameOver==false){
-		player.Position += new Vector2(speed * (float)delta, 0);
-		camera.Position += new Vector2(speed * (float)delta, 0);
+		if(gameOver==true){
+		player.Position += new Vector2(0 * (float)delta, 0);
+		camera.Position += new Vector2(0 * (float)delta, 0);
 		//Suma puntuacion
 		score+=10;
+		}else{
+		player.Position += new Vector2(speed * (float)delta, 0);
+		camera.Position += new Vector2(speed * (float)delta, 0);
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
@@ -226,8 +226,9 @@ public partial class Main : Node
 	private void OnPlayerDeath()
 	{
 		gameOver = true;
+		
 		// Espera 1.5 segundos para que la animación se vea
-		GetTree().CreateTimer(0.5).Timeout += () =>
+		GetTree().CreateTimer(1.5).Timeout += () =>
 		{
 			GetTree().ReloadCurrentScene();
 		};
