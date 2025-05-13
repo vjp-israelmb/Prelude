@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c5fg5ls8toa41"]
+
+[node name="Bg" type="ParallaxBackground"]
+
+[node name="Fondo" type="AnimatedSprite2D" parent="."]
