@@ -227,7 +227,7 @@ public partial class Main2 : Node
 	{
 		gameOver = true;
 		// Espera 1.5 segundos para que la animación se vea
-		GetTree().CreateTimer(0.5).Timeout += () =>
+		GetTree().CreateTimer(1.5).Timeout += () =>
 		{
 			GetTree().ReloadCurrentScene();
 		};

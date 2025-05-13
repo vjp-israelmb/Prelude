@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://bg2e60obi8k7g"]
+
+[ext_resource type="Texture2D" uid="uid://m68bam4exbr6" path="res://Assets/Sprites/UI/Character Selection/Character_Selection_big-Sheet.png" id="1_cdwgg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5b42"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7ajh"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrw6o"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmg5m"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_latmh"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fip86"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu5ui"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdo8h"]
+atlas = ExtResource("1_cdwgg")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3qixx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5b42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7ajh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrw6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmg5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_latmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fip86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu5ui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdo8h")
+}],
+"loop": true,
+"name": &"Selected",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+scale = Vector2(1.5, 1.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3qixx")
+animation = &"Selected"
+autoplay = "Selected"
+frame_progress = 0.357778
