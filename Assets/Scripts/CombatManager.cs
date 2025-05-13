@@ -10,7 +10,6 @@ public partial class CombatManager : Node
 	private List<Card> deck = new List<Card>();
 	private List<Card> hand = new List<Card>();
 	
-	private Player player;
 	//Para obtener la animacion del corazon
 	private Node2D heartBar;
 	private AnimatedSprite2D heart;
@@ -19,17 +18,18 @@ public partial class CombatManager : Node
 
 	public override void _Ready()
 	{
+		var player = (Player)GetNode("/root/Player");
 		// Instanciar el fondo
 		backgroundContainer = GetNode<Node2D>("BgContainer");
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
-
+  		
 		// Instanciar el loader de cartas
 		loader = new CardLoader();
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
 		DrawHand(6);
 		GD.Print($"Error");
-		heartBar = GetNode<Node2D>("../OnGame/HeartBar"); //Ruta donde se encuentra el corazon 
+		heartBar = GetNode<Node2D>("CombatUI/OnGame/HeartBar");
 		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
 		GD.Print($"Error");
 		playerHealth = player.getHp();
