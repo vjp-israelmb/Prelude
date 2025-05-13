@@ -22,6 +22,7 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D anim;
 	private AnimationPlayer animPlayer;
 	public int hp = 6;
+	public int hpActual;
 	public int armor = 0;
 	public bool isDead = false;
 	//Declaracion  de señal para la muerte del jugador
@@ -30,7 +31,15 @@ public partial class Player : CharacterBody2D
 	
 	public int getHp()
 	{
-		return hp;
+		return Global.hpActual;
+	}
+	public Node2D getHeartBar()
+	{
+		return this.heartBar;
+	}
+	public AnimatedSprite2D getHeart()
+	{
+		return this.heart;
 	}
 	//Funcion para hacer las animaciones de la vida del jugador 
 	public void UpdateHeart(int currentHp)
@@ -180,6 +189,7 @@ public partial class Player : CharacterBody2D
 		GD.Print("Armor restante: " + armor);
 	}else{
 		hp -= 1;
+		Global.hpActual=hp;
 		if (heart != null) UpdateHeart(hp);
 		GD.Print("HP restante: " + hp);
 	}
