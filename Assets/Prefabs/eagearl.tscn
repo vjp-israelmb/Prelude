@@ -1,8 +1,8 @@
 [gd_scene load_steps=29 format=3 uid="uid://d1uadmv06t5gc"]
 
-[ext_resource type="Texture2D" uid="uid://dpdttdyf88mfo" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
+[ext_resource type="Texture2D" uid="uid://2lfpfsrf5xkl" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_ta52a"]
-[ext_resource type="Texture2D" uid="uid://cdtwlm21rpd" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="2_ta52a"]
+[ext_resource type="Texture2D" uid="uid://b381sgbgblww3" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="2_ta52a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_feygp"]
 atlas = ExtResource("1_7s7l1")

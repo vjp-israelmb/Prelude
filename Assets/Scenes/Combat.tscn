@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://djgu43i0mti72"]
 
 [ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
-[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_b1qmc"]
+[ext_resource type="PackedScene" uid="uid://c5fg5ls8toa41" path="res://Assets/Prefabs/bgCombat.tscn" id="2_b1qmc"]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_b1qmc")

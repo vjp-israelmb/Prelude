@@ -59,6 +59,7 @@ public partial class Player : CharacterBody2D
 			GD.PrintErr($"La animación '{animName}' no existe en el AnimatedSprite2D.");
 		}
 	}
+	
 	public override void _Ready()
 	{
 		

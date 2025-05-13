@@ -28,13 +28,6 @@ public partial class CombatManager : Node
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
 		DrawHand(6);
-		GD.Print($"Error");
-		heartBar = GetNode<Node2D>("CombatUI/OnGame/HeartBar");
-		heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
-		GD.Print($"Error");
-		playerHealth = player.getHp();
-		player.UpdateHeart(playerHealth);
-		GD.Print($"Error" + playerHealth);
 	}
 
 	private void LoadDeck()

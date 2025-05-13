@@ -40,7 +40,7 @@ public partial class Main : Node
 
 	// Referencias a los nodos
 	private TextureProgressBar progress;
-	private Player player;
+	private CharacterBody2D player;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
