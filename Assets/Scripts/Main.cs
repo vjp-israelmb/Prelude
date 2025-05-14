@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 public partial class Main : Node
 {
@@ -41,6 +43,7 @@ public partial class Main : Node
 	// Referencias a los nodos
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
+	private Player jugador;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
@@ -66,22 +69,50 @@ public partial class Main : Node
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
 		enemies = new PackedScene[] { frogrosso, eagearl};
 	}
-	//Carga jugador 
+	
 	 private void LoadPlayer()
 	{
-		// 1. Cargar escena del personaje (o usar valor por defecto)
-		 playerScene = Global.SelectedCharacter ?? GD.Load<PackedScene>("res://Assets/Prefabs/vagabond.tscn");
-		// 2. Instanciar
+		// Leer archivo JSON de personajes
+		string path = "res://Assets/Resources/personajes.json";
+		if (!FileAccess.FileExists(path))
+		{
+			GD.PrintErr("Archivo de personajes no encontrado.");
+			return;
+		}
+		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+		string jsonText = file.GetAsText();
+
+		List<Player> personajes = JsonSerializer.Deserialize<List<Player>>(jsonText);
+		GD.Print("Cargando jugador...");
+		// Buscar personaje seleccionado
+		string selectedName = Global.namePlayer ?? "Vagabundo";
+		jugador = personajes.Find(p => p.name == selectedName);
+
+		
+		if (jugador == null)
+		{
+			GD.PrintErr("No se encontró el personaje seleccionado en el JSON.");
+			return;
+		}
+		else
+		{
+			GD.Print($"Jugador cargado: {jugador.name} / {jugador.hp} HP / {jugador.armor} Armadura");
+		}
+
+		// Personaje
+		playerScene = Global.SelectedCharacter ?? GD.Load<PackedScene>("res://Assets/Prefabs/vagabond.tscn");
+		
+		// Instanciar
 		player = playerScene.Instantiate<CharacterBody2D>();
-		player.Name = "Player"; // Nombre consistente		
-		// 3. Añadir a la escena
+		// Añadir a la escena
 		AddChild(player);
-		// 4. Conectar señal   muerte
+		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
 		{
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
 		}
 	}
+	
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
 	{
@@ -146,6 +177,8 @@ public partial class Main : Node
 
 	  public override void _Process(double delta)
 	  {	
+		GD.Print("Jugador: " + jugador.name + " " + jugador.hp + " " + jugador.armor);
+		
 		//Pausa el juego cuando se pulsa escape(En el caso del ordenador)
 		  if (Input.IsActionJustPressed("pause_key"))
 		  {
