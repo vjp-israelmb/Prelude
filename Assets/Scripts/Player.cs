@@ -29,14 +29,6 @@ public partial class Player : CharacterBody2D
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
 	
-	// Constructor
-	public Player(String Name, int Hp, int Armor)
-	{
-		name = Name;
-		hp = Hp;
-		armor = Armor;
-	}
-	
 	//Funcion para hacer las animaciones de la vida del jugador 
 	public void UpdateHeart(int currentHp)
 	{

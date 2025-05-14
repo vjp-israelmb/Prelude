@@ -87,17 +87,8 @@ public partial class Main2 : Node
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
 		Jugador datosPlayer = personajes.Find(p => p.name == selectedName);
-		jugador = new Player(datosPlayer.name, datosPlayer.hp, datosPlayer.armor);
 		
-		if (jugador == null)
-		{
-			GD.PrintErr("No se encontró el personaje seleccionado en el JSON.");
-			return;
-		}
-		else
-		{
-			GD.Print($"Jugador cargado: {jugador.name} / {jugador.hp} HP / {jugador.armor} Armadura");
-		}
+		GD.Print($"Jugador cargado: {datosPlayer.name} / {datosPlayer.hp} HP / {datosPlayer.armor} Armadura");
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
