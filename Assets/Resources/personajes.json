@@ -1,12 +1,12 @@
 [
   {
-	"Nombre": "Vagabundo",
-	"Vida": 80,
-	"Armadura": 0
+	"name": "Vagabundo",
+	"hp": 80,
+	"armor": 0
   },
   {
-	"Nombre": "Guerrero",
-	"Vida": 100,
-	"Armadura": 20
+	"name": "Guerrero",
+	"hp": 100,
+	"armor": 20
   }
 ]

@@ -36,12 +36,14 @@ private void SelectCharacter(string characterPath)
 		GD.Print("vagabond Seleccionado");
 		hoboSelected.Visible = true;
 		knightSelected.Visible = false;
+		Global.namePlayer = "Vagabond";
 	}
 	else
 	{
 		GD.Print("knight Seleccionado");
 		hoboSelected.Visible = false;
 		knightSelected.Visible = true;
+		Global.namePlayer = "Guerrero";
 	}
 }
 	private void OnStartPressed()
