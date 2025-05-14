@@ -82,12 +82,12 @@ public partial class Main : Node
 		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 		string jsonText = file.GetAsText();
 
-		List<Player> personajes = JsonSerializer.Deserialize<List<Player>>(jsonText);
+		List<Jugador> personajes = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
 		GD.Print("Cargando jugador...");
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
-		jugador = personajes.Find(p => p.name == selectedName);
-
+		Jugador datosPlayer = personajes.Find(p => p.name == selectedName);
+		jugador = new Player(datosPlayer.name, datosPlayer.hp, datosPlayer.armor);
 		
 		if (jugador == null)
 		{
@@ -100,11 +100,9 @@ public partial class Main : Node
 		}
 
 		// Personaje
-		playerScene = Global.SelectedCharacter ?? GD.Load<PackedScene>("res://Assets/Prefabs/vagabond.tscn");
-		
-		// Instanciar
+		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
 		player = playerScene.Instantiate<CharacterBody2D>();
-		// Añadir a la escena
+		player.Name = "Player";// Añadir a la escena
 		AddChild(player);
 		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
@@ -176,9 +174,7 @@ public partial class Main : Node
 	}
 
 	  public override void _Process(double delta)
-	  {	
-		GD.Print("Jugador: " + jugador.name + " " + jugador.hp + " " + jugador.armor);
-		
+	  {			
 		//Pausa el juego cuando se pulsa escape(En el caso del ordenador)
 		  if (Input.IsActionJustPressed("pause_key"))
 		  {

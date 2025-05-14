@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 public partial class Main2 : Node
 {
@@ -41,6 +43,7 @@ public partial class Main2 : Node
 	// Referencias a los nodos
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
+	private Player jugador;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
@@ -69,14 +72,39 @@ public partial class Main2 : Node
 	//Carga jugador 
 	 private void LoadPlayer()
 	{
-		// 1. Cargar escena del personaje (o usar valor por defecto)
-		 playerScene = Global.SelectedCharacter ?? GD.Load<PackedScene>("res://Assets/Prefabs/vagabond.tscn");
-		// 2. Instanciar
+		// Leer archivo JSON de personajes
+		string path = "res://Assets/Resources/personajes.json";
+		if (!FileAccess.FileExists(path))
+		{
+			GD.PrintErr("Archivo de personajes no encontrado.");
+			return;
+		}
+		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+		string jsonText = file.GetAsText();
+
+		List<Jugador> personajes = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
+		GD.Print("Cargando jugador...");
+		// Buscar personaje seleccionado
+		string selectedName = Global.namePlayer ?? "Vagabundo";
+		Jugador datosPlayer = personajes.Find(p => p.name == selectedName);
+		jugador = new Player(datosPlayer.name, datosPlayer.hp, datosPlayer.armor);
+		
+		if (jugador == null)
+		{
+			GD.PrintErr("No se encontró el personaje seleccionado en el JSON.");
+			return;
+		}
+		else
+		{
+			GD.Print($"Jugador cargado: {jugador.name} / {jugador.hp} HP / {jugador.armor} Armadura");
+		}
+
+		// Personaje
+		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
 		player = playerScene.Instantiate<CharacterBody2D>();
-		player.Name = "Player"; // Nombre consistente		
-		// 3. Añadir a la escena
+		player.Name = "Player";// Añadir a la escena
 		AddChild(player);
-		// 4. Conectar señal   muerte
+		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
 		{
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));

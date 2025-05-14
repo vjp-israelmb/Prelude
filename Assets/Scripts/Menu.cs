@@ -28,8 +28,8 @@ private void SelectCharacter(string characterPath)
 {
 	GD.Print("Seleccionando: " + characterPath);
 	
-	SelectedCharacter = GD.Load<PackedScene>(characterPath);
-	Global.SelectedCharacter = SelectedCharacter;
+	//SelectedCharacter = GD.Load<PackedScene>();
+	Global.SelectedCharacter = characterPath;
 
 	if (characterPath.Contains("vagabond"))
 	{

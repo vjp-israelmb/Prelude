@@ -83,7 +83,7 @@ public partial class Player : CharacterBody2D
 			GD.PrintErr("Error accediendo a nodos: ", e.Message);
 		}
 		UpdateHeart(hp);
-		if (Global.SelectedCharacter.ResourcePath=="res://Assets/Prefabs/Knigth.tscn")
+		if (Global.SelectedCharacter == "res://Assets/Prefabs/Knigth.tscn")
 		{
 			armor = 6;
 			GD.Print("Caballero detectado. Armadura inicial: " + armor);
