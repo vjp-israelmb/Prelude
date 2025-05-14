@@ -27,7 +27,7 @@ public partial class CombatManager : Node
 		loader = new CardLoader();
 		// Cargar el mazo y repartir cartas
 		LoadDeck();
-		DrawHand(6);
+		DrawHand(5);
 	}
 
 	private void LoadDeck()
@@ -92,6 +92,12 @@ public partial class CombatManager : Node
 				}
 			}
 			hand.Remove(card);
+		}
+		GD.Print("Cartas: " + hand.Count);
+		if(hand.Count == 0)
+		{
+			EndCombat();
+			GD.Print("Fin del combate");
 		}
 	}
 

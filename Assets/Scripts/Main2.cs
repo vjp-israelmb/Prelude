@@ -16,8 +16,8 @@ public partial class Main2 : Node
 	//Intervalos en los que aparece los obstaculo
 	private const double SPAWN_INTERVAL = 3.0;
 	// Enemigos
-	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrosso.tscn");
-	private PackedScene eagearl = GD.Load<PackedScene>("res://Assets/Prefabs/eagearl.tscn");
+	private PackedScene maggotBrain = GD.Load<PackedScene>("res://Assets/Prefabs/maggotBrain.tscn");
+	private PackedScene mindy = GD.Load<PackedScene>("res://Assets/Prefabs/mindy.tscn");
 	private PackedScene[] enemies;
 	private double enemySpawnTimer = 0;
 	private const double ENEMY_SPAWN_INTERVAL = 5.0; // Cada 5 segundos
@@ -64,7 +64,7 @@ public partial class Main2 : Node
 		ground = GetNode<StaticBody2D>("Ground");
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
-		enemies = new PackedScene[] { frogrosso, eagearl};
+		enemies = new PackedScene[] { maggotBrain, mindy};
 	}
 	//Carga jugador 
 	 private void LoadPlayer()
@@ -99,7 +99,7 @@ public partial class Main2 : Node
 		spawnY -= 100;
 
 		//Si es volador lo ubicamos un poco mas arriba 
-		if (enemy.Name.ToString().ToLower().Contains("eagearl")) // ejemplo de Eagearl
+		if (enemy.Name.ToString().ToLower().Contains("mindy")) // ejemplo de Eagearl
 		{
 			 spawnY -= 200; // que aparezca volando más arriba
 		}

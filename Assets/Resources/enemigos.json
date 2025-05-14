@@ -1,0 +1,22 @@
+[
+  {
+	"Nombre": "Eaglearl",
+	"Vida": 20,
+	"Armadura": 15
+  },
+  {
+	"Nombre": "Frogrosso",
+	"Vida": 30,
+	"Armadura": 0
+  },
+  {
+	"Nombre": "Maggot Brian",
+	"Vida": 30,
+	"Armadura": 10
+  },
+  {
+	"Nombre": "Mindy",
+	"Vida": 20,
+	"Armadura": 25
+  }
+]
