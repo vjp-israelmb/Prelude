@@ -110,7 +110,6 @@ public partial class Player : CharacterBody2D
 					anim.Play("Moving");
 				}catch(NullReferenceException x){
 				}
-				
 			}
 			}
 			else
@@ -131,37 +130,25 @@ public partial class Player : CharacterBody2D
 
 		MoveAndSlide();
 	}
-	public void Knockback()
-	{
-		GD.Print("Jugador empujado hacia atrás!");
-
-		// Activar la animación de retroceso
-		if (anim != null)
-		{
-			animPlayer.Play("Knockback");
-			anim.Play("Hit_Enemy"); //AnimatedSprite2D  y AnimationPlayer
-			
-		}
-	}
 
 	public async void Hit()
-{
-   if (isHit) return;
+	{
+	if (isHit) return;
 	isHit = true;
 	try
 	{
-		// 1. Detener y reproducir animación (usando variable existente)
+		// Detener y reproducir animación (usando variable existente)
 		anim.Stop();
 		anim.Play("Hit");
 		audioHit.Play();
 
-		// 2. Calcular duración exacta (frame count * tiempo por frame)
+		// Calcular duración exacta (frame count * tiempo por frame)
 		double hitDuration = (anim.SpriteFrames.GetFrameCount("Hit") / anim.SpriteFrames.GetAnimationSpeed("Hit"))/anim.SpeedScale;
 		
-		// 3. Esperar animación + margen de seguridad
+		// Esperar animación + margen de seguridad
 		await ToSignal(GetTree().CreateTimer(hitDuration), "timeout");
 
-		// 4. Reset seguro (evita que quede en estado intermedio)
+		// Reset seguro (evita que quede en estado intermedio)
 		if (anim.IsPlaying() && anim.Animation == "Hit")
 		{
 			anim.Play("Moving");
@@ -193,16 +180,14 @@ public partial class Player : CharacterBody2D
 	{
 		isDead = true;
 
-		// ✋ Detener movimiento inmediato
+		// Detener movimiento
 		GRAVITY = 0;
-		SetProcess(false); // Detiene _Process si lo usas
-		SetPhysicsProcess(false); // Detiene _PhysicsProcess si lo usas
+		SetProcess(false);
+		SetPhysicsProcess(false);
 		GD.Print("El jugador ha muerto");
 		audioDeath.Play();
 		anim.Play("Death");
 		// Esperar a que termine la animación para reiniciar
-		EmitSignal(SignalName.PlayerDied); //Avisamos al Main
+		EmitSignal(SignalName.PlayerDied);
 	}
-
-
 }

@@ -1,0 +1,12 @@
+[
+  {
+	"Nombre": "Vagabundo",
+	"Vida": 80,
+	"Armadura": 0
+  },
+  {
+	"Nombre": "Guerrero",
+	"Vida": 100,
+	"Armadura": 20
+  }
+]
