@@ -57,7 +57,6 @@ public partial class HeartBar : Node
 script = ExtResource("1_00nml")
 
 [node name="OnGame" type="CanvasLayer" parent="."]
-layer = -1
 scale = Vector2(0.645, 0.645)
 transform = Transform2D(0.645, 0, 0, 0.645, 0, 0)
 
@@ -75,7 +74,7 @@ scale = Vector2(0.645, 0.645)
 [node name="Bg" parent="." instance=ExtResource("2_pjs4v")]
 
 [node name="Ground" parent="." instance=ExtResource("4_pjs4v")]
-z_index = -10
+z_index = 1
 position = Vector2(962, 620)
 scale = Vector2(55.1037, 1.48)
 
@@ -86,7 +85,7 @@ position = Vector2(576.95, 325)
 visible = false
 
 [node name="Combate" type="CanvasLayer" parent="."]
-layer = -5
+layer = 0
 visible = false
 
 [node name="Combat" parent="Combate" instance=ExtResource("7_a5iuh")]

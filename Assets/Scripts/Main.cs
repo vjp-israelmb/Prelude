@@ -44,6 +44,7 @@ public partial class Main : Node
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
 	private Player jugador;
+	Jugador datosPlayer;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
@@ -86,18 +87,23 @@ public partial class Main : Node
 		GD.Print("Cargando jugador...");
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
-		Jugador datosPlayer = personajes.Find(p => p.name == selectedName);
+		datosPlayer = personajes.Find(p => p.name == selectedName);
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
 		player = playerScene.Instantiate<CharacterBody2D>();
-		player.Name = "Player";// Añadir a la escena
+		player.Name = "Player";
 		AddChild(player);
 		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
 		{
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
 		}
+	}
+	
+	public Jugador setDatosPersonaje()
+	{
+		return datosPlayer;
 	}
 	
 	//Spawn aleatoria de enemigos
@@ -195,11 +201,11 @@ public partial class Main : Node
 		if(gameOver==true){
 		player.Position += new Vector2(0 * (float)delta, 0);
 		camera.Position += new Vector2(0 * (float)delta, 0);
-		//Suma puntuacion
-		score+=10;
 		}else{
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
+		//Suma puntuacion
+		score+=10;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		

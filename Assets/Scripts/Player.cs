@@ -62,14 +62,29 @@ public partial class Player : CharacterBody2D
 	
 	public override void _Ready()
 	{
-		
+		// Obtener el nodo padre y hacerle cast a tipo Main
+		var mainNode = GetParent();
+		if (mainNode is Main main)
+		{
+			Jugador datos = main.setDatosPersonaje();
 
+			// Asignar los datos del jugador
+			name = datos.name;
+			hp = datos.hp;
+			armor = datos.armor;
+
+			GD.Print($"Jugador cargado desde Main: {name}, HP: {hp}, Armor: {armor}");
+		}
+		else
+		{
+			GD.PrintErr("No se pudo obtener el nodo Main desde Player.");
+		}
 		try {
 			audioJump = GetNode<AudioStreamPlayer>("AudioJump");
 			audioHit = GetNode<AudioStreamPlayer>("AudioHit");
 			audioDeath = GetNode<AudioStreamPlayer>("AudioDeath");
 			anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-			heartBar = GetNode<Node2D>("../OnGame/HeartBar");
+			heartBar = GetNode<Node2D>("root/OnGame/HeartBar");
 			heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
 		} catch (Exception e) {
 			GD.PrintErr("Error accediendo a nodos: ", e.Message);
