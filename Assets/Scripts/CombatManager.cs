@@ -9,6 +9,7 @@ public partial class CombatManager : Node
 	private CardLoader loader;
 	private List<Card> deck = new List<Card>();
 	private List<Card> hand = new List<Card>();
+	public bool Visible = false;
 	
 	//Para obtener la animacion del corazon
 	private Node2D heartBar;
@@ -16,11 +17,8 @@ public partial class CombatManager : Node
 	private int playerHealth;
 	private int enemyHealth = 100;
 
-	public override void _Ready()
+	public void inicioCombate()
 	{
-		var player = (Player)GetNode("/root/Player");
-		// Instanciar el fondo
-		backgroundContainer = GetNode<Node2D>("BgContainer");
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
   		
 		// Instanciar el loader de cartas

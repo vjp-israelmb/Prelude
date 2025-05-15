@@ -49,6 +49,7 @@ public partial class Main : Node
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
 	private CanvasLayer menuOnPause;
+	private CombatManager combatUI;
 	
 	
 	
@@ -56,6 +57,10 @@ public partial class Main : Node
 	{	//Obtener tamaño de la pantalla
 		screen_size=DisplayServer.WindowGetSize();
 		// Obtener referencias a los nodos
+		combatUI = GetNode<CombatManager>("Combat");
+		//var combatRoot = combatUI.GetNode<Node2D>("Combat");
+		//combatUI.Visible = false;
+		//combatRoot.Visible = false;
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
@@ -69,6 +74,27 @@ public partial class Main : Node
 		NewGame();
 		obstacles = new PackedScene[] { spikeScene, lavaScene };
 		enemies = new PackedScene[] { frogrosso, eagearl};
+	}
+	
+	public void StartCombat()
+	{
+		
+		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
+		gamePaused = true;
+		combatUI.Visible = true;
+		GD.Print(combatUI.Visible);
+		//var combatRoot = GetNode<Node2D>("Combate/Combat");
+		//combatRoot.Visible = true;
+
+		combatUI.inicioCombate();
+		GD.Print("¡Inicio del combate!");
+	}
+	
+	public void EndCombat()
+	{
+		gamePaused = false;
+		combatUI.Visible = false;
+		GD.Print("Fin del combate, retomando el juego");
 	}
 	
 	 private void LoadPlayer()
@@ -144,7 +170,15 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
+<<<<<<< Updated upstream
 		float spawnY = ground.Position.Y+4f;
+=======
+<<<<<<< HEAD
+		float spawnY = ground.Position.Y + 9.7f;
+=======
+		float spawnY = ground.Position.Y+4f;
+>>>>>>> b0b1e7c6432f0ac0ca5f1c86daf16f722fc1dfc8
+>>>>>>> Stashed changes
 
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
@@ -164,8 +198,8 @@ public partial class Main : Node
 		player.Velocity = Vector2.Zero;
 		progress.Value=0;
 		// 🔹 Posicionar la cámara RELATIVAMENTE al jugador
-		camera.Position =CAM_START_OFFSET;
-		ground.Position =GROUND_INITIAL_POS;
+		camera.Position = CAM_START_OFFSET;
+		ground.Position = GROUND_INITIAL_POS;
 	}
 
 	  public override void _Process(double delta)
