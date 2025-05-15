@@ -1,8 +1,8 @@
 [gd_scene load_steps=29 format=3 uid="uid://d1uadmv06t5gc"]
 
-[ext_resource type="Texture2D" uid="uid://2lfpfsrf5xkl" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
+[ext_resource type="Texture2D" uid="uid://dpdttdyf88mfo" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_ta52a"]
-[ext_resource type="Texture2D" uid="uid://b381sgbgblww3" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="2_ta52a"]
+[ext_resource type="Texture2D" uid="uid://cdtwlm21rpd" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="2_ta52a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_feygp"]
 atlas = ExtResource("1_7s7l1")
@@ -178,8 +178,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vapkg"]
-size = Vector2(178, 127)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ta52a"]
+radius = 46.0
+height = 137.0
 
 [node name="eagearl" type="Area2D" groups=["Enemy"]]
 script = ExtResource("1_ta52a")
@@ -192,7 +193,7 @@ autoplay = "Idle"
 frame_progress = 0.9798
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_vapkg")
+position = Vector2(-6, 2)
+shape = SubResource("CapsuleShape2D_ta52a")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

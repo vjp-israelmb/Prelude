@@ -59,8 +59,7 @@ script = ExtResource("1_tpt61")
 
 [node name="Ground" parent="." instance=ExtResource("3_pih06")]
 z_index = 1
-position = Vector2(987, 605)
-scale = Vector2(55.08, 1.88)
+position = Vector2(985, 608)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576.95, 325)

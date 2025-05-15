@@ -29,7 +29,7 @@ public partial class Main : Node
 
 	// Posiciones iniciales del jugador,la cámara Y suelo
 	public static readonly Vector2 PLAYER_START_POS = new Vector2(70,491); //posicion inicial del jugador
-	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(962,620); //posicion inicial del suelo
+	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(985,608); //posicion inicial del suelo
 	public static readonly Vector2 CAM_START_OFFSET = new Vector2(576, 325); // Ajuste relativo al jugador
 	public static  Vector2 screen_size= new Vector2(576, 325);//Tamaño de la pantalla
 
