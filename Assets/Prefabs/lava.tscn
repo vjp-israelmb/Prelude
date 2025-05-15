@@ -1,38 +1,35 @@
 [gd_scene load_steps=11 format=3 uid="uid://cmnbnvqdxvy37"]
 
-[ext_resource type="Texture2D" uid="uid://dhsv0qhnqasmn" path="res://Assets/Sprites/Tiles/Hazards/Lava/lava1-Sheet_big.png" id="1_2ody6"]
 [ext_resource type="Script" uid="uid://c1utxp0yphg6u" path="res://Assets/Scripts/Obstacle.cs" id="1_qm4ne"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qm4ne"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(0, 0, 255, 126)
+[ext_resource type="Texture2D" uid="uid://57gmvyaw5a83" path="res://Assets/Sprites/Tiles/Hazards/Lava/lava3_big-Sheet.png" id="2_qm4ne"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uwm5t"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(255, 0, 255, 126)
+atlas = ExtResource("2_qm4ne")
+region = Rect2(0, 0, 255, 132)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3oogi"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(510, 0, 255, 126)
+atlas = ExtResource("2_qm4ne")
+region = Rect2(255, 0, 255, 132)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvdyr"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(765, 0, 255, 126)
+atlas = ExtResource("2_qm4ne")
+region = Rect2(510, 0, 255, 132)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uay8x"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(1020, 0, 255, 126)
+atlas = ExtResource("2_qm4ne")
+region = Rect2(0, 132, 255, 132)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lwbqv"]
-atlas = ExtResource("1_2ody6")
-region = Rect2(1275, 0, 255, 126)
+atlas = ExtResource("2_qm4ne")
+region = Rect2(255, 132, 255, 132)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlr3f"]
+atlas = ExtResource("2_qm4ne")
+region = Rect2(510, 132, 255, 132)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mlr3f"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qm4ne")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uwm5t")
 }, {
@@ -47,6 +44,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lwbqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlr3f")
 }],
 "loop": true,
 "name": &"lava_moving",
@@ -63,7 +63,7 @@ script = ExtResource("1_qm4ne")
 sprite_frames = SubResource("SpriteFrames_mlr3f")
 animation = &"lava_moving"
 autoplay = "lava_moving"
-frame_progress = 0.713492
+frame_progress = 0.825783
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(12.76, 6.28)

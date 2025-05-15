@@ -144,7 +144,7 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+9.7f;
+		float spawnY = ground.Position.Y+4f;
 
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
@@ -177,7 +177,11 @@ public partial class Main : Node
 			gamePaused = !gamePaused;
 			menuOnGame.Visible=!gamePaused;
 		 }
-
+		//Si la barra de nivel llega al maximo cambio escena 
+		if(progress.Value==progress.MaxValue){
+			GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
+			
+		}
 		if (gamePaused)
 		return; // No procesamos nada si está en pausa
 		

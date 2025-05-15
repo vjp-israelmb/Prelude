@@ -12,7 +12,7 @@ public partial class Main2 : Node
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
 	private PackedScene spikeScene = GD.Load<PackedScene>("res://Assets/Prefabs/spike.tscn");
-	private PackedScene lavaScene = GD.Load<PackedScene>("res://Assets/Prefabs/lava.tscn");
+	private PackedScene poisonScene = GD.Load<PackedScene>("res://Assets/Prefabs/poison.tscn");
 	private PackedScene[] obstacles;
 	private double spawnTimer = 0;
 	//Intervalos en los que aparece los obstaculo
@@ -66,7 +66,7 @@ public partial class Main2 : Node
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
 		NewGame();
-		obstacles = new PackedScene[] { spikeScene, lavaScene };
+		obstacles = new PackedScene[] { spikeScene, poisonScene };
 		enemies = new PackedScene[] { maggotBrain, mindy};
 	}
 	//Carga jugador 
@@ -139,7 +139,7 @@ public partial class Main2 : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+25;
+		float spawnY = ground.Position.Y+16.5f;
 
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
@@ -175,7 +175,11 @@ public partial class Main2 : Node
 			gamePaused = !gamePaused;
 			menuOnGame.Visible=!gamePaused;
 		 }
-
+		
+		if(progress.Value==progress.MaxValue){
+			GetTree().Quit();
+			
+		}
 		if (gamePaused)
 		return; // No procesamos nada si está en pausa
 		
