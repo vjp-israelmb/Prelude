@@ -170,24 +170,14 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-<<<<<<< Updated upstream
 		float spawnY = ground.Position.Y+4f;
-=======
-<<<<<<< HEAD
-		float spawnY = ground.Position.Y + 9.7f;
-=======
-		float spawnY = ground.Position.Y+4f;
->>>>>>> b0b1e7c6432f0ac0ca5f1c86daf16f722fc1dfc8
->>>>>>> Stashed changes
-
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
 		{
 			spawnY -= 100;
 		}
-
 		obstacle.Position = new Vector2(spawnX,spawnY);
-
+		
 		AddChild(obstacle);
 	}
 
@@ -243,7 +233,7 @@ public partial class Main : Node
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
 		//Suma puntuacion
-		score+=10;
+		score+=5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		

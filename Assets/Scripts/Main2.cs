@@ -204,7 +204,7 @@ public partial class Main2 : Node
 		player.Position += new Vector2(speed * (float)delta, 0);
 		camera.Position += new Vector2(speed * (float)delta, 0);
 		//Suma puntuacion
-		score+=10;
+		score+=5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
