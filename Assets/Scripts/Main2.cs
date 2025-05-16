@@ -44,6 +44,7 @@ public partial class Main2 : Node
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
 	private Player jugador;
+	Jugador datosPlayer;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
@@ -58,7 +59,7 @@ public partial class Main2 : Node
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
 		//Cargamos jugador seleccionado 
 		LoadPlayer();
@@ -86,7 +87,7 @@ public partial class Main2 : Node
 		GD.Print("Cargando jugador...");
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
-		Jugador datosPlayer = personajes.Find(p => p.name == selectedName);
+		datosPlayer = personajes.Find(p => p.name == selectedName);
 		
 		GD.Print($"Jugador cargado: {datosPlayer.name} / {datosPlayer.hp} HP / {datosPlayer.armor} Armadura");
 

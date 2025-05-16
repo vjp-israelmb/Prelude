@@ -58,13 +58,10 @@ public partial class Main : Node
 		screen_size=DisplayServer.WindowGetSize();
 		// Obtener referencias a los nodos
 		combatUI = GetNode<CombatManager>("Combat");
-		//var combatRoot = combatUI.GetNode<Node2D>("Combat");
-		//combatUI.Visible = false;
-		//combatRoot.Visible = false;
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
 		//Cargamos jugador seleccionado 
 		LoadPlayer();
