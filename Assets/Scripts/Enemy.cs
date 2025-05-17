@@ -13,13 +13,13 @@ public partial class Enemy : Area2D
 		if (body.IsInGroup("Player"))
 		{
 			GD.Print("¡Jugador chocado con enemigo!");
-			// Buscar el nodo padre o usar GetTree().Root
+			// Buscar el nodo padre
 			Main main = GetParent() as Main;
 
 			// Si no es el padre directo, intenta buscarlo en el árbol
 			if (main == null)
 			{
-				main = GetTree().Root.GetNodeOrNull<Main>("Main"); // Asegúrate que tu nodo raíz se llama "Main"
+				main = GetTree().Root.GetNodeOrNull<Main>("Main");
 			}
 
 			if (main != null)

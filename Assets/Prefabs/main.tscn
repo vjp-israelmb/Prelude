@@ -83,6 +83,9 @@ position = Vector2(576.95, 325)
 [node name="MenuPause" parent="." instance=ExtResource("7_a4abk")]
 visible = false
 
-[node name="Combat" parent="." instance=ExtResource("7_a5iuh")]
+[node name="Combate" type="CanvasLayer" parent="."]
+layer = 0
 visible = false
+
+[node name="Combat" parent="Combate" instance=ExtResource("7_a5iuh")]
 z_index = 1

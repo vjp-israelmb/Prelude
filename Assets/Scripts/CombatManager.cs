@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class CombatManager : Node
+public partial class CombatManager : Node2D
 {
 	private Node2D backgroundContainer;
 	private HBoxContainer handContainer;

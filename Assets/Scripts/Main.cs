@@ -56,7 +56,7 @@ public partial class Main : Node
 	{	//Obtener tamaño de la pantalla
 		screen_size=DisplayServer.WindowGetSize();
 		// Obtener referencias a los nodos
-		combatUI = GetNode<CombatManager>("Combat");
+		combatUI = GetNode<CombatManager>("Combate/Combat");
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
@@ -77,13 +77,13 @@ public partial class Main : Node
 		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
 		gamePaused = true;
 		combatUI.Visible = true;
+		
+		var combate = GetNode<CanvasLayer>("Combate");
+		combate.Visible = true;
+		
 		if(jugador !=null){
 			jugador.canJump=false;
 		}
-		GD.Print(combatUI.Visible);
-		
-		//var combatRoot = GetNode<Node2D>("Combate/Combat");
-		//combatRoot.Visible = true;
 
 		combatUI.inicioCombate();
 		GD.Print("¡Inicio del combate!");
