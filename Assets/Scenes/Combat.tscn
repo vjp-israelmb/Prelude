@@ -1,12 +1,99 @@
-[gd_scene load_steps=3 format=3 uid="uid://djgu43i0mti72"]
+[gd_scene load_steps=15 format=3 uid="uid://djgu43i0mti72"]
 
 [ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
 [ext_resource type="PackedScene" uid="uid://c5fg5ls8toa41" path="res://Assets/Prefabs/bgCombat.tscn" id="2_b1qmc"]
+[ext_resource type="Texture2D" uid="uid://x0pgqyft3fpq" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Idle/Frog_Idle-Sheet.png" id="3_qsdfg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikiw1"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(0, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iqcq"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(42, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63i5k"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(84, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6uc1"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(126, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv0wh"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(168, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_528t7"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(210, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_npucx"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(252, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc71h"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(294, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ftao"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(336, 0, 42, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uikfy"]
+atlas = ExtResource("3_qsdfg")
+region = Rect2(378, 0, 42, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_61fm0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikiw1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7iqcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63i5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6uc1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv0wh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_528t7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_npucx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vc71h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ftao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uikfy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_b1qmc")
 
 [node name="Bg" parent="." instance=ExtResource("2_b1qmc")]
+
+[node name="Enemigo" type="AnimatedSprite2D" parent="."]
+position = Vector2(589, 288)
+scale = Vector2(5.90476, 5.83333)
+sprite_frames = SubResource("SpriteFrames_61fm0")
+autoplay = "default"
+frame = 9
+frame_progress = 0.122392
 
 [node name="CombatUI" type="CanvasLayer" parent="."]
 

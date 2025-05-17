@@ -1,0 +1,76 @@
+{
+  "Eagearl": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Ataque Rápido",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño, aplica sangrado.",
+	  "levelEffect": 1,
+	  "name": "Garras Filosas",
+	  "type": "damage_bleed",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Sube X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Vuelo Evasivo",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño, posibilidad de ¼ de reducir la armadura en X.",
+	  "levelEffect": 1,
+	  "name": "Explosión de Plumas",
+	  "type": "damage_armor_reduce_chance",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Reduce en X la cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Aullido de Águila",
+	  "type": "armor_reduce",
+	  "quantity": 1
+	}
+  ],
+  "Frogrosso": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Salto Mortal",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño, aplica veneno.",
+	  "levelEffect": 1,
+	  "name": "Lengüetazo Venenoso",
+	  "type": "damage_poison",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Sube X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Bajo la Superficie",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida, aplica veneno.",
+	  "levelEffect": 1,
+	  "name": "Toxina Letal",
+	  "type": "heal_poison",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Reduce en X la cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Voz Sibilante",
+	  "type": "armor_reduce",
+	  "quantity": 1
+	}
+  ]
+}

@@ -78,10 +78,13 @@ public partial class Main : Node
 	
 	public void StartCombat()
 	{
+		if(gamePaused)
+		{
+			return;
+		}
+		
 		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
 		gamePaused = true;
-		combatUI.Visible = true;
-		
 		var combate = GetNode<CanvasLayer>("Combate");
 		combate.Visible = true;
 		

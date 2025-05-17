@@ -56,11 +56,12 @@ public partial class CombatManager : Node2D
 		var camera = mainNode.GetNode<Camera2D>("Camera2D");
 		var ground = mainNode.GetNode<StaticBody2D>("Ground");
 		// Posición: justo fuera de la cámara, a la altura del suelo
-		float spawnX = camera.Position.X; // un poquito más lejos
-		float spawnY = ground.Position.Y;
+		float spawnX = camera.Position.X + Main.screen_size.X;
+		float spawnY = ground.Position.Y - 100;
 		enemyScene.Position = new Vector2(spawnX, spawnY);
-		enemyScene.ZIndex = 1;
+		enemyScene.ZIndex = 10;
 		enemyScene.Name = "enemy";
+		//var combate = GetParent();
 		AddChild(enemyScene);
 		
 		DrawHand(5);
