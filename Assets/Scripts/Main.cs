@@ -5,9 +5,8 @@ using System.Text.Json;
 
 public partial class Main : Node
 {
-	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
 	//Jugador actual 
-
+	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
 	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
@@ -75,11 +74,14 @@ public partial class Main : Node
 	
 	public void StartCombat()
 	{
-		
 		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
 		gamePaused = true;
 		combatUI.Visible = true;
+		if(jugador !=null){
+			jugador.canJump=false;
+		}
 		GD.Print(combatUI.Visible);
+		
 		//var combatRoot = GetNode<Node2D>("Combate/Combat");
 		//combatRoot.Visible = true;
 
@@ -91,6 +93,9 @@ public partial class Main : Node
 	{
 		gamePaused = false;
 		combatUI.Visible = false;
+		if(jugador !=null){
+			jugador.canJump=true;
+		}
 		GD.Print("Fin del combate, retomando el juego");
 	}
 	
@@ -117,6 +122,9 @@ public partial class Main : Node
 		player = playerScene.Instantiate<CharacterBody2D>();
 		player.Name = "Player";
 		AddChild(player);
+		//Castear el nodo 	Player para poder usar sus variables			
+		jugador=player as Player;
+
 		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
 		{

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://yglt2v0vsg5s"]
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
-[ext_resource type="PackedScene" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
+[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_pdc24"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_ptjad"]

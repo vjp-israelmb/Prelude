@@ -13,6 +13,8 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D heart;
 	//Booleano para cuando es golepado
 	private bool isHit = false;
+		//Booleano que le permite saltar o no 
+	public bool canJump { get; set; } = true;
 	[Export]
 	public int GRAVITY { get; private set; } = 4200;
 	
@@ -114,7 +116,7 @@ public partial class Player : CharacterBody2D
 		{
 			if(Velocity.Y>0f)
 			{
-			if (Input.IsActionJustPressed("jump_key"))
+			if (Input.IsActionJustPressed("jump_key") && canJump)
 			{
 				Velocity = new Vector2(Velocity.X, -JUMP_SPEED);
 				audioJump.Play();
