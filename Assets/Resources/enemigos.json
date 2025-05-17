@@ -1,22 +1,22 @@
 [
   {
-	"Name": "Eaglearl",
-	"Hp": 20,
-	"Armor": 15
+	"name": "Eagearl",
+	"hp": 20,
+	"armor": 15
   },
   {
-	"Name": "Frogrosso",
-	"Hp": 30,
-	"Armor": 0
+	"name": "Frogrosso",
+	"hp": 30,
+	"armor": 0
   },
   {
-	"Name": "Maggot Brian",
-	"Hp": 30,
-	"Armor": 10
+	"name": "Maggot Brian",
+	"hp": 30,
+	"armor": 10
   },
   {
-	"Name": "Mindy",
-	"Hp": 20,
-	"Armor": 25
+	"name": "Mindy",
+	"hp": 20,
+	"armor": 25
   }
 ]

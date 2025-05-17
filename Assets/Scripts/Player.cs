@@ -25,6 +25,7 @@ public partial class Player : CharacterBody2D
 	private AnimationPlayer animPlayer;
 	public String name;
 	public int hp;
+	public int hpInicial;
 	public int armor;
 	public bool isDead = false;
 	//Declaracion  de señal para la muerte del jugador
@@ -32,7 +33,7 @@ public partial class Player : CharacterBody2D
 	public delegate void PlayerDiedEventHandler();
 	
 	//Funcion para hacer las animaciones de la vida del jugador 
-	public void UpdateHeart(int currentHp)
+	public void UpdateHeart()
 	{
 		if (heart == null)
 		{
@@ -41,20 +42,20 @@ public partial class Player : CharacterBody2D
 		}
 
 		string animName = "";
+		int medidor = hpInicial/3;
 
-		if (currentHp >= 6)
+		if (hp >= hpInicial-13)
 			animName = "Full";
-		else if (currentHp == 1)
+		else if (hp >= (medidor + medidor))
 			animName = "Lose4";
-		else if (currentHp <= 0)
+		else if (hp >= medidor)
 			animName = "Lose6";
 		else
-			animName = $"Lose{6 - currentHp}";
+			animName = $"Lose{6 - hp}";
 
 		if (heart.SpriteFrames.HasAnimation(animName))
 		{
 			heart.Play(animName);
-			GD.Print($"Reproduciendo animación: {animName}");
 		}
 		else
 		{
@@ -73,6 +74,7 @@ public partial class Player : CharacterBody2D
 			// Asignar los datos del jugador
 			name = datos.name;
 			hp = datos.hp;
+			hpInicial = datos.hp;
 			armor = datos.armor;
 
 			GD.Print($"Jugador cargado desde Main: {name}, HP: {hp}, Armor: {armor}");
@@ -86,12 +88,33 @@ public partial class Player : CharacterBody2D
 			audioHit = GetNode<AudioStreamPlayer>("AudioHit");
 			audioDeath = GetNode<AudioStreamPlayer>("AudioDeath");
 			anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-			heartBar = GetNode<Node2D>("root/OnGame/HeartBar");
-			heart = heartBar.GetNode<AnimatedSprite2D>("Heart");
+			
+			try {
+				var onGame = GetNodeOrNull<CanvasLayer>("../OnGame");
+				if (onGame == null) {
+					GD.PrintErr("No se encontró el nodo 'OnGame'");
+					return;
+				}
+
+				heartBar = onGame.GetNodeOrNull<Node2D>("HeartBar");
+				if (heartBar == null) {
+					GD.PrintErr("No se encontró el nodo 'HeartBar' dentro de 'OnGame'");
+					return;
+				}
+
+				heart = heartBar.GetNodeOrNull<AnimatedSprite2D>("Heart");
+				if (heart == null) {
+					GD.PrintErr("No se encontró el nodo 'Heart' dentro de 'HeartBar'");
+					return;
+				}
+			} catch (Exception e) {
+				GD.PrintErr("Error accediendo a nodos: ", e.Message);
+			}
 		} catch (Exception e) {
 			GD.PrintErr("Error accediendo a nodos: ", e.Message);
 		}
-		UpdateHeart(hp);
+		
+		UpdateHeart();
 		if (Global.SelectedCharacter == "res://Assets/Prefabs/Knigth.tscn")
 		{
 			armor = 6;
@@ -182,14 +205,16 @@ public partial class Player : CharacterBody2D
 		GD.Print("Armor restante: " + armor);
 	}else{
 		hp -= 1;
-		if (heart != null) UpdateHeart(hp);
+		if (heart != null) UpdateHeart();
 		GD.Print("HP restante: " + hp);
 	}
 	
 	if (hp <= 0) {
 			Die();
 	}
-
+	
+	var mainNode = GetParent() as Main;
+	mainNode.actualizarPlayer(hp, armor);
 }
 
 	private void Die()

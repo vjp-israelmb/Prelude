@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public partial class CombatManager : Node2D
 {
+	// Precarga Enemigos
+	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrosso.tscn");
+	private PackedScene eagearl = GD.Load<PackedScene>("res://Assets/Prefabs/eagearl.tscn");
+	private PackedScene[] enemies;
+	
 	private Node2D backgroundContainer;
 	private HBoxContainer handContainer;
 	private CardLoader loader;
@@ -14,17 +19,50 @@ public partial class CombatManager : Node2D
 	//Para obtener la animacion del corazon
 	private Node2D heartBar;
 	private AnimatedSprite2D heart;
-	private int playerHealth;
+	private Jugador player;
+	private Jugador enemy;
 	private int enemyHealth = 100;
 
-	public void inicioCombate()
+	public void inicioCombate(Jugador Player, Jugador Enemy)
 	{
+		enemies = new PackedScene[] { frogrosso, eagearl};
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
-  		
 		// Instanciar el loader de cartas
 		loader = new CardLoader();
-		// Cargar el mazo y repartir cartas
 		LoadDeck();
+		
+		player = Player;
+		enemy = Enemy;
+		
+		int i = 0;
+		if (enemy.name.ToLower().Contains("eagearl"))
+		{
+			i = 1;
+		} else if (enemy.name.ToLower().Contains("frogrosso"))
+		{
+			i = 0;
+		} else if (enemy.name.ToLower().Contains("mindy"))
+		{
+			i = 2;
+		} else
+		{
+			i = 3;
+		}
+		
+		// Instanciar el enemigo
+		var scene = enemies[i];
+		var enemyScene = scene.Instantiate<Node2D>();
+		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+		var camera = mainNode.GetNode<Camera2D>("Camera2D");
+		var ground = mainNode.GetNode<StaticBody2D>("Ground");
+		// Posición: justo fuera de la cámara, a la altura del suelo
+		float spawnX = camera.Position.X; // un poquito más lejos
+		float spawnY = ground.Position.Y;
+		enemyScene.Position = new Vector2(spawnX, spawnY);
+		enemyScene.ZIndex = 1;
+		enemyScene.Name = "enemy";
+		AddChild(enemyScene);
+		
 		DrawHand(5);
 	}
 
@@ -109,14 +147,14 @@ public partial class CombatManager : Node2D
 
 		if (card.Type == "heal" && card.LevelEffect > 0)
 		{
-				playerHealth += card.LevelEffect;
-			GD.Print($"El jugador se curó {card.LevelEffect}. Salud del jugador: {playerHealth}");
+				player.hp += card.LevelEffect;
+			GD.Print($"El jugador se curó {card.LevelEffect}. Salud del jugador: {player.hp}");
 		}
 
 		if (card.Type == "armor" && card.LevelEffect > 0)
 		{
-			playerHealth += card.Quantity;
-			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {playerHealth}");
+			player.hp += card.Quantity;
+			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Salud del jugador: {player.hp}");
 		}
 
 		card.LevelEffect -= card.LevelEffect;
@@ -125,7 +163,7 @@ public partial class CombatManager : Node2D
 
 	private void UpdateUI()
 	{
-		GD.Print($"Salud del jugador: {playerHealth}, Salud del enemigo: {enemyHealth}");
+		GD.Print($"Salud del jugador: {player.hp}, Salud del enemigo: {enemyHealth}");
 	}
 
 	private void EndCombat()
@@ -135,8 +173,9 @@ public partial class CombatManager : Node2D
 		{
 			child.QueueFree();
 		}
-
-		// Cambiar de escena al juego principal
-		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
+		var enemyScene = GetNode<Node2D>("enemy");
+		enemyScene.QueueFree();
+		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+		mainNode.EndCombat(player);
 	}
 }

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Linq;
 
 public partial class Main : Node
 {
@@ -43,7 +44,9 @@ public partial class Main : Node
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
 	private Player jugador;
-	Jugador datosPlayer;
+	private Jugador datosPlayer;
+	private Jugador enemigoActual;
+	private List<Jugador> listaEnemigos;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
@@ -62,8 +65,9 @@ public partial class Main : Node
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
 		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
-		//Cargamos jugador seleccionado 
+		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
+		loadEnemy();
 		player = GetNode<CharacterBody2D>("Player");
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
@@ -85,17 +89,24 @@ public partial class Main : Node
 			jugador.canJump=false;
 		}
 
-		combatUI.inicioCombate();
+		combatUI.inicioCombate(datosPlayer, enemigoActual);
 		GD.Print("¡Inicio del combate!");
 	}
 	
-	public void EndCombat()
+	public void EndCombat(Jugador datos)
 	{
 		gamePaused = false;
 		combatUI.Visible = false;
+		
+		var combate = GetNode<CanvasLayer>("Combate");
+		combate.Visible = false;
+		
 		if(jugador !=null){
 			jugador.canJump=true;
 		}
+		
+		datosPlayer.hp = datos.hp;
+		datosPlayer.armor = datos.armor;
 		GD.Print("Fin del combate, retomando el juego");
 	}
 	
@@ -132,9 +143,39 @@ public partial class Main : Node
 		}
 	}
 	
+	public void loadEnemy()
+	{
+		string path = "res://Assets/Resources/enemigos.json";
+		if (!FileAccess.FileExists(path))
+		{
+			GD.PrintErr("Archivo de enemigos no encontrado.");
+			return;
+		}
+		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+		string jsonText = file.GetAsText();
+
+		listaEnemigos = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
+	}
+	
+	public void actualizarPlayer(int Hp, int Armor) {
+		datosPlayer.hp = Hp;
+		datosPlayer.armor = Armor;
+	}
+	
 	public Jugador setDatosPersonaje()
 	{
 		return datosPlayer;
+	}
+	
+	public void setEnemy(String enemigo)
+	{
+		if (enemigo.ToLower().Contains("eagearl"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
+		} else
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
+		}
 	}
 	
 	//Spawn aleatoria de enemigos
@@ -156,9 +197,10 @@ public partial class Main : Node
 		//Si es volador lo ubicamos un poco mas arriba 
 		if (enemy.Name.ToString().ToLower().Contains("eagearl")) // ejemplo de Eagearl
 		{
-			 spawnY -= 200; // que aparezca volando más arriba
+			spawnY -= 200; // que aparezca volando más arriba
 		}
 		enemy.Position = new Vector2(spawnX, spawnY);
+		setEnemy(enemy.Name.ToString());
 		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
 	}
@@ -269,6 +311,9 @@ public partial class Main : Node
 					}
 				}
 		}
+		
+		jugador.UpdateHeart();
+		
 		// generacion de suelo unico de manera indefinida
 		if (camera.Position.X - ground.Position.X > screen_size.X * 1.3)
 		{
