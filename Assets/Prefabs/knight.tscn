@@ -1,14 +1,14 @@
 [gd_scene load_steps=104 format=3 uid="uid://bjq74hnucmrdb"]
 
 [ext_resource type="Script" uid="uid://cv5ug1ipbr2as" path="res://Assets/Scripts/Player.cs" id="1_2dag6"]
-[ext_resource type="Texture2D" uid="uid://6y23y0g0uwoq" path="res://Assets/Sprites/Characters/Playable/Knight/Hit/Knight_Hit_big-Sheet.png" id="2_6j3yg"]
-[ext_resource type="Texture2D" uid="uid://5nl8kvcyhbse" path="res://Assets/Sprites/Characters/Playable/Knight/Death/Knight_Death_big-Sheet.png" id="2_8cxrw"]
-[ext_resource type="Texture2D" uid="uid://cl0ffjj353ikj" path="res://Assets/Sprites/Characters/Playable/Knight/Idle/Knight_Idle_big-Sheet.png" id="3_8gyn4"]
-[ext_resource type="Texture2D" uid="uid://wy62v5f0incp" path="res://Assets/Sprites/Characters/Playable/Knight/Jump/Knight_Jump_big-Sheet.png" id="3_lqpme"]
-[ext_resource type="Texture2D" uid="uid://b86kmx5j8dhur" path="res://Assets/Sprites/Characters/Playable/Knight/Moving/Knight_Moving_big-Sheet.png" id="5_kkkxj"]
-[ext_resource type="AudioStream" uid="uid://4l1gp8i8cucs" path="res://Assets/VFX/Hobo_Jump.mp3" id="6_2dag6"]
-[ext_resource type="AudioStream" uid="uid://cbvuslhfgwjju" path="res://Assets/VFX/Hobo_Hurt.mp3" id="7_o8t3f"]
-[ext_resource type="AudioStream" uid="uid://cod4ow2mtsl6k" path="res://Assets/VFX/Hobo_Death.mp3" id="8_cvlf8"]
+[ext_resource type="Texture2D" uid="uid://cqvxc0nke3tr4" path="res://Assets/Sprites/Characters/Playable/Knight/Hit/Knight_Hit_big-Sheet.png" id="2_6j3yg"]
+[ext_resource type="Texture2D" uid="uid://b8hhma1ylhssj" path="res://Assets/Sprites/Characters/Playable/Knight/Death/Knight_Death_big-Sheet.png" id="2_8cxrw"]
+[ext_resource type="Texture2D" uid="uid://dx8xhrs7tgryg" path="res://Assets/Sprites/Characters/Playable/Knight/Idle/Knight_Idle_big-Sheet.png" id="3_8gyn4"]
+[ext_resource type="Texture2D" uid="uid://se6al6wp0w8i" path="res://Assets/Sprites/Characters/Playable/Knight/Jump/Knight_Jump_big-Sheet.png" id="3_lqpme"]
+[ext_resource type="Texture2D" uid="uid://b6as1lefjni35" path="res://Assets/Sprites/Characters/Playable/Knight/Moving/Knight_Moving_big-Sheet.png" id="5_kkkxj"]
+[ext_resource type="AudioStream" uid="uid://bb4mt53ctiwki" path="res://Assets/VFX/Hobo_Jump.mp3" id="6_2dag6"]
+[ext_resource type="AudioStream" uid="uid://c2nf8ns0htx3m" path="res://Assets/VFX/Hobo_Hurt.mp3" id="7_o8t3f"]
+[ext_resource type="AudioStream" uid="uid://caotjxpaqj13r" path="res://Assets/VFX/Hobo_Death.mp3" id="8_cvlf8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tbujp"]
 atlas = ExtResource("2_8cxrw")
@@ -698,10 +698,8 @@ metadata/_edit_group_ = true
 position = Vector2(2, -68.4962)
 scale = Vector2(0.968254, 0.994296)
 sprite_frames = SubResource("SpriteFrames_83uj1")
-animation = &"Death"
+animation = &"Moving"
 autoplay = "Idle"
-frame = 49
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(6, -63.25)
