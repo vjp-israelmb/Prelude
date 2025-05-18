@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public partial class CardLoader : Node
 {
-	public Dictionary<string, List<Card>> LoadCardsFromFile()
+	public Dictionary<string, List<Card>> LoadCardsFromFile(String ruta)
 	{
 		var cardDecks = new Dictionary<string, List<Card>>();
 
-		if (FileAccess.FileExists("res://Assets/Resources/cards.json"))
+		if (FileAccess.FileExists(ruta))
 		{
 			try
 			{
-				using var file = FileAccess.Open("res://Assets/Resources/cards.json", FileAccess.ModeFlags.Read);
+				using var file = FileAccess.Open(ruta, FileAccess.ModeFlags.Read);
 				string fileContent = file.GetAsText();
 
 				var json = Json.ParseString(fileContent);

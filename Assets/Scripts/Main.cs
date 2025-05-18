@@ -63,7 +63,7 @@ public partial class Main : Node
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 200; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
 		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
@@ -108,9 +108,21 @@ public partial class Main : Node
 			jugador.canJump=true;
 		}
 		
-		datosPlayer.hp = datos.hp;
-		datosPlayer.armor = datos.armor;
-		GD.Print("Fin del combate, retomando el juego");
+		if (datos.hp > 0)
+		{
+			datosPlayer.hp = datos.hp;
+			datosPlayer.armor = datos.armor;
+			jugador.hp = datos.hp;
+			jugador.armor = datos.armor;
+			jugador.UpdateHeart();
+			GD.Print("Fin del combate, retomando el juego");
+		} else
+		{
+			jugador.hp = 1;
+			jugador.Hit();
+			GD.Print("Muerto en combate");
+		}
+		
 	}
 	
 	 private void LoadPlayer()
@@ -130,6 +142,7 @@ public partial class Main : Node
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
 		datosPlayer = personajes.Find(p => p.name == selectedName);
+		datosPlayer.setMano();
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
@@ -175,9 +188,27 @@ public partial class Main : Node
 		if (enemigo.ToString().ToLower().Contains("eagearl"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
+			manoEnemigo("Eagearl");
 		} else
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
+			manoEnemigo("Frogrosso");
+		}
+	}
+	
+	private void manoEnemigo(String name)
+	{
+		CardLoader loader = new CardLoader();
+		var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cardsEnemy.json");
+
+		if (allDecks.ContainsKey(name))
+		{
+			List<Card> mano = allDecks[name];
+			enemigoActual.mano = mano;
+			GD.Print("MAno Enemigoooo: " + enemigoActual.mano.Count);
+		} else
+		{
+			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
 		}
 	}
 	

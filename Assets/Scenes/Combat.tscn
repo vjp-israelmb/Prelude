@@ -88,6 +88,7 @@ script = ExtResource("1_b1qmc")
 [node name="Bg" parent="." instance=ExtResource("2_b1qmc")]
 
 [node name="Enemigo" type="AnimatedSprite2D" parent="."]
+visible = false
 position = Vector2(589, 288)
 scale = Vector2(5.90476, 5.83333)
 sprite_frames = SubResource("SpriteFrames_61fm0")

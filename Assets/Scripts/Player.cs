@@ -24,9 +24,9 @@ public partial class Player : CharacterBody2D
 	private AnimatedSprite2D anim;
 	private AnimationPlayer animPlayer;
 	private String name;
-	private int hp;
+	public int hp;
 	private int hpInicial;
-	private int armor;
+	public int armor;
 	public bool isDead = false;
 	//Declaracion  de señal para la muerte del jugador
 	[Signal]
