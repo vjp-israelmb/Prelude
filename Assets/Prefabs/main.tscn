@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://yglt2v0vsg5s"]
+[gd_scene load_steps=10 format=3 uid="uid://yglt2v0vsg5s"]
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
+[ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="2_a5iuh"]
 [ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_pdc24"]
@@ -55,6 +56,7 @@ public partial class HeartBar : Node
 
 [node name="Main" type="Node"]
 script = ExtResource("1_00nml")
+playerScene = ExtResource("2_a5iuh")
 
 [node name="OnGame" type="CanvasLayer" parent="."]
 scale = Vector2(0.645, 0.645)

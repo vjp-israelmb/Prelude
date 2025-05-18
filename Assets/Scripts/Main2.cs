@@ -44,11 +44,14 @@ public partial class Main2 : Node
 	private TextureProgressBar progress;
 	private CharacterBody2D player;
 	private Player jugador;
-	Jugador datosPlayer;
+	private Jugador datosPlayer;
+	private Jugador enemigoActual;
+	private List<Jugador> listaEnemigos;
 	private Camera2D camera;
 	private StaticBody2D ground;
 	private CanvasLayer menuOnGame;
 	private CanvasLayer menuOnPause;
+	private CombatManager combatUI;
 	
 	
 	
@@ -70,8 +73,45 @@ public partial class Main2 : Node
 		obstacles = new PackedScene[] { spikeScene, poisonScene };
 		enemies = new PackedScene[] { maggotBrain, mindy};
 	}
+	
+	public void StartCombat()
+	{
+		if(gamePaused)
+		{
+			return;
+		}
+		
+		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
+		gamePaused = true;
+		var combate = GetNode<CanvasLayer>("Combate");
+		combate.Visible = true;
+		
+		if(jugador !=null){
+			jugador.canJump=false;
+		}
+
+		combatUI.inicioCombate(datosPlayer, enemigoActual);
+		GD.Print("¡Inicio del combate!");
+	}
+	
+	public void EndCombat(Jugador datos)
+	{
+		gamePaused = false;
+		combatUI.Visible = false;
+		
+		var combate = GetNode<CanvasLayer>("Combate");
+		combate.Visible = false;
+		
+		if(jugador !=null){
+			jugador.canJump=true;
+		}
+		
+		datosPlayer.hp = datos.hp;
+		datosPlayer.armor = datos.armor;
+		GD.Print("Fin del combate, retomando el juego");
+	}
 	//Carga jugador 
-	 private void LoadPlayer()
+ private void LoadPlayer()
 	{
 		// Leer archivo JSON de personajes
 		string path = "res://Assets/Resources/personajes.json";
@@ -88,20 +128,22 @@ public partial class Main2 : Node
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
 		datosPlayer = personajes.Find(p => p.name == selectedName);
-		
-		GD.Print($"Jugador cargado: {datosPlayer.name} / {datosPlayer.hp} HP / {datosPlayer.armor} Armadura");
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
 		player = playerScene.Instantiate<CharacterBody2D>();
-		player.Name = "Player";// Añadir a la escena
+		player.Name = "Player";
 		AddChild(player);
+		//Castear el nodo 	Player para poder usar sus variables			
+		jugador=player as Player;
+
 		// Conectar señal de muerte
 		if (player.HasSignal("PlayerDied"))
 		{
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
 		}
 	}
+
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
 	{
@@ -253,7 +295,7 @@ public partial class Main2 : Node
 		// Espera 1.5 segundos para que la animación se vea
 		GetTree().CreateTimer(1.5).Timeout += () =>
 		{
-			GetTree().ReloadCurrentScene();
+			GetTree().ChangeSceneToFile("res://Assets/Prefabs/game_over.tscn");
 		};
 	}
 }

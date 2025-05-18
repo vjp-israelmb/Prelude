@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://t7cqyyyk8q2e"]
+[gd_scene load_steps=9 format=3 uid="uid://t7cqyyyk8q2e"]
 
 [ext_resource type="Script" uid="uid://iqsmldc028ox" path="res://Assets/Scripts/Main2.cs" id="1_tpt61"]
+[ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="2_pih06"]
 [ext_resource type="PackedScene" uid="uid://c1mplsa184cjm" path="res://Assets/Prefabs/bg2.tscn" id="2_tpt61"]
 [ext_resource type="PackedScene" uid="uid://cpp71c0gqex1k" path="res://Assets/Prefabs/groundlvl2.tscn" id="3_pih06"]
 [ext_resource type="PackedScene" uid="uid://botkbd42vfkkn" path="res://Assets/Prefabs/menu_pause.tscn" id="4_kqtrx"]
@@ -54,6 +55,7 @@ public partial class HeartBar : Node
 
 [node name="Main" type="Node"]
 script = ExtResource("1_tpt61")
+playerScene = ExtResource("2_pih06")
 
 [node name="Bg2" parent="." instance=ExtResource("2_tpt61")]
 

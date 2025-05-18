@@ -63,7 +63,7 @@ public partial class Main : Node
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 200; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
 		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
@@ -172,7 +172,7 @@ public partial class Main : Node
 	
 	public void setEnemy(String enemigo)
 	{
-		if (enemigo.ToLower().Contains("eagearl"))
+		if (enemigo.ToString().ToLower().Contains("eagearl"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
 		} else
@@ -203,7 +203,7 @@ public partial class Main : Node
 			spawnY -= 200; // que aparezca volando más arriba
 		}
 		enemy.Position = new Vector2(spawnX, spawnY);
-		setEnemy(enemy.Name.ToString());
+		setEnemy(enemy.Name.ToString().ToLower());
 		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
 	}
@@ -335,7 +335,7 @@ public partial class Main : Node
 		// Espera 1.5 segundos para que la animación se vea
 		GetTree().CreateTimer(1.5).Timeout += () =>
 		{
-			GetTree().ReloadCurrentScene();
+			GetTree().ChangeSceneToFile("res://Assets/Prefabs/game_over.tscn");
 		};
 	}
 }

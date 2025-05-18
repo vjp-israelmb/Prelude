@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://t1myuoidsj7h"]
+
+[ext_resource type="Script" uid="uid://da6r7w7r36a3t" path="res://Assets/Scripts/GameOver.cs" id="1_2rcyy"]
+
+[node name="GameOver" type="CanvasLayer" node_paths=PackedStringArray("mainMenuButton", "exitButton")]
+script = ExtResource("1_2rcyy")
+mainMenuButton = NodePath("Main_Menu")
+exitButton = NodePath("Exit")
+
+[node name="GameOverText" type="Label" parent="."]
+texture_filter = 1
+offset_left = 345.0
+offset_top = 55.0
+offset_right = 432.0
+offset_bottom = 78.0
+scale = Vector2(5.33939, 5.06152)
+text = "Game Over"
+vertical_alignment = 1
+
+[node name="Main_Menu" type="Button" parent="."]
+texture_filter = 1
+offset_left = 198.0
+offset_top = 384.0
+offset_right = 340.0
+offset_bottom = 415.0
+scale = Vector2(2.05195, 3.57143)
+text = "Go to main menu"
+
+[node name="Exit" type="Button" parent="."]
+texture_filter = 1
+offset_left = 650.0
+offset_top = 385.0
+offset_right = 701.0
+offset_bottom = 417.0
+scale = Vector2(5.65685, 3.39392)
+text = "Exit
+"
+
+[connection signal="pressed" from="Main_Menu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

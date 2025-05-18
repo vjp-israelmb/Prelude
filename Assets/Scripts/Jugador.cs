@@ -6,7 +6,7 @@ public partial class Jugador : Node
 	public string name { get; set; }
 	public int hp { get; set; }
 	public int armor { get; set; }
-	public Card[5] mano { get; set; }
+	public Card[] mano { get; set; } = new Card[5];
 	
 	public Jugador(string Name, int Hp, int Armor)
 	{
@@ -15,7 +15,7 @@ public partial class Jugador : Node
 		armor = Armor;
 	}
 	
-	public setMano()
+	public void  setMano()
 	{
 		
 	}
