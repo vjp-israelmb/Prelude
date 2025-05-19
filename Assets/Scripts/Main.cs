@@ -6,8 +6,12 @@ using System.Linq;
 
 public partial class Main : Node
 {
+//region  Game Variables, Scene References and Configuration
 	//Jugador actual 
 	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
+	//booleanos para controlas diferentes apartados del juego  
+	private bool bossSpawned=false;
+	private bool isInCombat=false;
 	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
@@ -17,9 +21,10 @@ public partial class Main : Node
 	private double spawnTimer = 0;
 	//Intervalos en los que aparece los obstaculo
 	private const double SPAWN_INTERVAL = 3.0;
-	// Enemigos
+	// Enemigos y boss
 	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrosso.tscn");
 	private PackedScene eagearl = GD.Load<PackedScene>("res://Assets/Prefabs/eagearl.tscn");
+	private PackedScene grilledBear = GD.Load<PackedScene>("res://Assets/Prefabs/Obviously_Grilled_Bear.tscn");
 	private PackedScene[] enemies;
 	private double enemySpawnTimer = 0;
 	private const double ENEMY_SPAWN_INTERVAL = 5.0; // Cada 5 segundos
@@ -52,6 +57,7 @@ public partial class Main : Node
 	private CanvasLayer menuOnGame;
 	private CanvasLayer menuOnPause;
 	private CombatManager combatUI;
+//endregion
 	
 	
 	
@@ -76,15 +82,16 @@ public partial class Main : Node
 		enemies = new PackedScene[] { frogrosso, eagearl};
 	}
 	
+//region Start and end of combat
 	public void StartCombat()
 	{
 		if(gamePaused)
 		{
 			return;
 		}
-		
-		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
-		gamePaused = true;
+		RemoveObstacles();
+		//Cambiamos a true;
+		isInCombat=true;
 		var combate = GetNode<CanvasLayer>("Combate");
 		combate.Visible = true;
 		
@@ -98,7 +105,7 @@ public partial class Main : Node
 	
 	public void EndCombat(Jugador datos)
 	{
-		gamePaused = false;
+		isInCombat=false;
 		combatUI.Visible = false;
 		
 		var combate = GetNode<CanvasLayer>("Combate");
@@ -124,7 +131,9 @@ public partial class Main : Node
 		}
 		
 	}
+//endregion
 	
+//region Load of player and enemy
 	 private void LoadPlayer()
 	{
 		// Leer archivo JSON de personajes
@@ -172,6 +181,7 @@ public partial class Main : Node
 
 		listaEnemigos = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
 	}
+//endregion
 	
 	public void actualizarPlayer(int Hp, int Armor) {
 		datosPlayer.hp = Hp;
@@ -211,7 +221,7 @@ public partial class Main : Node
 			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
 		}
 	}
-	
+	//region Spawn and remove From enemy, obstacle and boss
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
 	{
@@ -238,6 +248,21 @@ public partial class Main : Node
 		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
 	}
+	private void SpawnBoss()
+	{
+		if (bossSpawned) return; // Solo se puede spawnear una vez
+		bossSpawned = true;
+		var boss = grilledBear.Instantiate<Node2D>();
+//
+		//Posición: fuera de la cámara y a la altura del suelo
+		float spawnX = camera.Position.X + screen_size.X + 150;
+		float spawnY = ground.Position.Y-200;
+//
+		boss.Position = new Vector2(spawnX, spawnY);
+		AddChild(boss);
+
+		GD.Print("Boss spawned!");
+	}
 	//Spawn aleatoria de obstaculos
 	public void SpawnRandomObstacle()
 	{
@@ -261,7 +286,29 @@ public partial class Main : Node
 		
 		AddChild(obstacle);
 	}
-
+	private void RemoveObstacles()
+	{
+		foreach (Node node in GetChildren())
+		{
+			if (node.IsInGroup("obstacle"))
+			{
+				node.QueueFree();
+			}
+		}
+	}
+	private void RemoveEnemies()
+	{
+		foreach (Node node in GetChildren())
+		{
+			if (node.IsInGroup("enemy"))
+			{
+				node.QueueFree();
+			}
+		}
+	}
+//endregion
+	
+	
 	public void NewGame()
 	{
 		// Posicionar al jugador en su punto de inicio
@@ -282,17 +329,19 @@ public partial class Main : Node
 			gamePaused = !gamePaused;
 			menuOnGame.Visible=!gamePaused;
 		 }
-		//Si la barra de nivel llega al maximo cambio escena 
+		//Si la barra de nivel llega al maximo aparece el boss
 		if(progress.Value==progress.MaxValue){
-			GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
-			
+			SpawnBoss();
 		}
 		if (gamePaused)
 		return; // No procesamos nada si está en pausa
 		
-		//Suma por cada frame del juego 
-		spawnTimer += delta;
-		enemySpawnTimer += delta;
+		//Suma por cada frame del juego o no en caso de estar en combate o ya este el boss
+		if (!isInCombat && !bossSpawned)
+		{
+			spawnTimer += delta;
+			enemySpawnTimer += delta;
+		}
 		//Si supera al intervalo  genera un obstaculo y reiniciamos el temporizador 
 		if (spawnTimer >= SPAWN_INTERVAL)
 		{
@@ -307,14 +356,15 @@ public partial class Main : Node
 		speed = START_SPEED;
 
 		// Mover player y cámara en X
-		if(gameOver==true){
-		player.Position += new Vector2(0 * (float)delta, 0);
-		camera.Position += new Vector2(0 * (float)delta, 0);
+		if(gameOver==true || isInCombat==true)
+		{
+			player.Position += new Vector2(0 * (float)delta, 0);
+			camera.Position += new Vector2(0 * (float)delta, 0);
 		}else{
-		player.Position += new Vector2(speed * (float)delta, 0);
-		camera.Position += new Vector2(speed * (float)delta, 0);
-		//Suma puntuacion
-		score+=5;
+			player.Position += new Vector2(speed * (float)delta, 0);
+			camera.Position += new Vector2(speed * (float)delta, 0);
+			//Suma puntuacion si no esta en combate 
+			score+=5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		

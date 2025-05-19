@@ -1,7 +1,7 @@
 [gd_scene load_steps=36 format=3 uid="uid://bq7r8qlb4c05c"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_dcr0b"]
-[ext_resource type="Texture2D" uid="uid://c1e70mlkeoa8m" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Idle/Lackalcia_Idle-Sheet.png" id="1_u5xvs"]
+[ext_resource type="Texture2D" uid="uid://cmwph57tj04bt" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Idle/Lackalcia_Idle-Sheet.png" id="1_u5xvs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcr0b"]
 atlas = ExtResource("1_u5xvs")
@@ -231,7 +231,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qd10i"]
 size = Vector2(252, 457)
 
-[node name="Area2D" type="Area2D"]
+[node name="Area2D" type="Area2D" groups=["Boss"]]
 script = ExtResource("1_dcr0b")
 metadata/_edit_group_ = true
 
@@ -239,7 +239,7 @@ metadata/_edit_group_ = true
 sprite_frames = SubResource("SpriteFrames_ya82o")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.973891
+frame_progress = 0.4844
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -81.5)

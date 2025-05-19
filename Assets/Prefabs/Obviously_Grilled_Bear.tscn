@@ -116,9 +116,9 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d8j46"]
-size = Vector2(28.9773, 305)
+size = Vector2(28.9773, 451)
 
-[node name="Obviously_Grilled_Bear" type="Area2D" groups=["Boss", "Enemy"]]
+[node name="Obviously_Grilled_Bear" type="Area2D" groups=["Boss"]]
 z_index = 1
 script = ExtResource("1_ylyi7")
 
@@ -126,10 +126,10 @@ script = ExtResource("1_ylyi7")
 sprite_frames = SubResource("SpriteFrames_7h0qu")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.0187094
+frame_progress = 0.853596
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4.5, -0.5)
+position = Vector2(4.5, -73.5)
 scale = Vector2(5.28, 1)
 shape = SubResource("RectangleShape2D_d8j46")
 

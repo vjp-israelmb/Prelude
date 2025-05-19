@@ -3,6 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+//region Player State, Properties, Animations, Audio, and Signals
 	//audios del jugador 
 	private AudioStreamPlayer audioJump;
 	private AudioStreamPlayer audioHit;
@@ -31,6 +32,7 @@ public partial class Player : CharacterBody2D
 	//Declaracion  de señal para la muerte del jugador
 	[Signal]
 	public delegate void PlayerDiedEventHandler();
+//endregion
 	
 	//Funcion para hacer las animaciones de la vida del jugador 
 	public void UpdateHeart()
@@ -135,6 +137,7 @@ public partial class Player : CharacterBody2D
 		}
 		Velocity = new Vector2(Velocity.X, Velocity.Y + (float)(GRAVITY * delta));
 		
+		//region Animations
 		if (IsOnFloor())
 		{
 			if(Velocity.Y>0f)
@@ -167,6 +170,7 @@ public partial class Player : CharacterBody2D
 			anim.Play("Jump");}catch(NullReferenceException x){	
 			}
 		}
+//endregion
 
 		MoveAndSlide();
 	}
