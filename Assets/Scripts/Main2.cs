@@ -5,9 +5,11 @@ using System.Text.Json;
 
 public partial class Main2 : Node
 {
+//region Game Variables, Scene References and Configuration
 	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
-	//Jugador actual 
-
+	//booleanos para controlas diferentes apartados del juego  
+	private bool bossSpawned=false;
+	private bool isInCombat=false;
 	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
@@ -20,6 +22,7 @@ public partial class Main2 : Node
 	// Enemigos
 	private PackedScene maggotBrain = GD.Load<PackedScene>("res://Assets/Prefabs/maggotBrain.tscn");
 	private PackedScene mindy = GD.Load<PackedScene>("res://Assets/Prefabs/mindy.tscn");
+	private PackedScene lackalcia = GD.Load<PackedScene>("res://Assets/Prefabs/Lackalcia.tscn");
 	private PackedScene[] enemies;
 	private double enemySpawnTimer = 0;
 	private const double ENEMY_SPAWN_INTERVAL = 5.0; // Cada 5 segundos
@@ -52,6 +55,7 @@ public partial class Main2 : Node
 	private CanvasLayer menuOnGame;
 	private CanvasLayer menuOnPause;
 	private CombatManager combatUI;
+//endregion
 	
 	
 	
@@ -74,6 +78,7 @@ public partial class Main2 : Node
 		enemies = new PackedScene[] { maggotBrain, mindy};
 	}
 	
+//region Start and end of combat
 	public void StartCombat()
 	{
 		if(gamePaused)
@@ -81,6 +86,8 @@ public partial class Main2 : Node
 			return;
 		}
 		
+		//Cambiamos a true;
+		isInCombat=true;
 		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
 		gamePaused = true;
 		var combate = GetNode<CanvasLayer>("Combate");
@@ -110,6 +117,7 @@ public partial class Main2 : Node
 		datosPlayer.armor = datos.armor;
 		GD.Print("Fin del combate, retomando el juego");
 	}
+//endregion
 	//Carga jugador 
  private void LoadPlayer()
 	{
@@ -143,7 +151,7 @@ public partial class Main2 : Node
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
 		}
 	}
-
+//region Spawn and remove From enemy, obstacle and boss
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
 	{
@@ -168,6 +176,22 @@ public partial class Main2 : Node
 		enemy.Position = new Vector2(spawnX, spawnY);
 		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
+	}
+	
+	private void SpawnBoss()
+	{
+		if (bossSpawned) return; // Solo se puede spawnear una vez
+		bossSpawned = true;
+		var boss = lackalcia.Instantiate<Node2D>();
+
+		// Posición: fuera de la cámara y a la altura del suelo
+		float spawnX = camera.Position.X + screen_size.X + 150;
+		float spawnY = ground.Position.Y-185;
+
+		boss.Position = new Vector2(spawnX, spawnY);
+		AddChild(boss);
+
+		GD.Print("Boss spawned!");
 	}
 	//Spawn aleatoria de obstaculos
 	public void SpawnRandomObstacle()
@@ -194,6 +218,29 @@ public partial class Main2 : Node
 
 		AddChild(obstacle);
 	}
+	private void RemoveObstacles()
+	{
+		foreach (Node node in GetChildren())
+		{
+			if (node.IsInGroup("obstacle"))
+			{
+				node.QueueFree();
+			}
+		}
+	}
+	private void RemoveEnemies()
+	{
+		foreach (Node node in GetChildren())
+		{
+			if (node.IsInGroup("enemy"))
+			{
+				node.QueueFree();
+			}
+		}
+	}
+//endregion
+
+
 
 	public void NewGame()
 	{
@@ -219,16 +266,18 @@ public partial class Main2 : Node
 			menuOnGame.Visible=!gamePaused;
 		 }
 		
-		if(progress.Value==progress.MaxValue){
-			GetTree().Quit();
-			
+		if(!bossSpawned && progress.Value==progress.MaxValue){
+			SpawnBoss();
 		}
 		if (gamePaused)
 		return; // No procesamos nada si está en pausa
 		
-		//Suma por cada frame del juego 
-		spawnTimer += delta;
-		enemySpawnTimer += delta;
+		//Suma por cada frame del juego o no en caso de estar en combate o ya este el boss
+		if (!isInCombat && !bossSpawned)
+		{
+			spawnTimer += delta;
+			enemySpawnTimer += delta;
+		}
 		//Si supera al intervalo  genera un obstaculo y reiniciamos el temporizador 
 		if (spawnTimer >= SPAWN_INTERVAL)
 		{
@@ -243,11 +292,15 @@ public partial class Main2 : Node
 		speed = START_SPEED;
 
 		// Mover player y cámara en X
-		if(gameOver==false){
-		player.Position += new Vector2(speed * (float)delta, 0);
-		camera.Position += new Vector2(speed * (float)delta, 0);
-		//Suma puntuacion
-		score+=5;
+		if(gameOver==true || isInCombat==true)
+		{
+			player.Position += new Vector2(0 * (float)delta, 0);
+			camera.Position += new Vector2(0 * (float)delta, 0);
+		}else{
+			player.Position += new Vector2(speed * (float)delta, 0);
+			camera.Position += new Vector2(speed * (float)delta, 0);
+			//Suma puntuacion si no esta en combate 
+			score+=5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
