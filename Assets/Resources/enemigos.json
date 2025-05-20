@@ -10,7 +10,7 @@
 	"armor": 0
   },
   {
-	"name": "Maggot Brian",
+	"name": "MaggotBrian",
 	"hp": 30,
 	"armor": 10
   },
@@ -18,5 +18,15 @@
 	"name": "Mindy",
 	"hp": 20,
 	"armor": 25
+  },
+  {
+	"name": "GrilledBear",
+	"hp": 80,
+	"armor": 20
+  },
+  {
+	"name": "Verdugo",
+	"hp": 80,
+	"armor": 20
   }
 ]

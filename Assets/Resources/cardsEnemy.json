@@ -8,10 +8,10 @@
 	  "quantity": 1
 	},
 	{
-	  "effect": "Realiza X cantidad de daño, aplica sangrado.",
+	  "effect": "Realiza X cantidad de daño.",
 	  "levelEffect": 1,
 	  "name": "Garras Filosas",
-	  "type": "damage_bleed",
+	  "type": "damage",
 	  "quantity": 1
 	},
 	{
@@ -22,17 +22,17 @@
 	  "quantity": 1
 	},
 	{
-	  "effect": "Realiza X cantidad de daño, posibilidad de ¼ de reducir la armadura en X.",
+	  "effect": "Realiza X cantidad de daño.",
 	  "levelEffect": 1,
 	  "name": "Explosión de Plumas",
-	  "type": "damage_armor_reduce_chance",
+	  "type": "damage",
 	  "quantity": 1
 	},
 	{
 	  "effect": "Reduce en X la cantidad de armadura.",
 	  "levelEffect": 1,
 	  "name": "Aullido de Águila",
-	  "type": "armor_reduce",
+	  "type": "armor",
 	  "quantity": 1
 	}
   ],
@@ -45,10 +45,10 @@
 	  "quantity": 1
 	},
 	{
-	  "effect": "Realiza X cantidad de daño, aplica veneno.",
+	  "effect": "Realiza X cantidad de daño.",
 	  "levelEffect": 1,
 	  "name": "Lengüetazo Venenoso",
-	  "type": "damage_poison",
+	  "type": "damage",
 	  "quantity": 1
 	},
 	{
@@ -59,17 +59,128 @@
 	  "quantity": 1
 	},
 	{
-	  "effect": "Cura X cantidad de vida, aplica veneno.",
+	  "effect": "Cura X cantidad de vida.",
 	  "levelEffect": 1,
 	  "name": "Toxina Letal",
-	  "type": "heal_poison",
+	  "type": "heal",
 	  "quantity": 1
 	},
 	{
 	  "effect": "Reduce en X la cantidad de armadura.",
 	  "levelEffect": 1,
 	  "name": "Voz Sibilante",
-	  "type": "armor_reduce",
+	  "type": "armor",
+	  "quantity": 1
+	}
+  ],
+  "GrilledBear": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Mordisco de Oso",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Zarpazo Salvaje",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "Hibernación Express",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Golpe Machacante",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Furia del Bosque",
+	  "type": "damage",
+	  "quantity": 1
+	}
+  ],
+  "Mindy": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Toque Gélido",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Alma Perdida",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Sube X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Desvanecerse",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "Invocar Sombras",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Reduce en X la cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Llanto Sonico",
+	  "type": "armor",
+	  "quantity": 1
+	}
+  ],
+  "MaggotBrian": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Crioquinesis",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Piroquinesis",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Sube X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Clarividencia",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "Cronoquinesis",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Reduce en X la cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Precognición",
+	  "type": "armor",
 	  "quantity": 1
 	}
   ]

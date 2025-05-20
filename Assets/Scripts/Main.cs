@@ -124,6 +124,7 @@ public partial class Main : Node
 		} else
 		{
 			jugador.hp = 1;
+			jugador.armor = 0;
 			jugador.Hit();
 			GD.Print("Muerto en combate");
 		}
@@ -197,10 +198,22 @@ public partial class Main : Node
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
 			manoEnemigo("Eagearl");
-		} else
+		} else if (enemigo.ToString().ToLower().Contains("frogrosso"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
 			manoEnemigo("Frogrosso");
+		} else if (enemigo.ToString().ToLower().Contains("grilledbear"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "GrilledBear");
+			manoEnemigo("GrilledBear");
+		} else if (enemigo.ToString().ToLower().Contains("maggotbrian"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
+			manoEnemigo("MaggotBrian");
+		} else if (enemigo.ToString().ToLower().Contains("mindy"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Mindy");
+			manoEnemigo("Mindy");
 		}
 	}
 	
@@ -213,7 +226,6 @@ public partial class Main : Node
 		{
 			List<Card> mano = allDecks[name];
 			enemigoActual.mano = mano;
-			GD.Print("MAno Enemigoooo: " + enemigoActual.mano.Count);
 		} else
 		{
 			GD.PrintErr("No se encontró el mazo en el archivo JSON.");

@@ -50,6 +50,7 @@ public partial class Jugador : Node
 				int index = (int)GD.RandRange(0, deck.Count - 1);
 				Card card = deck[index];
 				card.LevelEffect = 3;
+				
 				mano.Add(card);
 			}
 		}

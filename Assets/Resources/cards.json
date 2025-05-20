@@ -1,89 +1,104 @@
 {
-  "Guerrero": [{
-	"effect": "Realiza X cantidad de daño.",
-	"levelEffect": 1,
-	"name": "Golpe de Sable",
-	"type": "damage",
-	"quantity": 1
-  }, {
-	"effect": "Suma X cantidad de armadura.",
-	"levelEffect": 1,
-	"name": "Alzad Escudos",
-	"type": "armor",
-	"quantity": 1
-  }, {
-	"effect": "Realiza un ataque contundente causando X daño y noqueando.",
-	"levelEffect": 1,
-	"name": "Mamporrazo",
-	"type": "damage_stun",
-	"quantity": 1
-  }, {
-	"effect": "Cura X cantidad de vida.",
-	"levelEffect": 1,
-	"name": "Vendas",
-	"type": "heal",
-	"quantity": 1
-  }, {
-	"effect": "Duplica la cantidad de armadura actual.",
-	"levelEffect": 1,
-	"name": "Reforjado",
-	"type": "armor_double",
-	"quantity": 1
-  }, {
-	"effect": "Suma X cantidad de armadura. Si tienes X cantidad de armadura, se duplica.",
-	"levelEffect": 1,
-	"name": "Escudo Blindado",
-	"type": "armor_double_condition",
-	"quantity": 1
-  }],
-  "Vagabundo": [{
-	"effect": "Obtienes una carta al azar. Cuando se activa, pierde 1 nivel.",
-	"levelEffect": 1,
-	"name": "Hurgar",
-	"type": "activate",
-	"quantity": 1
-  }, {
-	"effect": "Cura X cantidad de vida.",
-	"levelEffect": 1,
-	"name": "Paloma Muerta",
-	"type": "heal",
-	"quantity": 1
-  }, {
-	"effect": "Realiza X cantidad de daño, pero solo se puede usar a nivel 5.",
-	"levelEffect": 1,
-	"minLevelRequired": 5,
-	"name": "Hadouken",
-	"type": "damage",
-	"quantity": 1
-  }, {
-	"effect": "Realiza X cantidad de daño. Si tienes Hurgar en la mano, la activa.",
-	"levelEffect": 1,
-	"name": "Dame 1 Leuro",
-	"type": "damage_activate",
-	"quantity": 1
-  }, {
-	"effect": "Cura X cantidad de vida. Si tienes Hurgar en la mano, la activa.",
-	"levelEffect": 1,
-	"name": "Sobras",
-	"type": "heal_activate",
-	"quantity": 1
-  }, {
-	"effect": "Suma X cantidad de armadura.",
-	"levelEffect": 1,
-	"name": "Castillo de Cartón",
-	"type": "armor",
-	"quantity": 1
-  }, {
-	"effect": "Suma X cantidad de armadura. Si tienes Hurgar en la mano, la activa.",
-	"levelEffect": 1,
-	"name": "Contenedor Móvil",
-	"type": "armor_activate",
-	"quantity": 1
-  }, {
-	"effect": "Causa X daño y luego reemplazas esta carta por Hurgar.",
-	"levelEffect": 1,
-	"name": "Crisis de Cartón",
-	"type": "damage_replace",
-	"quantity": 1
-  }]
+  "Guerrero": [
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "BladeKiss",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Suma X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "RaiseShields",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza un ataque contundente causando X daño.",
+	  "levelEffect": 1,
+	  "name": "Whack",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "Bandage",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Suma X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Reforged",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Suma X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "ArmoredShield",
+	  "type": "armor",
+	  "quantity": 1
+	}
+  ],
+  "Vagabundo": [
+	{
+	  "effect": "No hace nada. (Carta no compatible con el sistema actual)",
+	  "levelEffect": 1,
+	  "name": "Pickpocket",
+	  "type": "damage",
+	  "quantity": 0
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "DeadPigeon",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "SpiritBlast",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Realiza X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "GimmeCoin",
+	  "type": "damage",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Cura X cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "LeftOvers",
+	  "type": "heal",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Suma X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "BoardCastle",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Suma X cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Leprosy",
+	  "type": "armor",
+	  "quantity": 1
+	},
+	{
+	  "effect": "Causa X cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "BoardCrisis",
+	  "type": "damage",
+	  "quantity": 1
+	}
+  ]
 }

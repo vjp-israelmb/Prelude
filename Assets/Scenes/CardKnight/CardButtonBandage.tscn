@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bovj21y7noywx"]
+
+[ext_resource type="Texture2D" uid="uid://dsisr7ag54uu1" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_Bandage.png" id="1_j07ox"]
+[ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_7fjvi"]
+
+[node name="Button" type="Button"]
+offset_right = 56.0
+offset_bottom = 76.0
+icon = ExtResource("1_j07ox")
+script = ExtResource("2_7fjvi")

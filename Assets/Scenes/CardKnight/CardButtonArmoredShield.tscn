@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dde86gwqleibd"]
+
+[ext_resource type="Texture2D" uid="uid://bk2onxlvr60n" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_ArmoredShield.png" id="1_c6ky7"]
+[ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_462bu"]
+
+[node name="Button" type="Button"]
+offset_right = 56.0
+offset_bottom = 76.0
+icon = ExtResource("1_c6ky7")
+script = ExtResource("2_462bu")

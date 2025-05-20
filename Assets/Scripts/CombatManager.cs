@@ -61,7 +61,7 @@ public partial class CombatManager : Node2D
 		var ground = mainNode.GetNode<StaticBody2D>("Ground");
 		float spawnX = camera.Position.X + Main.screen_size.X;
 		float spawnY = ground.Position.Y - 100;
-		enemyScene.Position = camera.Position; // new Vector2(spawnX, spawnY);
+		enemyScene.Position = camera.Position;
 		enemyScene.Name = "enemy";
 		AddChild(enemyScene);
 		GD.Print("Escena instanciada: ", scene);
@@ -78,13 +78,67 @@ public partial class CombatManager : Node2D
 			Card card = hand[i];
 
 			// Instanciar el botón de la carta
-			var buttonScene = GD.Load<PackedScene>("res://Assets/Scenes/CardButton.tscn");
+			var buttonScene = GD.Load<PackedScene>(cargarEscena(card.Name));
 			var cardButton = buttonScene.Instantiate<CardButton>();
 			cardButton.SetCard(card);
 
 			cardButton.Pressed += () => OnCardPressed(card);
 			handContainer.AddChild(cardButton);
 		}
+	}
+	
+	private String cargarEscena(String name)
+	{
+		String ruta;
+		switch(name)
+		{
+			case "BoardCastle": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonBoardCastle.tscn";
+				return ruta;
+			case "BoardCrisis": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonBoardCrisis.tscn";
+				return ruta;
+			case "DeadPigeon": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonDeadPigeon.tscn";
+				return ruta;
+			case "GimmeCoin": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonGimmeCoin.tscn";
+				return ruta;
+			case "LeftOvers": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonLeftOvers.tscn";
+				return ruta;
+			case "Leprosy": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonLeprosy.tscn";
+				return ruta;
+			case "Pickpocket": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonPickpocket.tscn";
+				return ruta;
+			case "SpiritBlast": 
+				ruta = "res://Assets/Scenes/CardHobbo/CardButtonSpiritBlast.tscn";
+				return ruta;
+			case "ArmoredShield": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonArmoredShield.tscn";
+				return ruta;
+			case "Bandage": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonBandage.tscn";
+				return ruta;
+			case "BladeKiss": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonBladeKiss.tscn";
+				return ruta;
+			case "RaiseShields": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonRaiseShields.tscn";
+				return ruta;
+			case "Reforged": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonReforged.tscn";
+				return ruta;
+			case "Whack": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonWhack.tscn";
+				return ruta;
+			default:
+				GD.Print("Error: No se encontro la escena.");
+				break;
+		}
+		return null;
 	}
 
 	private void OnCardPressed(Card card)
@@ -122,8 +176,19 @@ public partial class CombatManager : Node2D
 	{
 		if (card.Type == "damage" && card.LevelEffect > 0)
 		{
-			enemy.hp -= card.Quantity;
-			GD.Print($"El enemigo recibió {card.LevelEffect} de daño. Salud enemiga: {enemy.hp}");
+			if(enemy.armor > 0)
+			{
+				enemy.armor -= card.Quantity;
+				if(enemy.armor < 0)
+				{
+					enemy.armor = 0;
+				}
+				GD.Print($"Has realizado {card.Quantity} de daño. Armadura restante del enemigo: {enemy.armor}");
+			} else
+			{
+				enemy.hp -= card.Quantity;
+				GD.Print($"Has realizado {card.Quantity} de daño. Salud restante del enemigo: {enemy.hp}");
+			}
 		}
 
 		if (card.Type == "heal" && card.LevelEffect > 0)
@@ -158,20 +223,31 @@ public partial class CombatManager : Node2D
 		GD.Print($"Carta jugada: {card.Name}");
 		if (card.Type == "damage")
 		{
-			player.hp -= card.Quantity;
-			GD.Print($"Has recibido {card.LevelEffect} de daño. Salud restante: {player.hp}");
+			if(player.armor > 0)
+			{
+				player.armor -= card.Quantity;
+				if(player.armor < 0)
+				{
+					player.armor = 0;
+				}
+				GD.Print($"Has recibido {card.Quantity} de daño. Armadura restante: {player.armor}");
+			} else
+			{
+				player.hp -= card.Quantity;
+				GD.Print($"Has recibido {card.Quantity} de daño. Salud restante: {player.hp}");
+			}
 		}
 
 		if (card.Type == "heal")
 		{
 			enemy.hp += card.Quantity;
-			GD.Print($"El enemigo se curó {card.LevelEffect}. Salud del enemigo: {enemy.hp}");
+			GD.Print($"El enemigo se curó {card.Quantity}. Salud del enemigo: {enemy.hp}");
 		}
 
 		if (card.Type == "armor")
 		{
 			enemy.armor += card.Quantity;
-			GD.Print($"El enemigo ganó {card.LevelEffect} de armadura. Armadura del enemigo: {enemy.armor}");
+			GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
 		}
 		UpdateUI();
 	}

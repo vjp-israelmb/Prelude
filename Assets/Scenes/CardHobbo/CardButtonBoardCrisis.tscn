@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://mt7aheru3vot"]
+
+[ext_resource type="Texture2D" uid="uid://4mukgnx8kmqm" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_CardboardCrisis.png" id="1_vagfb"]
+[ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_ib177"]
+
+[node name="Button" type="Button"]
+offset_right = 56.0
+offset_bottom = 76.0
+icon = ExtResource("1_vagfb")
+script = ExtResource("2_ib177")
