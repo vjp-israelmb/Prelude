@@ -11,7 +11,7 @@ public partial class Main : Node
 	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
 	//booleanos para controlas diferentes apartados del juego  
 	private bool bossSpawned=false;
-	private bool isInCombat=false;
+	public bool isInCombat=false;
 	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
@@ -90,8 +90,6 @@ public partial class Main : Node
 			return;
 		}
 		RemoveObstacles();
-		//Cambiamos a true;
-		isInCombat=true;
 		var combate = GetNode<CanvasLayer>("Combate");
 		combate.Visible = true;
 		

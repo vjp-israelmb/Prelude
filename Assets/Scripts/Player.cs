@@ -42,6 +42,10 @@ public partial class Player : CharacterBody2D
 			GD.PrintErr("Heart no está asignado.");
 			return;
 		}
+		if(isDead)
+		{
+			return;
+		}
 
 		string animName = "";
 		int medidor = hpInicial/3;
@@ -52,8 +56,8 @@ public partial class Player : CharacterBody2D
 			animName = "Lose4";
 		else if (hp >= medidor)
 			animName = "Lose6";
-		else
-			animName = $"Lose{6 - hp}";
+		//else
+		//	animName = $"Lose{6 - hp}";
 
 		if (heart.SpriteFrames.HasAnimation(animName))
 		{

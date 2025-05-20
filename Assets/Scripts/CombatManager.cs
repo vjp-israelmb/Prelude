@@ -22,6 +22,15 @@ public partial class CombatManager : Node2D
 
 	public void inicioCombate(Jugador Player, Jugador Enemy)
 	{
+		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+		if(mainNode.isInCombat)
+		{
+			return;
+		}else
+		{
+			mainNode.isInCombat = true;
+		}
+		
 		enemies = new PackedScene[] { frogrosso, eagearl};
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
 		
@@ -48,7 +57,6 @@ public partial class CombatManager : Node2D
 		// Instanciar el enemigo
 		var scene = enemies[i];
 		var enemyScene = scene.Instantiate<Node2D>();
-		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
 		var camera = mainNode.GetNode<Camera2D>("Camera2D");
 		var ground = mainNode.GetNode<StaticBody2D>("Ground");
 		float spawnX = camera.Position.X + Main.screen_size.X;
