@@ -270,6 +270,7 @@ public partial class Main : Node
 		float spawnY = ground.Position.Y-200;
 //
 		boss.Position = new Vector2(spawnX, spawnY);
+		setEnemy(boss.Name.ToString().ToLower());
 		AddChild(boss);
 
 		GD.Print("Boss spawned!");
