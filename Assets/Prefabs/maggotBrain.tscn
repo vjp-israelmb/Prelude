@@ -112,7 +112,7 @@ animations = [{
 radius = 50.0
 height = 128.0
 
-[node name="Area2D" type="Area2D"]
+[node name="Area2D" type="Area2D" groups=["Enemy"]]
 script = ExtResource("1_mgea1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -125,3 +125,5 @@ frame_progress = 0.840926
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6cpsk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
