@@ -42,10 +42,8 @@ public partial class CardLoader : Node
 									string cardType = cardData["type"].ToString();
 									int quantity = cardData.ContainsKey("quantity")
 										? StringExtensions.ToInt(cardData["quantity"].ToString().Replace(".0", "")) : 0;
-									int minLevelRequired = cardData.ContainsKey("minLevelRequired")
-										? StringExtensions.ToInt(cardData["minLevelRequired"].ToString().Replace(".0", "")) : 1;
 									
-									Card card = new Card(cardName, cardEffect, levelEffect, cardType, quantity, minLevelRequired);
+									Card card = new Card(cardName, cardEffect, levelEffect, cardType, quantity);
 									deckCards.Add(card);
 								}
 							}
