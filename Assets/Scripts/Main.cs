@@ -40,6 +40,7 @@ public partial class Main : Node
 
 	//Puntuacion/Recorrido que lleva hecho el jugador 
 	private float score=0f;
+	private int levelUp = 0; 
 	// Velocidades del jugador
 	private float speed;
 	public const float START_SPEED = 700.0f;
@@ -375,6 +376,7 @@ public partial class Main : Node
 			camera.Position += new Vector2(speed * (float)delta, 0);
 			//Suma puntuacion si no esta en combate 
 			score+=5;
+			levelUp += 5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
@@ -417,7 +419,15 @@ public partial class Main : Node
 			newGroundPos.X += screen_size.X;
 			ground.Position = newGroundPos;
 		}
+		
+		//Comprobacion nivel Cartas
+		if(levelUp == 50000)
+		{
+			levelUp = 0;
+			datosPlayer.subirNivelCartas();
+		}
 	  }
+	
 	//Muerte del jugador 
 	private void OnPlayerDeath()
 	{

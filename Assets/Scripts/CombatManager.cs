@@ -134,6 +134,12 @@ public partial class CombatManager : Node2D
 			case "Whack": 
 				ruta = "res://Assets/Scenes/CardKnight/CardButtonWhack.tscn";
 				return ruta;
+			case "CaptivePower": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonCaptivePower.tscn";
+				return ruta;
+			case "ForgedWarrior": 
+				ruta = "res://Assets/Scenes/CardKnight/CardButtonForgedWarrior.tscn";
+				return ruta;
 			default:
 				GD.Print("Error: No se encontro la escena.");
 				break;
@@ -174,39 +180,105 @@ public partial class CombatManager : Node2D
 
 	private void ApplyCardEffect(Card card)
 	{
-		if (card.Type == "damage" && card.LevelEffect > 0)
+		if (card.LevelEffect <= 0)
+			return;
+
+		switch (card.Type)
 		{
-			if(enemy.armor > 0)
-			{
-				enemy.armor -= card.Quantity;
-				if(enemy.armor < 0)
+			case "damage":
+				if (enemy.armor > 0)
 				{
-					enemy.armor = 0;
+					enemy.armor -= card.Quantity;
+					if (enemy.armor < 0)
+					{
+						int remainingDamage = -enemy.armor;
+						enemy.armor = 0;
+						enemy.hp -= remainingDamage;
+						GD.Print($"Has atravesado la armadura y causado {remainingDamage} de daño a la salud. Salud restante: {enemy.hp}");
+					}
+					else
+					{
+						GD.Print($"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}");
+					}
 				}
-				GD.Print($"Has realizado {card.Quantity} de daño. Armadura restante del enemigo: {enemy.armor}");
-			} else
-			{
-				enemy.hp -= card.Quantity;
-				GD.Print($"Has realizado {card.Quantity} de daño. Salud restante del enemigo: {enemy.hp}");
-			}
-		}
-
-		if (card.Type == "heal" && card.LevelEffect > 0)
-		{
-			player.hp += card.Quantity;
-			GD.Print($"El jugador se curó {card.LevelEffect}. Salud del jugador: {player.hp}");
-		}
-
-		if (card.Type == "armor" && card.LevelEffect > 0)
-		{
-			player.armor += card.Quantity;
-			GD.Print($"El jugador ganó {card.LevelEffect} de armadura. Armadura del jugador: {player.armor}");
+				else
+				{
+					enemy.hp -= card.Quantity;
+					GD.Print($"Has hecho {card.Quantity} de daño. Salud restante del enemigo: {enemy.hp}");
+				}
+				break;
+			case "damageArmor":
+				enemy.armor -= card.Quantity;
+				if (enemy.armor < 0) enemy.armor = 0;
+				GD.Print($"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}");
+				break;
+			case "heal":
+				player.hp += card.Quantity;
+				GD.Print($"Te has curado {card.Quantity} de vida. Salud actual: {player.hp}");
+				break;
+			case "armor":
+				player.armor += card.Quantity;
+				GD.Print($"Has ganado {card.Quantity} de armadura. Armadura actual: {player.armor}");
+				break;
+			case "armorHeal":
+				player.armor += card.Quantity;
+				player.hp += card.Quantity;
+				GD.Print($"Has ganado {card.Quantity} de armadura y te has curado {card.Quantity} de vida.");
+				break;
+			case "armorDraw":
+				player.armor += card.Quantity;
+				robarCarta();
+				GD.Print($"Has ganado {card.Quantity} de armadura y robado una carta.");
+				break;
+			case "healDraw":
+				player.hp += card.Quantity;
+				robarCarta();
+				GD.Print($"Te has curado {card.Quantity} de vida y robado una carta.");
+				break;
+			case "draw":
+				robarCarta();
+				GD.Print("Has robado una carta.");
+				break;
+			default:
+				GD.Print("Tipo de carta no reconocido.");
+				break;
 		}
 
 		card.LevelEffect -= 1;
-		GD.Print(card.LevelEffect);
 		UpdateUI();
 		turnoEnemigo();
+	}
+
+	private void robarCarta()
+	{
+		var loader = new CardLoader();
+		// Eliminar todos los botones hijos de handContainer
+		foreach (Node child in handContainer.GetChildren())
+		{
+			child.QueueFree();
+		}
+		var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cards.json");
+
+		if (allDecks.ContainsKey(player.name))
+		{
+			var deck = allDecks[player.name];
+			if (deck.Count > 0)
+			{
+				int index = (int)GD.RandRange(0, deck.Count - 1);
+				Card card = deck[index];
+
+				if (player.mano.Count < 5)
+				{
+					player.mano.Add(card);
+				}
+			}
+		}
+		else
+		{
+			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
+		}
+		
+		cagarMano();
 	}
 
 	private void UpdateUI()
@@ -216,41 +288,75 @@ public partial class CombatManager : Node2D
 
 	private void turnoEnemigo()
 	{
-		int index = (int)GD.RandRange(0, enemy.mano.Count - 1);
-		GD.Print(enemy.mano.Count);
-		Card card = enemy.mano[index];
-		
-		GD.Print($"Carta jugada: {card.Name}");
-		if (card.Type == "damage")
+		if (enemy.mano.Count == 0)
 		{
-			if(player.armor > 0)
-			{
+			GD.Print("El enemigo no tiene cartas.");
+			return;
+		}
+
+		int index = (int)GD.RandRange(0, enemy.mano.Count - 1);
+		Card card = enemy.mano[index];
+
+		GD.Print($"Carta jugada por el enemigo: {card.Name}");
+
+		if (card.LevelEffect <= 0)
+		{
+			GD.Print("La carta no tiene efecto restante.");
+			return;
+		}
+
+		switch (card.Type)
+		{
+			case "damage":
+				if (player.armor > 0)
+				{
+					player.armor -= card.Quantity;
+					if (player.armor < 0)
+					{
+						int remainingDamage = -player.armor;
+						player.armor = 0;
+						player.hp -= remainingDamage;
+						GD.Print($"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}");
+					}
+					else
+					{
+						GD.Print($"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}");
+					}
+				}
+				else
+				{
+					player.hp -= card.Quantity;
+					GD.Print($"Recibiste {card.Quantity} de daño. Salud restante: {player.hp}");
+				}
+				break;
+
+			case "heal":
+				enemy.hp += card.Quantity;
+				GD.Print($"El enemigo se curó {card.Quantity} de vida. Salud del enemigo: {enemy.hp}");
+				break;
+
+			case "armor":
+				enemy.armor += card.Quantity;
+				GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
+				break;
+
+			case "damageArmor":
 				player.armor -= card.Quantity;
-				if(player.armor < 0)
+				if (player.armor < 0)
 				{
 					player.armor = 0;
 				}
-				GD.Print($"Has recibido {card.Quantity} de daño. Armadura restante: {player.armor}");
-			} else
-			{
-				player.hp -= card.Quantity;
-				GD.Print($"Has recibido {card.Quantity} de daño. Salud restante: {player.hp}");
-			}
+				GD.Print($"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}");
+				break;
+
+			default:
+				GD.Print("Tipo de carta enemigo no reconocido.");
+				break;
 		}
 
-		if (card.Type == "heal")
-		{
-			enemy.hp += card.Quantity;
-			GD.Print($"El enemigo se curó {card.Quantity}. Salud del enemigo: {enemy.hp}");
-		}
-
-		if (card.Type == "armor")
-		{
-			enemy.armor += card.Quantity;
-			GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
-		}
 		UpdateUI();
 	}
+
 
 	private void EndCombat()
 	{

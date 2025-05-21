@@ -25,7 +25,7 @@ public partial class Jugador : Node
 		LoadDeck();
 		robarMano();
 	}
-	
+
 	private void LoadDeck()
 	{
 		var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cards.json");
@@ -33,7 +33,8 @@ public partial class Jugador : Node
 		if (allDecks.ContainsKey(name))
 		{
 			deck = allDecks[name];
-		} else
+		}
+		else
 		{
 			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
 		}
@@ -54,5 +55,14 @@ public partial class Jugador : Node
 				mano.Add(card);
 			}
 		}
+	}
+
+	public void subirNivelCartas()
+	{
+		for (int i = 0; i < mano.Count; i++)
+		{
+			mano[i].LevelEffect += 1;
+		}
+		GD.Print("Subieron de nivel las cartas.");
 	}
 }

@@ -1,104 +1,118 @@
 {
   "Guerrero": [
 	{
-	  "effect": "Realiza X cantidad de daño.",
+	  "effect": "Realiza 5 de daño.",
 	  "levelEffect": 1,
 	  "name": "BladeKiss",
 	  "type": "damage",
-	  "quantity": 1
+	  "quantity": 5
 	},
 	{
-	  "effect": "Suma X cantidad de armadura.",
+	  "effect": "Suma 5 de armadura.",
 	  "levelEffect": 1,
 	  "name": "RaiseShields",
 	  "type": "armor",
-	  "quantity": 1
+	  "quantity": 5
 	},
 	{
-	  "effect": "Realiza un ataque contundente causando X daño.",
+	  "effect": "Realiza un ataque 10 daño a la armadura del enemigo.",
 	  "levelEffect": 1,
 	  "name": "Whack",
-	  "type": "damage",
-	  "quantity": 1
+	  "type": "damageArmor",
+	  "quantity": 10
 	},
 	{
-	  "effect": "Cura X cantidad de vida.",
+	  "effect": "Cura 5 cantidad de vida.",
 	  "levelEffect": 1,
 	  "name": "Bandage",
 	  "type": "heal",
-	  "quantity": 1
+	  "quantity": 5
 	},
 	{
-	  "effect": "Suma X cantidad de armadura.",
+	  "effect": "Suma 2 de armadura y cura 2.",
 	  "levelEffect": 1,
 	  "name": "Reforged",
-	  "type": "armor",
-	  "quantity": 1
+	  "type": "armorHeal",
+	  "quantity": 2
 	},
 	{
-	  "effect": "Suma X cantidad de armadura.",
+	  "effect": "Suma 3 cantidad de armadura y roba carta.",
 	  "levelEffect": 1,
 	  "name": "ArmoredShield",
+	  "type": "armorDraw",
+	  "quantity": 3
+	},
+	{
+	  "effect": "Realiza 8 de daño.",
+	  "levelEffect": 1,
+	  "name": "CaptivePower",
+	  "type": "damage",
+	  "quantity": 8
+	},
+	{
+	  "effect": "Suma 8 cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "ForgedWarrior",
 	  "type": "armor",
-	  "quantity": 1
+	  "quantity": 8
 	}
   ],
   "Vagabundo": [
 	{
-	  "effect": "No hace nada. (Carta no compatible con el sistema actual)",
+	  "effect": "Si tienes espacio, roba 1 carta",
 	  "levelEffect": 1,
 	  "name": "Pickpocket",
-	  "type": "damage",
+	  "type": "draw",
 	  "quantity": 0
 	},
 	{
-	  "effect": "Cura X cantidad de vida.",
+	  "effect": "Cura 5 de vida.",
 	  "levelEffect": 1,
 	  "name": "DeadPigeon",
 	  "type": "heal",
-	  "quantity": 1
+	  "quantity": 3
 	},
 	{
-	  "effect": "Realiza X cantidad de daño.",
+	  "effect": "Realiza 5 de daño.",
 	  "levelEffect": 1,
 	  "name": "SpiritBlast",
 	  "type": "damage",
-	  "quantity": 1
+	  "quantity": 5
 	},
 	{
-	  "effect": "Realiza X cantidad de daño.",
+	  "effect": "Realiza 8 de daño.",
 	  "levelEffect": 1,
 	  "name": "GimmeCoin",
 	  "type": "damage",
-	  "quantity": 1
+	  "quantity": 8
 	},
 	{
-	  "effect": "Cura X cantidad de vida.",
+	  "effect": "Cura 3 de vida y roba carta.",
 	  "levelEffect": 1,
 	  "name": "LeftOvers",
-	  "type": "heal",
+	  "type": "healDraw",
 	  "quantity": 1
 	},
 	{
-	  "effect": "Suma X cantidad de armadura.",
+	  "effect": "Suma 5 de armadura.",
 	  "levelEffect": 1,
 	  "name": "BoardCastle",
 	  "type": "armor",
-	  "quantity": 1
+	  "quantity": 5
 	},
 	{
-	  "effect": "Suma X cantidad de armadura.",
+	  "effect": "Suma 3 de armadura y roba carta.",
 	  "levelEffect": 1,
 	  "name": "Leprosy",
-	  "type": "armor",
-	  "quantity": 1
+	  "type": "armorDraw",
+	  "quantity": 3
 	},
 	{
-	  "effect": "Causa X cantidad de daño.",
+	  "effect": "Cura 3 de vida y roba carta.",
 	  "levelEffect": 1,
 	  "name": "BoardCrisis",
-	  "type": "damage",
-	  "quantity": 1
+	  "type": "healDraw",
+	  "quantity": 3
 	}
   ]
 }

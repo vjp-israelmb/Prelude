@@ -8,15 +8,13 @@ public class Card
 	public int LevelEffect;
 	public string Type;
 	public int Quantity;
-	public int MinLevelRequired;
 
-	public Card(string name, string effect, int levelEffect, string type, int quantity, int minLevelRequired)
+	public Card(string name, string effect, int levelEffect, string type, int quantity)
 	{
 		Name = name;
 		Effect = effect;
 		LevelEffect = levelEffect;
 		Type = type;
 		Quantity = quantity;
-		MinLevelRequired = minLevelRequired;
 	}
 }
