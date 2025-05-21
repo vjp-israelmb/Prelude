@@ -1,14 +1,89 @@
-[gd_scene format=3 uid="uid://botkbd42vfkkn"]
+[gd_scene load_steps=10 format=3 uid="uid://botkbd42vfkkn"]
+
+[ext_resource type="Texture2D" uid="uid://bfca27068nrs3" path="res://Assets/Sprites/UI/Game Status/DLYH_Pause-Sheet.png" id="1_vc2r6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3g8ca"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 0, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbkkr"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 80, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6peyh"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 160, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iote4"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 240, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sgc8"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 320, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sq7qp"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 400, 280, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1fjr"]
+atlas = ExtResource("1_vc2r6")
+region = Rect2(0, 480, 280, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2bima"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3g8ca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbkkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6peyh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iote4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sgc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sq7qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1fjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1fjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sq7qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sgc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iote4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbkkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3g8ca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6peyh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
 
 [node name="MenuPause" type="CanvasLayer"]
 
-[node name="Label" type="Label" parent="."]
-offset_left = 246.0
-offset_top = 38.0
-offset_right = 617.0
-offset_bottom = 143.0
-scale = Vector2(1.57333, 1.8)
-text = "Game Paused"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(563, 100)
+sprite_frames = SubResource("SpriteFrames_2bima")
+autoplay = "default"
+frame_progress = 0.18333
