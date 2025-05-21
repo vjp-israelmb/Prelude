@@ -46,7 +46,7 @@ public partial class CombatManager : Node2D
 		} else if (enemy.name.ToLower().Contains("frogrosso"))
 		{
 			i = 0;
-		} else if (enemy.name.ToLower().Contains("mindy"))
+		} else if (enemy.name.ToLower().Contains("grilledbear"))
 		{
 			i = 2;
 		} else
@@ -174,7 +174,16 @@ public partial class CombatManager : Node2D
 			EndCombat();
 		} else if(enemy.hp <= 0 )
 		{
-			EndCombat();
+			if (enemy.name.ToLower().Contains("grilledbear"))
+			{
+				turnoBoss = 2;
+			} else if (enemy.name.ToLower().Contains("verdugo"))
+			{
+				turnoBoss = 2;
+			} else
+			{
+				EndCombat();
+			}
 		}
 	}
 
@@ -288,73 +297,85 @@ public partial class CombatManager : Node2D
 
 	private void turnoEnemigo()
 	{
-		if (enemy.mano.Count == 0)
+		// Doble turno del Boss
+		int turnoBoss = 1;
+		if (enemy.name.ToLower().Contains("grilledbear"))
 		{
-			GD.Print("El enemigo no tiene cartas.");
-			return;
+			turnoBoss = 2;
+		} else if (enemy.name.ToLower().Contains("verdugo"))
+		{
+			turnoBoss = 2;
 		}
-
-		int index = (int)GD.RandRange(0, enemy.mano.Count - 1);
-		Card card = enemy.mano[index];
-
-		GD.Print($"Carta jugada por el enemigo: {card.Name}");
-
-		if (card.LevelEffect <= 0)
+		
+		for (int i = 0; i < turnoBoss; i++)
 		{
-			GD.Print("La carta no tiene efecto restante.");
-			return;
-		}
+			if (enemy.mano.Count == 0)
+			{
+				GD.Print("El enemigo no tiene cartas.");
+				return;
+			}
 
-		switch (card.Type)
-		{
-			case "damage":
-				if (player.armor > 0)
-				{
-					player.armor -= card.Quantity;
-					if (player.armor < 0)
+			int index = (int)GD.RandRange(0, enemy.mano.Count - 1);
+			Card card = enemy.mano[index];
+
+			GD.Print($"Carta jugada por el enemigo: {card.Name}");
+
+			if (card.LevelEffect <= 0)
+			{
+				GD.Print("La carta no tiene efecto restante.");
+				return;
+			}
+
+			switch (card.Type)
+			{
+				case "damage":
+					if (player.armor > 0)
 					{
-						int remainingDamage = -player.armor;
-						player.armor = 0;
-						player.hp -= remainingDamage;
-						GD.Print($"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}");
+						player.armor -= card.Quantity;
+						if (player.armor < 0)
+						{
+							int remainingDamage = -player.armor;
+							player.armor = 0;
+							player.hp -= remainingDamage;
+							GD.Print($"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}");
+						}
+						else
+						{
+							GD.Print($"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}");
+						}
 					}
 					else
 					{
-						GD.Print($"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}");
+						player.hp -= card.Quantity;
+						GD.Print($"Recibiste {card.Quantity} de daño. Salud restante: {player.hp}");
 					}
-				}
-				else
-				{
-					player.hp -= card.Quantity;
-					GD.Print($"Recibiste {card.Quantity} de daño. Salud restante: {player.hp}");
-				}
-				break;
+					break;
 
-			case "heal":
-				enemy.hp += card.Quantity;
-				GD.Print($"El enemigo se curó {card.Quantity} de vida. Salud del enemigo: {enemy.hp}");
-				break;
+				case "heal":
+					enemy.hp += card.Quantity;
+					GD.Print($"El enemigo se curó {card.Quantity} de vida. Salud del enemigo: {enemy.hp}");
+					break;
 
-			case "armor":
-				enemy.armor += card.Quantity;
-				GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
-				break;
+				case "armor":
+					enemy.armor += card.Quantity;
+					GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
+					break;
 
-			case "damageArmor":
-				player.armor -= card.Quantity;
-				if (player.armor < 0)
-				{
-					player.armor = 0;
-				}
-				GD.Print($"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}");
-				break;
+				case "damageArmor":
+					player.armor -= card.Quantity;
+					if (player.armor < 0)
+					{
+						player.armor = 0;
+					}
+					GD.Print($"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}");
+					break;
 
-			default:
-				GD.Print("Tipo de carta enemigo no reconocido.");
-				break;
+				default:
+					GD.Print("Tipo de carta enemigo no reconocido.");
+					break;
+			}
+			UpdateUI();
 		}
-
-		UpdateUI();
 	}
 
 
