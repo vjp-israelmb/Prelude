@@ -1,101 +1,59 @@
-[gd_scene load_steps=16 format=3 uid="uid://djgu43i0mti72"]
+[gd_scene load_steps=10 format=3 uid="uid://djgu43i0mti72"]
 
 [ext_resource type="Script" uid="uid://djp25pdmfqpvq" path="res://Assets/Scripts/CombatManager.cs" id="1_b1qmc"]
 [ext_resource type="PackedScene" uid="uid://c5fg5ls8toa41" path="res://Assets/Prefabs/bgCombat.tscn" id="2_b1qmc"]
-[ext_resource type="Texture2D" uid="uid://cpoo4x7842rsy" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Idle/Frog_Idle-Sheet.png" id="3_qsdfg"]
+[ext_resource type="PackedScene" uid="uid://nch5vkrrupn8" path="res://Assets/Prefabs/frogrosso.tscn" id="2_npucx"]
+[ext_resource type="PackedScene" uid="uid://d1uadmv06t5gc" path="res://Assets/Prefabs/eagearl.tscn" id="3_vc71h"]
+[ext_resource type="PackedScene" uid="uid://bor83ma32ajkx" path="res://Assets/Prefabs/Obviously_Grilled_Bear.tscn" id="4_5ftao"]
 [ext_resource type="AudioStream" uid="uid://c1h753ydsxa0o" path="res://Assets/Music/Attack!.mp3" id="4_ikiw1"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ikiw1"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(0, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7iqcq"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(42, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_63i5k"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(84, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n6uc1"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(126, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bv0wh"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(168, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_528t7"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(210, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_npucx"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(252, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vc71h"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(294, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ftao"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(336, 0, 42, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uikfy"]
-atlas = ExtResource("3_qsdfg")
-region = Rect2(378, 0, 42, 42)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_61fm0"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ikiw1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7iqcq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_63i5k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n6uc1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bv0wh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_528t7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_npucx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vc71h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5ftao")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uikfy")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="PackedScene" uid="uid://c6no4s66vcxed" path="res://Assets/Prefabs/mindy.tscn" id="5_uikfy"]
+[ext_resource type="PackedScene" uid="uid://jjpq6n6he1yc" path="res://Assets/Prefabs/maggotBrain.tscn" id="6_61fm0"]
+[ext_resource type="PackedScene" uid="uid://bq7r8qlb4c05c" path="res://Assets/Prefabs/Lackalcia.tscn" id="7_cebgu"]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_b1qmc")
 
-[node name="Bg" parent="." instance=ExtResource("2_b1qmc")]
-
-[node name="Enemigo" type="AnimatedSprite2D" parent="."]
+[node name="Frogrosso" parent="." instance=ExtResource("2_npucx")]
 visible = false
-position = Vector2(589, 288)
-scale = Vector2(5.90476, 5.83333)
-sprite_frames = SubResource("SpriteFrames_61fm0")
-autoplay = "default"
-frame = 9
-frame_progress = 0.122392
+position = Vector2(593, 289)
+scale = Vector2(1.925, 1.925)
+script = null
+
+[node name="eagearl" parent="." instance=ExtResource("3_vc71h")]
+visible = false
+z_index = 1
+position = Vector2(596, 264)
+scale = Vector2(1.94, 1.94)
+script = null
+
+[node name="Obviously_Grilled_Bear" parent="." instance=ExtResource("4_5ftao")]
+visible = false
+position = Vector2(569, 327)
+scale = Vector2(2.05, 2.05)
+script = null
+
+[node name="mindy" parent="." instance=ExtResource("5_uikfy")]
+visible = false
+z_index = 1
+position = Vector2(587, 292)
+scale = Vector2(2.07, 2.07)
+script = null
+
+[node name="MaggotBrain" parent="." instance=ExtResource("6_61fm0")]
+visible = false
+z_index = 1
+position = Vector2(580, 275)
+scale = Vector2(2.44, 2.44)
+script = null
+
+[node name="Lackalcia" parent="." instance=ExtResource("7_cebgu")]
+visible = false
+z_index = 1
+position = Vector2(584, 330)
+scale = Vector2(2.115, 2.115)
+script = null
+
+[node name="Bg" parent="." instance=ExtResource("2_b1qmc")]
 
 [node name="CombatUI" type="CanvasLayer" parent="."]
 
