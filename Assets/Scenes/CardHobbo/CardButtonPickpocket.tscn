@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://btyygmlgyl6je"]
 
-[ext_resource type="Texture2D" uid="uid://cx242i1qlcibl" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_Pickpocket.png" id="1_wbkch"]
+[ext_resource type="Texture2D" uid="uid://by1xxnxaumusq" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_Pickpocket_big.png" id="1_wbkch"]
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_ebc37"]
 
 [node name="Button" type="Button"]

@@ -30,6 +30,7 @@ public partial class CombatManager : Node2D
 		{
 			mainNode.isInCombat = true;
 		}
+		GD.Print("¡Inicio del combate!");
 		
 		enemies = new PackedScene[] { frogrosso, eagearl};
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
@@ -39,32 +40,32 @@ public partial class CombatManager : Node2D
 		enemy = Enemy;
 		GD.Print("Instanciando enemigo: ", enemy.name);
 		
-		int i = 0;
-		if (enemy.name.ToLower().Contains("eagearl"))
-		{
-			i = 1;
-		} else if (enemy.name.ToLower().Contains("frogrosso"))
-		{
-			i = 0;
-		} else if (enemy.name.ToLower().Contains("grilledbear"))
-		{
-			i = 2;
-		} else
-		{
-			i = 3;
-		}
-		
-		// Instanciar el enemigo
-		var scene = enemies[i];
-		var enemyScene = scene.Instantiate<Node2D>();
-		var camera = mainNode.GetNode<Camera2D>("Camera2D");
-		var ground = mainNode.GetNode<StaticBody2D>("Ground");
-		float spawnX = camera.Position.X + Main.screen_size.X;
-		float spawnY = ground.Position.Y - 100;
-		enemyScene.Position = camera.Position;
-		enemyScene.Name = "enemy";
-		AddChild(enemyScene);
-		GD.Print("Escena instanciada: ", scene);
+		//int i = 0;
+		//if (enemy.name.ToLower().Contains("eagearl"))
+		//{
+			//i = 1;
+		//} else if (enemy.name.ToLower().Contains("frogrosso"))
+		//{
+			//i = 0;
+		//} else if (enemy.name.ToLower().Contains("GrilledBear"))
+		//{
+			//i = 2;
+		//} else
+		//{
+			//i = 3;
+		//}
+		//
+		//// Instanciar el enemigo
+		//var scene = enemies[i];
+		//var enemyScene = scene.Instantiate<Node2D>();
+		//var camera = mainNode.GetNode<Camera2D>("Camera2D");
+		//var ground = mainNode.GetNode<StaticBody2D>("Ground");
+		//float spawnX = camera.Position.X + Main.screen_size.X;
+		//float spawnY = ground.Position.Y - 100;
+		//enemyScene.Position = camera.Position;
+		//enemyScene.Name = "enemy";
+		//AddChild(enemyScene);
+		//GD.Print("Escena instanciada: ", scene);
 		
 		cagarMano();
 	}
@@ -166,6 +167,7 @@ public partial class CombatManager : Node2D
 				}
 			}
 			hand.Remove(card);
+			GD.Print("Carta perdida");
 		}
 		GD.Print("Cartas: " + hand.Count);
 		if(hand.Count == 0 || player.hp <= 0)
@@ -174,14 +176,24 @@ public partial class CombatManager : Node2D
 			EndCombat();
 		} else if(enemy.hp <= 0 )
 		{
-			if (enemy.name.ToLower().Contains("grilledbear"))
+			if (enemy.name.Contains("GrilledBear"))
 			{
+<<<<<<< Updated upstream
 //				turnoBoss = 2;
 			} else if (enemy.name.ToLower().Contains("verdugo"))
 			{
 			//	turnoBoss = 2;
+=======
+				GD.Print("Victoria contra el Boss");
+				robarCarta();
+				GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
+			} else if (enemy.name.ToLower().Contains("verdugo"))
+			{
+				
+>>>>>>> Stashed changes
 			} else
 			{
+				robarCarta();
 				EndCombat();
 			}
 		}
@@ -260,31 +272,53 @@ public partial class CombatManager : Node2D
 
 	private void robarCarta()
 	{
-		var loader = new CardLoader();
-		// Eliminar todos los botones hijos de handContainer
-		foreach (Node child in handContainer.GetChildren())
+		if (player.mano.Count < 5)
 		{
-			child.QueueFree();
-		}
-		var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cards.json");
-
-		if (allDecks.ContainsKey(player.name))
-		{
-			var deck = allDecks[player.name];
-			if (deck.Count > 0)
+			var loader = new CardLoader();
+			// Eliminar todos los botones hijos de handContainer
+			foreach (Node child in handContainer.GetChildren())
 			{
-				int index = (int)GD.RandRange(0, deck.Count - 1);
-				Card card = deck[index];
-
-				if (player.mano.Count < 5)
-				{
-					player.mano.Add(card);
-				}
+				child.QueueFree();
 			}
-		}
-		else
+			var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cards.json");
+
+			if (allDecks.ContainsKey(player.name))
+			{
+				var deck = allDecks[player.name];
+				if (deck.Count > 0)
+				{
+					int cardDamage = 0;
+					for (int i = 0; i < player.mano.Count; i++)
+					{
+						if (player.mano[i].Type.Contains("damage"))
+						{
+							cardDamage++;
+						}
+					}
+
+					int index;
+					Card card;
+					if (cardDamage < 2)
+					{
+						do
+						{
+							index = (int)GD.RandRange(0, deck.Count - 1);
+							card = deck[index];
+							player.mano.Add(card);
+						} while (card.Type.Contains("damage"));
+					} else {
+						index = (int)GD.RandRange(0, deck.Count - 1);
+						card = deck[index];
+						player.mano.Add(card);
+					}
+				}
+			} else
+			{
+				GD.PrintErr("No se encontró el mazo en el archivo JSON.");
+			}
+		} else
 		{
-			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
+			GD.PrintErr("Mano llena.");
 		}
 		
 		cagarMano();
@@ -299,7 +333,7 @@ public partial class CombatManager : Node2D
 	{
 		// Doble turno del Boss
 		int turnoBoss = 1;
-		if (enemy.name.ToLower().Contains("grilledbear"))
+		if (enemy.name.Contains("GrilledBear"))
 		{
 			turnoBoss = 2;
 		} else if (enemy.name.ToLower().Contains("verdugo"))
@@ -386,8 +420,8 @@ public partial class CombatManager : Node2D
 		{
 			child.QueueFree();
 		}
-		var enemyScene = GetNode<Node2D>("enemy");
-		enemyScene.QueueFree();
+		//var enemyScene = GetNode<Node2D>("enemy");
+		//enemyScene.QueueFree();
 		GD.Print("Fin del combate");
 		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
 		mainNode.EndCombat(player);

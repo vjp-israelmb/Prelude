@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2ch4d727x4dt"]
 
-[ext_resource type="Texture2D" uid="uid://bme1jc4yki0rj" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_BladeKiss.png" id="1_nkfhy"]
+[ext_resource type="Texture2D" uid="uid://c8vsvq4w17h4l" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_BladeKiss_big.png" id="1_nkfhy"]
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_n1yek"]
 
 [node name="Button" type="Button"]

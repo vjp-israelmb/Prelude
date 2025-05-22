@@ -99,7 +99,6 @@ public partial class Main : Node
 		}
 
 		combatUI.inicioCombate(datosPlayer, enemigoActual);
-		GD.Print("¡Inicio del combate!");
 	}
 	
 	public void EndCombat(Jugador datos)
@@ -195,25 +194,36 @@ public partial class Main : Node
 	
 	public void setEnemy(String enemigo)
 	{
+		GD.Print("Seteo enemigo:  " + enemigo);
 		if (enemigo.ToString().ToLower().Contains("eagearl"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
+			enemigoActual.hp = 10;
+			enemigoActual.armor = 5;
 			manoEnemigo("Eagearl");
 		} else if (enemigo.ToString().ToLower().Contains("frogrosso"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
+			enemigoActual.hp = 15;
+			enemigoActual.armor = 0;
 			manoEnemigo("Frogrosso");
-		} else if (enemigo.ToString().ToLower().Contains("grilledbear"))
+		} else if (enemigo.ToString().ToLower().Contains("obviously_grilled_bear"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "GrilledBear");
+			enemigoActual.hp = 20;
+			enemigoActual.armor = 20;
 			manoEnemigo("GrilledBear");
 		} else if (enemigo.ToString().ToLower().Contains("maggotbrian"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
+			enemigoActual.hp = 10;
+			enemigoActual.armor = 5;
 			manoEnemigo("MaggotBrian");
 		} else if (enemigo.ToString().ToLower().Contains("mindy"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Mindy");
+			enemigoActual.hp = 5;
+			enemigoActual.armor = 10;
 			manoEnemigo("Mindy");
 		}
 	}
@@ -273,7 +283,7 @@ public partial class Main : Node
 		setEnemy(boss.Name.ToString().ToLower());
 		AddChild(boss);
 
-		GD.Print("Boss spawned!");
+		GD.Print("Boss spawned!   " + boss.Name.ToString().ToLower());
 	}
 	//Spawn aleatoria de obstaculos
 	public void SpawnRandomObstacle()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dhascw2ovhu0k"]
 
-[ext_resource type="Texture2D" uid="uid://cr0rpg60f0sh3" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_Leprosy.png" id="1_pol5e"]
+[ext_resource type="Texture2D" uid="uid://droyjl1xdd727" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_Leprosy_big.png" id="1_pol5e"]
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_5mfgb"]
 
 [node name="Button" type="Button"]

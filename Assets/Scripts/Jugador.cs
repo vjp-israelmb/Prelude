@@ -44,15 +44,30 @@ public partial class Jugador : Node
 	{
 		mano.Clear();
 
+		int cardDamage = 0;
 		for (int i = 0; i < 5; i++)
 		{
 			if (deck.Count > 0)
 			{
-				int index = (int)GD.RandRange(0, deck.Count - 1);
-				Card card = deck[index];
-				card.LevelEffect = 3;
-				
-				mano.Add(card);
+				int index;
+				Card card;
+				if (cardDamage < 2)
+				{
+					do
+					{
+						index = (int)GD.RandRange(0, deck.Count - 1);
+						card = deck[index];
+					} while (!card.Type.Contains("damage"));
+					cardDamage++;
+					card.LevelEffect = 3;
+					GD.Print("Meto daño.   " + card.Name);
+					mano.Add(card);
+				} else {
+					index = (int)GD.RandRange(0, deck.Count - 1);
+					card = deck[index];
+					card.LevelEffect = 3;
+					mano.Add(card);
+				}
 			}
 		}
 	}
