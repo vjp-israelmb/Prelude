@@ -71,6 +71,11 @@ public partial class Jugador : Node
 			}
 		}
 	}
+	
+	public void rellenarMano(List<Card> Mano)
+	{
+		mano = Mano;
+	}
 
 	public void subirNivelCartas()
 	{

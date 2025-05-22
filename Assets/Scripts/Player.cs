@@ -71,24 +71,55 @@ public partial class Player : CharacterBody2D
 	
 	public override void _Ready()
 	{
-		// Obtener el nodo padre y hacerle cast a tipo Main
-		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
-		if (mainNode is Main main)
+		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
+		if (data != null)
 		{
-			Jugador datos = main.setDatosPersonaje();
+			if (data.nivel == 2)
+			{
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main2>("Main");
+				if (mainNode is Main2 main)
+				{
+					Jugador datos = main.setDatosPersonaje();
 
-			// Asignar los datos del jugador
-			name = datos.name;
-			hp = datos.hp;
-			hpInicial = datos.hp;
-			armor = datos.armor;
+					// Asignar los datos del jugador
+					name = datos.name;
+					hp = datos.hp;
+					hpInicial = datos.hp;
+					armor = datos.armor;
 
-			GD.Print($"Jugador cargado desde Main: {name}, HP: {hp}, Armor: {armor}");
+					GD.Print($"Jugador cargado desde Main: {name}, HP: {hp}, Armor: {armor}");
+				}
+				else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde Player.");
+				}
+			} else {
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+				if (mainNode is Main main)
+				{
+					Jugador datos = main.setDatosPersonaje();
+
+					// Asignar los datos del jugador
+					name = datos.name;
+					hp = datos.hp;
+					hpInicial = datos.hp;
+					armor = datos.armor;
+
+					GD.Print($"Jugador cargado desde Main: {name}, HP: {hp}, Armor: {armor}");
+				}
+				else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde Player.");
+				}
+			}
 		}
 		else
 		{
-			GD.PrintErr("No se pudo obtener el nodo Main desde Player.");
+			GD.Print("No se encontró DataCarrier");
 		}
+		
 		try {
 			audioJump = GetNode<AudioStreamPlayer>("AudioJump");
 			audioHit = GetNode<AudioStreamPlayer>("AudioHit");

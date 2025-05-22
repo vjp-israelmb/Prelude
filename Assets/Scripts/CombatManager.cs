@@ -178,19 +178,24 @@ public partial class CombatManager : Node2D
 		{
 			if (enemy.name.Contains("GrilledBear"))
 			{
-<<<<<<< Updated upstream
-//				turnoBoss = 2;
-			} else if (enemy.name.ToLower().Contains("verdugo"))
-			{
-			//	turnoBoss = 2;
-=======
 				GD.Print("Victoria contra el Boss");
 				robarCarta();
+				
+				Node dataNode = GetTree().Root.GetNodeOrNull("DataCarrier");
+				if (dataNode != null && dataNode is DataCarrier data)
+				{
+					data.player = player;
+					data.nivel = 2;
+				}
+				else
+				{
+					GD.Print("No se encontró DataCarrier");
+				}
+				
 				GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
 			} else if (enemy.name.ToLower().Contains("verdugo"))
 			{
 				
->>>>>>> Stashed changes
 			} else
 			{
 				robarCarta();
@@ -343,12 +348,6 @@ public partial class CombatManager : Node2D
 		
 		for (int i = 0; i < turnoBoss; i++)
 		{
-			if (enemy.mano.Count == 0)
-			{
-				GD.Print("El enemigo no tiene cartas.");
-				return;
-			}
-
 			int index = (int)GD.RandRange(0, enemy.mano.Count - 1);
 			Card card = enemy.mano[index];
 

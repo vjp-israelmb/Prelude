@@ -72,6 +72,17 @@ public partial class Main : Node
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
 		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
+		
+		// Crear el portador de datos
+		DataCarrier data = new DataCarrier();
+		data.nivel = 1;
+
+		// Mantenerlo vivo tras el cambio de escena
+		data.Name = "DataCarrier";
+		//data.SetAsToplevel(true);
+		//data.Owner = null; // desvincula del current scene tree para evitar ser destruido
+		GetTree().Root.AddChild(data); // lo añadimos al nodo raíz
+		
 		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
 		loadEnemy();

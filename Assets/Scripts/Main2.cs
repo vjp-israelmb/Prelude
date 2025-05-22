@@ -136,22 +136,16 @@ public partial class Main2 : Node
 //region Load of player and enemy
 	 private void LoadPlayer()
 	{
-		// Leer archivo JSON de personajes
-		string path = "res://Assets/Resources/personajes.json";
-		if (!FileAccess.FileExists(path))
+		// Cargar personaje desde nivel 1
+		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
+		if (data != null)
 		{
-			GD.PrintErr("Archivo de personajes no encontrado.");
-			return;
+			datosPlayer = data.player;
 		}
-		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
-		string jsonText = file.GetAsText();
-
-		List<Jugador> personajes = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
-		GD.Print("Cargando jugador...");
-		// Buscar personaje seleccionado
-		string selectedName = Global.namePlayer ?? "Vagabundo";
-		datosPlayer = personajes.Find(p => p.name == selectedName);
-		datosPlayer.setMano();
+		else
+		{
+			GD.Print("No se encontró DataCarrier");
+		}
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);

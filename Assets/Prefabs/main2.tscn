@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://csp4xiiekxsap" path="res://Assets/Prefabs/armor.tscn" id="5_voihx"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_voihx"]
 [ext_resource type="PackedScene" uid="uid://djgu43i0mti72" path="res://Assets/Scenes/Combat.tscn" id="8_gimir"]
-[ext_resource type="AudioStream" uid="uid://dbpm3o6frjql3" path="res://Assets/Music/Keep Moving.mp3" id="9_kqtrx"]
+[ext_resource type="AudioStream" uid="uid://bef8tfkpc8y8" path="res://Assets/Music/Keep Moving.mp3" id="9_kqtrx"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
 script/source = "using Godot;

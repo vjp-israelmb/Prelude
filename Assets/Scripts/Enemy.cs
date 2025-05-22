@@ -14,21 +14,37 @@ public partial class Enemy : Area2D
 		{
 			GD.Print("¡Jugador chocado con enemigo!");
 			// Buscar el nodo padre
-			Main main = GetParent() as Main;
-
-			// Si no es el padre directo, intenta buscarlo en el árbol
-			if (main == null)
+			var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
+			if (data != null)
 			{
-				main = GetTree().Root.GetNodeOrNull<Main>("Main");
-			}
-
-			if (main != null)
-			{
-				main.StartCombat();
+				if (data.nivel == 2)
+				{
+					// Obtener el nodo padre y hacerle cast a tipo Main
+					var mainNode = GetTree().Root.GetNodeOrNull<Main2>("Main");
+					if (mainNode is Main2 main)
+					{
+						main.StartCombat();
+					}
+					else
+					{
+						GD.PrintErr("No se pudo obtener el nodo Main desde Enemy.");
+					}
+				} else {
+					// Obtener el nodo padre y hacerle cast a tipo Main
+					var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+					if (mainNode is Main main)
+					{
+						main.StartCombat();
+					}
+					else
+					{
+						GD.PrintErr("No se pudo obtener el nodo Main desde Enemy.");
+					}
+				}
 			}
 			else
 			{
-				GD.PrintErr("No se pudo encontrar el nodo Main.");
+				GD.Print("No se encontró DataCarrier");
 			}
 		}
 	}
