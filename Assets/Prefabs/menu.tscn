@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://d2aor17ovkrxm"]
+[gd_scene load_steps=23 format=3 uid="uid://d2aor17ovkrxm"]
 
 [ext_resource type="Script" uid="uid://dh5q6q42s7dbx" path="res://Assets/Scripts/Menu.cs" id="1_71n16"]
 [ext_resource type="Texture2D" uid="uid://divuqpvaydqay" path="res://Assets/Sprites/Backgrounds/MainMenu/MainMenuPixel-Sheet.png" id="2_k3vlr"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://5m04ucgq8wcs" path="res://Assets/Sprites/UI/Buttons/StartGame/Button_StartGame-Sheet.png" id="5_wglyt"]
 [ext_resource type="PackedScene" uid="uid://bg2e60obi8k7g" path="res://Assets/Prefabs/selected.tscn" id="6_8acst"]
 [ext_resource type="AudioStream" uid="uid://chpck4krih1ce" path="res://Assets/Music/DLYH.mp3" id="8_yf4jy"]
-[ext_resource type="Texture2D" uid="uid://txhfjt20fjve" path="res://Assets/Sprites/UI/Logo/DLYH_Logo_BloodAnim_big-Sheet.png" id="10_w10l6"]
+[ext_resource type="AudioStream" uid="uid://4gsub23uwexi" path="res://Assets/VFX/Selection.mp3" id="11_ykpgj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yf4jy"]
 atlas = ExtResource("2_k3vlr")
@@ -93,91 +93,14 @@ animations = [{
 "speed": 2.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xf3lf"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(0, 0, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_347cs"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(626, 0, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1q7ww"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(1252, 0, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1xc61"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(1878, 0, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_58aos"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(0, 244, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_17tgm"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(626, 244, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kxabe"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(1252, 244, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ajfe"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(1878, 244, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ex2s8"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(0, 488, 626, 244)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qsxt1"]
-atlas = ExtResource("10_w10l6")
-region = Rect2(626, 488, 626, 244)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_670on"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xf3lf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_347cs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1q7ww")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1xc61")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_58aos")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_17tgm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kxabe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ajfe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ex2s8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qsxt1")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[node name="Menu" type="CanvasLayer" node_paths=PackedStringArray("vagabondArea", "knightArea", "knightSelected", "hoboSelected", "startButton")]
+[node name="Menu" type="CanvasLayer" node_paths=PackedStringArray("vagabondArea", "knightArea", "knightSelected", "hoboSelected", "startButton", "selection")]
 script = ExtResource("1_71n16")
 vagabondArea = NodePath("CharacterSelector/vagabond/Area2D")
 knightArea = NodePath("CharacterSelector/Knight/Area2D")
 knightSelected = NodePath("KnightSelected")
 hoboSelected = NodePath("HoboSelected")
 startButton = NodePath("StartButton")
+selection = NodePath("Selection")
 
 [node name="BackGroundMenu" type="AnimatedSprite2D" parent="."]
 position = Vector2(577, 322.5)
@@ -253,11 +176,8 @@ stream = ExtResource("8_yf4jy")
 autoplay = true
 parameters/looping = false
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(554, 138)
-scale = Vector2(1.085, 0.953)
-sprite_frames = SubResource("SpriteFrames_670on")
-autoplay = "default"
+[node name="Selection" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ykpgj")
 
 [connection signal="mouse_entered" from="CharacterSelector/vagabond/Area2D" to="." method="_on_vagabond_mouse_entered"]
 [connection signal="mouse_entered" from="CharacterSelector/Knight/Area2D" to="." method="_on_knigth_mouse_entered"]

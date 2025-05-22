@@ -72,7 +72,7 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		// Obtener el nodo padre y hacerle cast a tipo Main
-		var mainNode = GetParent();
+		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
 		if (mainNode is Main main)
 		{
 			Jugador datos = main.setDatosPersonaje();

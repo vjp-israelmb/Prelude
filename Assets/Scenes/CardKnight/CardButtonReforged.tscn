@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dwvk7pqqgxyt0"]
 
-[ext_resource type="Texture2D" uid="uid://tmhf1bho8y2" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_Reforged.png" id="1_4osdr"]
+[ext_resource type="Texture2D" uid="uid://dae3cyrsliskg" path="res://Assets/Sprites/Cards/Knight_Cards/Knight_Reforged_big.png" id="1_4osdr"]
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_sxhgd"]
 
 [node name="Button" type="Button"]

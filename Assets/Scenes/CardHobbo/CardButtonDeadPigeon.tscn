@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc144d3sxfowk"]
 
-[ext_resource type="Texture2D" uid="uid://bqiq1jfoycet3" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_DeadPigeon.png" id="1_5jsjx"]
+[ext_resource type="Texture2D" uid="uid://dn2l3downd2sp" path="res://Assets/Sprites/Cards/Hobo_Cards/Card_DeadPigeon_big.png" id="1_5jsjx"]
 [ext_resource type="Script" uid="uid://cnl7p8oi2ois6" path="res://Assets/Scripts/CardButton.cs" id="2_mfd4j"]
 
 [node name="Button" type="Button"]

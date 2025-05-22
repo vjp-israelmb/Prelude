@@ -1,32 +1,32 @@
 [
   {
 	"name": "Eagearl",
-	"hp": 20,
-	"armor": 15
+	"hp": 10,
+	"armor": 5
   },
   {
 	"name": "Frogrosso",
-	"hp": 30,
+	"hp": 15,
 	"armor": 0
   },
   {
 	"name": "MaggotBrian",
-	"hp": 30,
-	"armor": 10
+	"hp": 10,
+	"armor": 5
   },
   {
 	"name": "Mindy",
-	"hp": 20,
-	"armor": 25
+	"hp": 5,
+	"armor": 10
   },
   {
 	"name": "GrilledBear",
-	"hp": 80,
+	"hp": 20,
 	"armor": 20
   },
   {
 	"name": "Verdugo",
-	"hp": 80,
-	"armor": 20
+	"hp": 20,
+	"armor": 30
   }
 ]

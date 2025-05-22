@@ -2,14 +2,16 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Linq;
 
 public partial class Main2 : Node
 {
-//region Game Variables, Scene References and Configuration
+//region  Game Variables, Scene References and Configuration
+	//Jugador actual 
 	[Export] private PackedScene playerScene; // Asigna escena  de jugador en el editor
 	//booleanos para controlas diferentes apartados del juego  
 	private bool bossSpawned=false;
-	private bool isInCombat=false;
+	public bool isInCombat=false;
 	private bool gamePaused=false;
 	private bool gameOver = false;
 	// pre cargamos los Obstáculos
@@ -19,7 +21,7 @@ public partial class Main2 : Node
 	private double spawnTimer = 0;
 	//Intervalos en los que aparece los obstaculo
 	private const double SPAWN_INTERVAL = 3.0;
-	// Enemigos
+	// Enemigos y boss
 	private PackedScene maggotBrain = GD.Load<PackedScene>("res://Assets/Prefabs/maggotBrain.tscn");
 	private PackedScene mindy = GD.Load<PackedScene>("res://Assets/Prefabs/mindy.tscn");
 	private PackedScene lackalcia = GD.Load<PackedScene>("res://Assets/Prefabs/Lackalcia.tscn");
@@ -32,12 +34,13 @@ public partial class Main2 : Node
 
 	// Posiciones iniciales del jugador,la cámara Y suelo
 	public static readonly Vector2 PLAYER_START_POS = new Vector2(70,491); //posicion inicial del jugador
-	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(962,620); //posicion inicial del suelo
+	public static readonly Vector2 GROUND_INITIAL_POS = new Vector2(985,608); //posicion inicial del suelo
 	public static readonly Vector2 CAM_START_OFFSET = new Vector2(576, 325); // Ajuste relativo al jugador
 	public static  Vector2 screen_size= new Vector2(576, 325);//Tamaño de la pantalla
 
 	//Puntuacion/Recorrido que lleva hecho el jugador 
 	private float score=0f;
+	private int levelUp = 0; 
 	// Velocidades del jugador
 	private float speed;
 	public const float START_SPEED = 700.0f;
@@ -63,13 +66,15 @@ public partial class Main2 : Node
 	{	//Obtener tamaño de la pantalla
 		screen_size=DisplayServer.WindowGetSize();
 		// Obtener referencias a los nodos
+		combatUI = GetNode<CombatManager>("Combate/Combat");
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
 		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
-		//Cargamos jugador seleccionado 
+		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
+		loadEnemy();
 		player = GetNode<CharacterBody2D>("Player");
 		camera = GetNode<Camera2D>("Camera2D");
 		ground = GetNode<StaticBody2D>("Ground");
@@ -85,11 +90,7 @@ public partial class Main2 : Node
 		{
 			return;
 		}
-		
-		//Cambiamos a true;
-		isInCombat=true;
-		// Pausar el juego, detener movimiento del jugador, ocultar HUD, etc.
-		gamePaused = true;
+		RemoveObstacles();
 		var combate = GetNode<CanvasLayer>("Combate");
 		combate.Visible = true;
 		
@@ -103,7 +104,7 @@ public partial class Main2 : Node
 	
 	public void EndCombat(Jugador datos)
 	{
-		gamePaused = false;
+		isInCombat=false;
 		combatUI.Visible = false;
 		
 		var combate = GetNode<CanvasLayer>("Combate");
@@ -113,13 +114,27 @@ public partial class Main2 : Node
 			jugador.canJump=true;
 		}
 		
-		datosPlayer.hp = datos.hp;
-		datosPlayer.armor = datos.armor;
-		GD.Print("Fin del combate, retomando el juego");
+		if (datos.hp > 0)
+		{
+			datosPlayer.hp = datos.hp;
+			datosPlayer.armor = datos.armor;
+			jugador.hp = datos.hp;
+			jugador.armor = datos.armor;
+			jugador.UpdateHeart();
+			GD.Print("Fin del combate, retomando el juego");
+		} else
+		{
+			jugador.hp = 1;
+			jugador.armor = 0;
+			jugador.Hit();
+			GD.Print("Muerto en combate");
+		}
+		
 	}
 //endregion
-	//Carga jugador 
- private void LoadPlayer()
+	
+//region Load of player and enemy
+	 private void LoadPlayer()
 	{
 		// Leer archivo JSON de personajes
 		string path = "res://Assets/Resources/personajes.json";
@@ -136,6 +151,7 @@ public partial class Main2 : Node
 		// Buscar personaje seleccionado
 		string selectedName = Global.namePlayer ?? "Vagabundo";
 		datosPlayer = personajes.Find(p => p.name == selectedName);
+		datosPlayer.setMano();
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
@@ -151,7 +167,72 @@ public partial class Main2 : Node
 			player.Connect("PlayerDied", new Callable(this, nameof(OnPlayerDeath)));
 		}
 	}
-//region Spawn and remove From enemy, obstacle and boss
+	
+	public void loadEnemy()
+	{
+		string path = "res://Assets/Resources/enemigos.json";
+		if (!FileAccess.FileExists(path))
+		{
+			GD.PrintErr("Archivo de enemigos no encontrado.");
+			return;
+		}
+		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+		string jsonText = file.GetAsText();
+
+		listaEnemigos = JsonSerializer.Deserialize<List<Jugador>>(jsonText);
+	}
+//endregion
+	
+	public void actualizarPlayer(int Hp, int Armor) {
+		datosPlayer.hp = Hp;
+		datosPlayer.armor = Armor;
+	}
+	
+	public Jugador setDatosPersonaje()
+	{
+		return datosPlayer;
+	}
+	
+	public void setEnemy(String enemigo)
+	{
+		if (enemigo.ToString().ToLower().Contains("eagearl"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
+			manoEnemigo("Eagearl");
+		} else if (enemigo.ToString().ToLower().Contains("frogrosso"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
+			manoEnemigo("Frogrosso");
+		} else if (enemigo.ToString().ToLower().Contains("grilledbear"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "GrilledBear");
+			manoEnemigo("GrilledBear");
+		} else if (enemigo.ToString().ToLower().Contains("maggotbrian"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
+			manoEnemigo("MaggotBrian");
+		} else if (enemigo.ToString().ToLower().Contains("mindy"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Mindy");
+			manoEnemigo("Mindy");
+		}
+	}
+	
+	private void manoEnemigo(String name)
+	{
+		CardLoader loader = new CardLoader();
+		var allDecks = loader.LoadCardsFromFile("res://Assets/Resources/cardsEnemy.json");
+
+		if (allDecks.ContainsKey(name))
+		{
+			List<Card> mano = allDecks[name];
+			enemigoActual.mano = mano;
+		} else
+		{
+			GD.PrintErr("No se encontró el mazo en el archivo JSON.");
+		}
+	}
+	//region Spawn and remove From enemy, obstacle and boss
 	//Spawn aleatoria de enemigos
 	public void SpawnRandomEnemy()
 	{
@@ -171,24 +252,25 @@ public partial class Main2 : Node
 		//Si es volador lo ubicamos un poco mas arriba 
 		if (enemy.Name.ToString().ToLower().Contains("mindy")) // ejemplo de Eagearl
 		{
-			 spawnY -= 200; // que aparezca volando más arriba
+			spawnY -= 200; // que aparezca volando más arriba
 		}
 		enemy.Position = new Vector2(spawnX, spawnY);
+		setEnemy(enemy.Name.ToString().ToLower());
 		GD.Print("Enemigo Spawneado: "+enemy.Name.ToString());
 		AddChild(enemy);
 	}
-	
 	private void SpawnBoss()
 	{
 		if (bossSpawned) return; // Solo se puede spawnear una vez
 		bossSpawned = true;
 		var boss = lackalcia.Instantiate<Node2D>();
-
-		// Posición: fuera de la cámara y a la altura del suelo
+//
+		//Posición: fuera de la cámara y a la altura del suelo
 		float spawnX = camera.Position.X + screen_size.X + 150;
-		float spawnY = ground.Position.Y-185;
-
+		float spawnY = ground.Position.Y-200;
+//
 		boss.Position = new Vector2(spawnX, spawnY);
+		setEnemy(boss.Name.ToString().ToLower());
 		AddChild(boss);
 
 		GD.Print("Boss spawned!");
@@ -206,16 +288,20 @@ public partial class Main2 : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+16.5f;
-
+		float spawnY=0f;
+		if(obstacle.Name.ToString().ToLower().Contains("poison")){
+			//Posicion manual para el poison
+			 spawnY = 626.55f;
+		}else{
+			 spawnY = ground.Position.Y;
+		}
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
 		{
 			spawnY -= 100;
 		}
-
 		obstacle.Position = new Vector2(spawnX,spawnY);
-
+		
 		AddChild(obstacle);
 	}
 	private void RemoveObstacles()
@@ -239,9 +325,8 @@ public partial class Main2 : Node
 		}
 	}
 //endregion
-
-
-
+	
+	
 	public void NewGame()
 	{
 		// Posicionar al jugador en su punto de inicio
@@ -249,15 +334,12 @@ public partial class Main2 : Node
 		player.Velocity = Vector2.Zero;
 		progress.Value=0;
 		// 🔹 Posicionar la cámara RELATIVAMENTE al jugador
-		camera.Position =CAM_START_OFFSET;
-		ground.Position =GROUND_INITIAL_POS;
+		camera.Position = CAM_START_OFFSET;
+		ground.Position = GROUND_INITIAL_POS;
 	}
 
 	  public override void _Process(double delta)
-	  {	
-		//Si es juego acabado no pasa y no avanza la camara ni el jugador 
-		if (gameOver)
-		return;
+	  {			
 		//Pausa el juego cuando se pulsa escape(En el caso del ordenador)
 		  if (Input.IsActionJustPressed("pause_key"))
 		  {
@@ -265,8 +347,8 @@ public partial class Main2 : Node
 			gamePaused = !gamePaused;
 			menuOnGame.Visible=!gamePaused;
 		 }
-		
-		if(!bossSpawned && progress.Value==progress.MaxValue){
+		//Si la barra de nivel llega al maximo aparece el boss
+		if(progress.Value==progress.MaxValue){
 			SpawnBoss();
 		}
 		if (gamePaused)
@@ -301,6 +383,7 @@ public partial class Main2 : Node
 			camera.Position += new Vector2(speed * (float)delta, 0);
 			//Suma puntuacion si no esta en combate 
 			score+=5;
+			levelUp += 5;
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
@@ -331,6 +414,9 @@ public partial class Main2 : Node
 					}
 				}
 		}
+		
+		jugador.UpdateHeart();
+		
 		// generacion de suelo unico de manera indefinida
 		if (camera.Position.X - ground.Position.X > screen_size.X * 1.3)
 		{
@@ -340,11 +426,20 @@ public partial class Main2 : Node
 			newGroundPos.X += screen_size.X;
 			ground.Position = newGroundPos;
 		}
+		
+		//Comprobacion nivel Cartas
+		if(levelUp == 50000)
+		{
+			levelUp = 0;
+			datosPlayer.subirNivelCartas();
+		}
 	  }
+	
 	//Muerte del jugador 
 	private void OnPlayerDeath()
 	{
 		gameOver = true;
+		
 		// Espera 1.5 segundos para que la animación se vea
 		GetTree().CreateTimer(1.5).Timeout += () =>
 		{

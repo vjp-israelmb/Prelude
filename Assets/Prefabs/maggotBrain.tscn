@@ -1,8 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://jjpq6n6he1yc"]
+[gd_scene load_steps=21 format=3 uid="uid://jjpq6n6he1yc"]
 
 [ext_resource type="Texture2D" uid="uid://dd6drue5q6j5a" path="res://Assets/Sprites/Characters/Enemies/Maggot Brian/Idle/Maggot Brian_big-Sheet.png" id="1_b3abe"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_mgea1"]
 [ext_resource type="Texture2D" uid="uid://b5ae3dj2m3s4o" path="res://Assets/Sprites/Characters/Enemies/Maggot Brian/Hit/Maggot Brian_Hit_big-Sheet.png" id="2_8vwpa"]
+[ext_resource type="AudioStream" uid="uid://gdrq2x8lhgl4" path="res://Assets/VFX/Enemies/Maggot Brian.mp3" id="4_ms6dw"]
+[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="5_xpk4y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_23j4q"]
 atlas = ExtResource("2_8vwpa")
@@ -125,5 +127,13 @@ frame_progress = 0.840926
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6cpsk")
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ms6dw")
+parameters/looping = false
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_xpk4y")
+parameters/looping = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

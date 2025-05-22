@@ -9,7 +9,7 @@ public partial class Menu : CanvasLayer
 	[Export] private Node2D knightSelected;
 	[Export] private Node2D hoboSelected;
 	[Export] private Button startButton;
-	
+	[Export] private AudioStreamPlayer selection;
 	// Variable estática para guardar la selección
 	public static PackedScene SelectedCharacter { get; private set; }
 	
@@ -26,6 +26,7 @@ public partial class Menu : CanvasLayer
 
 private void SelectCharacter(string characterPath)
 {
+	selection.Play();
 	GD.Print("Seleccionando: " + characterPath);
 	
 	//SelectedCharacter = GD.Load<PackedScene>();

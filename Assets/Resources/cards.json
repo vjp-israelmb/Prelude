@@ -1,39 +1,39 @@
 {
   "Guerrero": [
 	{
-	  "effect": "Realiza 5 de daño.",
+	  "effect": "Realiza 8 de daño.",
 	  "levelEffect": 1,
 	  "name": "BladeKiss",
 	  "type": "damage",
-	  "quantity": 5
+	  "quantity": 8
 	},
 	{
-	  "effect": "Suma 5 de armadura.",
+	  "effect": "Suma 7 de armadura.",
 	  "levelEffect": 1,
 	  "name": "RaiseShields",
 	  "type": "armor",
-	  "quantity": 5
+	  "quantity": 7
 	},
 	{
-	  "effect": "Realiza un ataque 10 daño a la armadura del enemigo.",
+	  "effect": "Realiza un ataque 16 daño a la armadura del enemigo.",
 	  "levelEffect": 1,
 	  "name": "Whack",
 	  "type": "damageArmor",
-	  "quantity": 10
+	  "quantity": 16
 	},
 	{
-	  "effect": "Cura 5 cantidad de vida.",
+	  "effect": "Cura 6 cantidad de vida.",
 	  "levelEffect": 1,
 	  "name": "Bandage",
 	  "type": "heal",
-	  "quantity": 5
+	  "quantity": 6
 	},
 	{
-	  "effect": "Suma 2 de armadura y cura 2.",
+	  "effect": "Suma 4 de armadura y cura 4.",
 	  "levelEffect": 1,
 	  "name": "Reforged",
 	  "type": "armorHeal",
-	  "quantity": 2
+	  "quantity": 4
 	},
 	{
 	  "effect": "Suma 3 cantidad de armadura y roba carta.",
@@ -43,18 +43,18 @@
 	  "quantity": 3
 	},
 	{
-	  "effect": "Realiza 8 de daño.",
+	  "effect": "Realiza 12 de daño.",
 	  "levelEffect": 1,
 	  "name": "CaptivePower",
 	  "type": "damage",
-	  "quantity": 8
+	  "quantity": 12
 	},
 	{
-	  "effect": "Suma 8 cantidad de armadura.",
+	  "effect": "Suma 10 cantidad de armadura.",
 	  "levelEffect": 1,
 	  "name": "ForgedWarrior",
 	  "type": "armor",
-	  "quantity": 8
+	  "quantity": 10
 	}
   ],
   "Vagabundo": [
@@ -66,53 +66,53 @@
 	  "quantity": 0
 	},
 	{
-	  "effect": "Cura 5 de vida.",
+	  "effect": "Cura 8 de vida.",
 	  "levelEffect": 1,
 	  "name": "DeadPigeon",
 	  "type": "heal",
-	  "quantity": 3
-	},
-	{
-	  "effect": "Realiza 5 de daño.",
-	  "levelEffect": 1,
-	  "name": "SpiritBlast",
-	  "type": "damage",
-	  "quantity": 5
-	},
-	{
-	  "effect": "Realiza 8 de daño.",
-	  "levelEffect": 1,
-	  "name": "GimmeCoin",
-	  "type": "damage",
 	  "quantity": 8
 	},
 	{
-	  "effect": "Cura 3 de vida y roba carta.",
+	  "effect": "Realiza 10 de daño.",
+	  "levelEffect": 1,
+	  "name": "SpiritBlast",
+	  "type": "damage",
+	  "quantity": 10
+	},
+	{
+	  "effect": "Realiza 6 de daño.",
+	  "levelEffect": 1,
+	  "name": "GimmeCoin",
+	  "type": "damage",
+	  "quantity": 6
+	},
+	{
+	  "effect": "Cura 4 de vida y roba carta.",
 	  "levelEffect": 1,
 	  "name": "LeftOvers",
 	  "type": "healDraw",
-	  "quantity": 1
+	  "quantity": 4
 	},
 	{
-	  "effect": "Suma 5 de armadura.",
+	  "effect": "Suma 10 de armadura.",
 	  "levelEffect": 1,
 	  "name": "BoardCastle",
 	  "type": "armor",
-	  "quantity": 5
+	  "quantity": 10
 	},
 	{
-	  "effect": "Suma 3 de armadura y roba carta.",
+	  "effect": "Suma 4 de armadura y roba carta.",
 	  "levelEffect": 1,
 	  "name": "Leprosy",
 	  "type": "armorDraw",
-	  "quantity": 3
+	  "quantity": 4
 	},
 	{
-	  "effect": "Cura 3 de vida y roba carta.",
+	  "effect": "Cura 4 de vida y roba carta.",
 	  "levelEffect": 1,
 	  "name": "BoardCrisis",
 	  "type": "healDraw",
-	  "quantity": 3
+	  "quantity": 4
 	}
   ]
 }

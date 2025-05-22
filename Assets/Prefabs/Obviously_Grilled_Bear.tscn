@@ -1,8 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://bor83ma32ajkx"]
+[gd_scene load_steps=22 format=3 uid="uid://bor83ma32ajkx"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_ylyi7"]
 [ext_resource type="Texture2D" uid="uid://dxmtyd8qiwa4t" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Hit/Frog_Hit-Shee_bigt.png" id="2_hqk2s"]
 [ext_resource type="Texture2D" uid="uid://d1nc10d3kl0ds" path="res://Assets/Sprites/Characters/Bosses/Obviously Grilled Bear/Idle/Obviously Grilled Bear_Idle-Sheet.png" id="3_nccfa"]
+[ext_resource type="AudioStream" uid="uid://bj4qg84q5scdi" path="res://Assets/VFX/Enemies/Obviously Grilled Bear.mp3" id="4_olb2x"]
+[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="5_d0v8t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7h0qu"]
 atlas = ExtResource("2_hqk2s")
@@ -132,5 +134,14 @@ frame_progress = 0.853596
 position = Vector2(4.5, -73.5)
 scale = Vector2(5.28, 1)
 shape = SubResource("RectangleShape2D_d8j46")
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_olb2x")
+autoplay = true
+parameters/looping = true
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_d0v8t")
+parameters/looping = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

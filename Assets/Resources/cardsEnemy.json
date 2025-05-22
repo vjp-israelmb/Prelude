@@ -79,14 +79,14 @@
 	  "levelEffect": 1,
 	  "name": "Mordisco de Oso",
 	  "type": "damage",
-	  "quantity": 6
+	  "quantity": 3
 	},
 	{
 	  "effect": "Realiza 9 de daño.",
 	  "levelEffect": 1,
 	  "name": "Zarpazo Salvaje",
 	  "type": "damage",
-	  "quantity": 9
+	  "quantity": 6
 	},
 	{
 	  "effect": "Cura 7 de vida.",
@@ -107,7 +107,7 @@
 	  "levelEffect": 1,
 	  "name": "Furia del Bosque",
 	  "type": "damage",
-	  "quantity": 12
+	  "quantity": 9
 	}
   ],
   "Mindy": [
