@@ -48,6 +48,6 @@ private void SelectCharacter(string characterPath)
 }
 	private void OnStartPressed()
 	{
-		GetTree().ChangeSceneToFile("res://Assets/Prefabs/main.tscn");
+		GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
 	}
 }

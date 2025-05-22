@@ -1,7 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://bq7r8qlb4c05c"]
+[gd_scene load_steps=38 format=3 uid="uid://bq7r8qlb4c05c"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_dcr0b"]
 [ext_resource type="Texture2D" uid="uid://cmwph57tj04bt" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Idle/Lackalcia_Idle-Sheet.png" id="1_u5xvs"]
+[ext_resource type="AudioStream" uid="uid://dnog8v5540acx" path="res://Assets/VFX/Enemies/Lackalcia.mp3" id="3_5j3yp"]
+[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="4_kbujh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcr0b"]
 atlas = ExtResource("1_u5xvs")
@@ -244,5 +246,13 @@ frame_progress = 0.4844
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -81.5)
 shape = SubResource("RectangleShape2D_qd10i")
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_5j3yp")
+parameters/looping = true
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_kbujh")
+parameters/looping = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

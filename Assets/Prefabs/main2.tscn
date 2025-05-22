@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://t7cqyyyk8q2e"]
+[gd_scene load_steps=11 format=3 uid="uid://t7cqyyyk8q2e"]
 
 [ext_resource type="Script" uid="uid://iqsmldc028ox" path="res://Assets/Scripts/Main2.cs" id="1_tpt61"]
 [ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="2_pih06"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://botkbd42vfkkn" path="res://Assets/Prefabs/menu_pause.tscn" id="4_kqtrx"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_u4yiy"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_voihx"]
+[ext_resource type="PackedScene" uid="uid://djgu43i0mti72" path="res://Assets/Scenes/Combat.tscn" id="8_gimir"]
+[ext_resource type="AudioStream" uid="uid://dbpm3o6frjql3" path="res://Assets/Music/Keep Moving.mp3" id="9_kqtrx"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
 script/source = "using Godot;
@@ -57,18 +59,6 @@ public partial class HeartBar : Node
 script = ExtResource("1_tpt61")
 playerScene = ExtResource("2_pih06")
 
-[node name="Bg2" parent="." instance=ExtResource("2_tpt61")]
-
-[node name="Ground" parent="." instance=ExtResource("3_pih06")]
-z_index = 1
-position = Vector2(985, 608)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576.95, 325)
-
-[node name="MenuPause" parent="." instance=ExtResource("4_kqtrx")]
-visible = false
-
 [node name="OnGame" type="CanvasLayer" parent="."]
 layer = -1
 scale = Vector2(0.645, 0.645)
@@ -84,3 +74,27 @@ offset_top = 18.6047
 offset_right = 117.829
 offset_bottom = 18.6047
 scale = Vector2(0.645, 0.645)
+
+[node name="Bg2" parent="." instance=ExtResource("2_tpt61")]
+
+[node name="Ground" parent="." instance=ExtResource("3_pih06")]
+z_index = 1
+position = Vector2(985, 608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576.95, 325)
+
+[node name="MenuPause" parent="." instance=ExtResource("4_kqtrx")]
+visible = false
+
+[node name="Combate" type="CanvasLayer" parent="."]
+layer = 0
+visible = false
+
+[node name="Combat" parent="Combate" instance=ExtResource("8_gimir")]
+z_index = 1
+
+[node name="OST" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_kqtrx")
+autoplay = true
+parameters/looping = true

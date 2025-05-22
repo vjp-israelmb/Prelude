@@ -176,10 +176,10 @@ public partial class CombatManager : Node2D
 		{
 			if (enemy.name.ToLower().Contains("grilledbear"))
 			{
-				turnoBoss = 2;
+//				turnoBoss = 2;
 			} else if (enemy.name.ToLower().Contains("verdugo"))
 			{
-				turnoBoss = 2;
+			//	turnoBoss = 2;
 			} else
 			{
 				EndCombat();

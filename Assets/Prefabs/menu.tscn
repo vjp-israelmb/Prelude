@@ -168,7 +168,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [node name="Menu" type="CanvasLayer" node_paths=PackedStringArray("vagabondArea", "knightArea", "knightSelected", "hoboSelected", "startButton")]

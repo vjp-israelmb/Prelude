@@ -288,7 +288,7 @@ public partial class Main : Node
 
 		// Posición: justo fuera de la cámara, a la altura del suelo
 		float spawnX = camera.Position.X + Main.screen_size.X + 100;
-		float spawnY = ground.Position.Y+4f;
+		float spawnY = ground.Position.Y+3f;
 		// Si el nombre contiene "spike", subirlo un poco
 		if (obstacle.Name.ToString().ToLower().Contains("spike"))
 		{

@@ -1,71 +1,23 @@
-[gd_scene load_steps=21 format=3 uid="uid://ckaue8srr6w4t"]
+[gd_scene load_steps=9 format=3 uid="uid://ckaue8srr6w4t"]
 
 [ext_resource type="Script" uid="uid://c1utxp0yphg6u" path="res://Assets/Scripts/Obstacle.cs" id="1_aba01"]
-[ext_resource type="Texture2D" uid="uid://esvlbkis20dn" path="res://Assets/Sprites/Tiles/Hazards/Poison/poison-Sheet.png" id="2_aba01"]
+[ext_resource type="Texture2D" uid="uid://cpir73yqb6ol2" path="res://Assets/Sprites/Tiles/Hazards/Poison/poison2_big-Sheet.png" id="2_aba01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8c8i7"]
 atlas = ExtResource("2_aba01")
-region = Rect2(0, 0, 21, 42)
+region = Rect2(0, 0, 170, 84)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptm1x"]
 atlas = ExtResource("2_aba01")
-region = Rect2(21, 0, 21, 42)
+region = Rect2(170, 0, 170, 84)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_of5hj"]
 atlas = ExtResource("2_aba01")
-region = Rect2(42, 0, 21, 42)
+region = Rect2(0, 84, 170, 84)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4blv"]
 atlas = ExtResource("2_aba01")
-region = Rect2(63, 0, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_70vy3"]
-atlas = ExtResource("2_aba01")
-region = Rect2(0, 42, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bcvoc"]
-atlas = ExtResource("2_aba01")
-region = Rect2(21, 42, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kpj3m"]
-atlas = ExtResource("2_aba01")
-region = Rect2(42, 42, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nlfth"]
-atlas = ExtResource("2_aba01")
-region = Rect2(63, 42, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kq8xy"]
-atlas = ExtResource("2_aba01")
-region = Rect2(0, 84, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hi8e1"]
-atlas = ExtResource("2_aba01")
-region = Rect2(21, 84, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hr0lj"]
-atlas = ExtResource("2_aba01")
-region = Rect2(42, 84, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pummv"]
-atlas = ExtResource("2_aba01")
-region = Rect2(63, 84, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uu38g"]
-atlas = ExtResource("2_aba01")
-region = Rect2(0, 126, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_irasu"]
-atlas = ExtResource("2_aba01")
-region = Rect2(21, 126, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_whvfc"]
-atlas = ExtResource("2_aba01")
-region = Rect2(42, 126, 21, 42)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hkdub"]
-atlas = ExtResource("2_aba01")
-region = Rect2(63, 126, 21, 42)
+region = Rect2(170, 84, 170, 84)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mlr3f"]
 animations = [{
@@ -81,42 +33,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y4blv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_70vy3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bcvoc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kpj3m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nlfth")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kq8xy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hi8e1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hr0lj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pummv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uu38g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_irasu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_whvfc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hkdub")
 }],
 "loop": true,
 "name": &"posion_moving",
@@ -130,12 +46,12 @@ z_index = 1
 script = ExtResource("1_aba01")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0.5, -4.23193e-06)
-scale = Vector2(12.1429, 2.95238)
+position = Vector2(0.5, 3.8147e-06)
+scale = Vector2(1.52353, 1.47619)
 sprite_frames = SubResource("SpriteFrames_mlr3f")
 animation = &"posion_moving"
 autoplay = "posion_moving"
-frame_progress = 0.449693
+frame_progress = 0.20772
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(12.76, 6.28)

@@ -1,8 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://d1uadmv06t5gc"]
+[gd_scene load_steps=31 format=3 uid="uid://d1uadmv06t5gc"]
 
 [ext_resource type="Texture2D" uid="uid://dpdttdyf88mfo" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="1_7s7l1"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_ta52a"]
 [ext_resource type="Texture2D" uid="uid://cdtwlm21rpd" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Idle/Eagle_Idle_big-Sheet.png" id="2_ta52a"]
+[ext_resource type="AudioStream" uid="uid://bf6tdck8b72mr" path="res://Assets/VFX/Enemies/Eagearl.mp3" id="4_qqy58"]
+[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="5_we4p2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_feygp"]
 atlas = ExtResource("1_7s7l1")
@@ -195,5 +197,13 @@ frame_progress = 0.9798
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-6, 2)
 shape = SubResource("CapsuleShape2D_ta52a")
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qqy58")
+parameters/looping = false
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_we4p2")
+parameters/looping = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

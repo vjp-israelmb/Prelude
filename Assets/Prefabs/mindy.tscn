@@ -1,8 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://c6no4s66vcxed"]
+[gd_scene load_steps=35 format=3 uid="uid://c6no4s66vcxed"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_hmr76"]
 [ext_resource type="Texture2D" uid="uid://dpdttdyf88mfo" path="res://Assets/Sprites/Characters/Enemies/Eaglearl/Hit/Eagle_Hit_big-Sheet.png" id="2_gdy42"]
 [ext_resource type="Texture2D" uid="uid://bn6qfeujk04h2" path="res://Assets/Sprites/Characters/Enemies/Mindy/Mindy_Idle_2_big-Sheet.png" id="3_hmr76"]
+[ext_resource type="AudioStream" uid="uid://cbs1ba54xblca" path="res://Assets/VFX/Enemies/Mindy.mp3" id="4_gdy42"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_feygp"]
 atlas = ExtResource("2_gdy42")
@@ -228,5 +229,14 @@ frame_progress = 0.471052
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_vapkg")
+
+[node name="Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gdy42")
+parameters/looping = false
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gdy42")
+autoplay = true
+parameters/looping = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
