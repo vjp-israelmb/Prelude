@@ -1,10 +1,10 @@
 [gd_scene load_steps=26 format=3 uid="uid://nch5vkrrupn8"]
 
-[ext_resource type="Texture2D" uid="uid://eu3gt6gag1yl" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Frog_Idle_big-Sheet.png" id="1_8a5mp"]
+[ext_resource type="Texture2D" uid="uid://bdgx85c7smw0o" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Idle/Frog_Idle_big-Sheet.png" id="1_8a5mp"]
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_k3wu0"]
-[ext_resource type="Texture2D" uid="uid://dxmtyd8qiwa4t" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Hit/Frog_Hit-Shee_bigt.png" id="2_81asm"]
-[ext_resource type="AudioStream" uid="uid://bms6mgwqm1dl5" path="res://Assets/VFX/Enemies/Frogrosso.mp3" id="4_e66we"]
-[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="5_c3ig6"]
+[ext_resource type="Texture2D" uid="uid://h2fdm8yyobay" path="res://Assets/Sprites/Characters/Enemies/Frogrosso/Hit/Frog_Hit-Shee_bigt.png" id="2_81asm"]
+[ext_resource type="AudioStream" uid="uid://d3fxki2517job" path="res://Assets/VFX/Enemies/Frogrosso.mp3" id="4_e66we"]
+[ext_resource type="AudioStream" uid="uid://2auvouqe70ob" path="res://Assets/VFX/Hit.mp3" id="5_c3ig6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7h0qu"]
 atlas = ExtResource("2_81asm")

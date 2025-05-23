@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dfv8oicxtogpc" path="res://Assets/Scripts/Main.cs" id="1_00nml"]
 [ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="2_a5iuh"]
-[ext_resource type="PackedScene" uid="uid://c8vioabfyoo5s" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
+[ext_resource type="PackedScene" path="res://Assets/Prefabs/bg.tscn" id="2_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://buk7riqbk0xln" path="res://Assets/Prefabs/groundlvl1.tscn" id="4_pjs4v"]
 [ext_resource type="PackedScene" uid="uid://csp4xiiekxsap" path="res://Assets/Prefabs/armor.tscn" id="5_cqve5"]
 [ext_resource type="PackedScene" uid="uid://cokn6sjj0pf6c" path="res://Assets/Prefabs/heart.tscn" id="5_pdc24"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_ptjad"]
 [ext_resource type="PackedScene" uid="uid://botkbd42vfkkn" path="res://Assets/Prefabs/menu_pause.tscn" id="7_a4abk"]
 [ext_resource type="PackedScene" uid="uid://djgu43i0mti72" path="res://Assets/Scenes/Combat.tscn" id="7_a5iuh"]
-[ext_resource type="AudioStream" uid="uid://dbpm3o6frjql3" path="res://Assets/Music/Keep Moving.mp3" id="9_f2s6b"]
-[ext_resource type="AudioStream" uid="uid://cxnohrkruw8oy" path="res://Assets/VFX/Cards_Levelup.mp3" id="11_aupu0"]
+[ext_resource type="AudioStream" uid="uid://dylrugs5d5w7x" path="res://Assets/Music/Keep Moving.mp3" id="9_f2s6b"]
+[ext_resource type="AudioStream" uid="uid://q38v1fgkielv" path="res://Assets/VFX/Cards_Levelup.mp3" id="11_aupu0"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
 script/source = "using Godot;

@@ -1,10 +1,11 @@
 [gd_scene load_steps=56 format=3 uid="uid://c6no4s66vcxed"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_hmr76"]
-[ext_resource type="Texture2D" uid="uid://b4aoryw02u6xj" path="res://Assets/Sprites/Characters/Enemies/Mindy/Hit/Mindy_Hit2_big-Sheet.png" id="2_gdy42"]
-[ext_resource type="Texture2D" uid="uid://bn6qfeujk04h2" path="res://Assets/Sprites/Characters/Enemies/Mindy/Mindy_Idle_2_big-Sheet.png" id="3_hmr76"]
-[ext_resource type="AudioStream" uid="uid://cbs1ba54xblca" path="res://Assets/VFX/Enemies/Mindy.mp3" id="4_gdy42"]
-[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="5_0h434"]
+[ext_resource type="Texture2D" uid="uid://blirhaqs0g51l" path="res://Assets/Sprites/Characters/Enemies/Mindy/Hit/Mindy_Hit2_big-Sheet.png" id="2_gdy42"]
+[ext_resource type="Texture2D" uid="uid://d35uvcdkyn07d" path="res://Assets/Sprites/Characters/Enemies/Mindy/Idle/Mindy_Idle_2_big-Sheet.png" id="3_hmr76"]
+[ext_resource type="AudioStream" uid="uid://b44ebue4qniwp" path="res://Assets/VFX/Enemies/Mindy.mp3" id="4_gdy42"]
+[ext_resource type="AudioStream" uid="uid://2auvouqe70ob" path="res://Assets/VFX/Hit.mp3" id="5_0h434"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6hk24"]
 atlas = ExtResource("2_gdy42")

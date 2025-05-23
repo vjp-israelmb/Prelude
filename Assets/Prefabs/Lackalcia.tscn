@@ -1,10 +1,10 @@
 [gd_scene load_steps=48 format=3 uid="uid://bq7r8qlb4c05c"]
 
 [ext_resource type="Script" uid="uid://bxi7kd435grxp" path="res://Assets/Scripts/Enemy.cs" id="1_dcr0b"]
-[ext_resource type="Texture2D" uid="uid://cmwph57tj04bt" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Idle/Lackalcia_Idle-Sheet.png" id="1_u5xvs"]
-[ext_resource type="Texture2D" uid="uid://j28j16dt7ixh" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Hit/Lackalcia_Hit-Sheet.png" id="2_5j3yp"]
-[ext_resource type="AudioStream" uid="uid://dnog8v5540acx" path="res://Assets/VFX/Enemies/Lackalcia.mp3" id="3_5j3yp"]
-[ext_resource type="AudioStream" uid="uid://erah8x68ye3w" path="res://Assets/VFX/Hit.mp3" id="4_kbujh"]
+[ext_resource type="Texture2D" uid="uid://c1e70mlkeoa8m" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Idle/Lackalcia_Idle-Sheet.png" id="1_u5xvs"]
+[ext_resource type="Texture2D" uid="uid://ca3bepeoupqcb" path="res://Assets/Sprites/Characters/Bosses/Lackalcia/Hit/Lackalcia_Hit-Sheet.png" id="2_5j3yp"]
+[ext_resource type="AudioStream" uid="uid://cilvdo0jqa63n" path="res://Assets/VFX/Enemies/Lackalcia.mp3" id="3_5j3yp"]
+[ext_resource type="AudioStream" uid="uid://2auvouqe70ob" path="res://Assets/VFX/Hit.mp3" id="4_kbujh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ya82o"]
 atlas = ExtResource("2_5j3yp")
