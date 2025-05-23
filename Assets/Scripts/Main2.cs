@@ -99,7 +99,6 @@ public partial class Main2 : Node
 		}
 
 		combatUI.inicioCombate(datosPlayer, enemigoActual);
-		GD.Print("¡Inicio del combate!");
 	}
 	
 	public void EndCombat(Jugador datos)
@@ -146,6 +145,16 @@ public partial class Main2 : Node
 		{
 			GD.Print("No se encontró DataCarrier");
 		}
+		
+		// Settear armadura
+		var armorPoints = GetNodeOrNull<Label>("OnGame/ArmorPoints");
+		if (armorPoints != null)
+		{
+			armorPoints.Text = datosPlayer.armor.ToString();
+		} else
+		{
+			GD.PrintErr("No se obtubo el nodo ArmorPoints");
+		}
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
@@ -189,26 +198,24 @@ public partial class Main2 : Node
 	
 	public void setEnemy(String enemigo)
 	{
-		if (enemigo.ToString().ToLower().Contains("eagearl"))
-		{
-			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Eagearl");
-			manoEnemigo("Eagearl");
-		} else if (enemigo.ToString().ToLower().Contains("frogrosso"))
-		{
-			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Frogrosso");
-			manoEnemigo("Frogrosso");
-		} else if (enemigo.ToString().ToLower().Contains("grilledbear"))
-		{
-			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "GrilledBear");
-			manoEnemigo("GrilledBear");
-		} else if (enemigo.ToString().ToLower().Contains("maggotbrian"))
+		if (enemigo.ToString().ToLower().Contains("maggotbrian"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
+			enemigoActual.hp = 10;
+			enemigoActual.armor = 5;
 			manoEnemigo("MaggotBrian");
 		} else if (enemigo.ToString().ToLower().Contains("mindy"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Mindy");
+			enemigoActual.hp = 5;
+			enemigoActual.armor = 10;
 			manoEnemigo("Mindy");
+		} else if (enemigo.ToString().ToLower().Contains("lackalcia"))
+		{
+			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Verdugo");
+			enemigoActual.hp = 10;
+			enemigoActual.armor = 20;
+			manoEnemigo("Verdugo");
 		}
 	}
 	

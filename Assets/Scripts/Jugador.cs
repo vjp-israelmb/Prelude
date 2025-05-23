@@ -81,7 +81,10 @@ public partial class Jugador : Node
 	{
 		for (int i = 0; i < mano.Count; i++)
 		{
-			mano[i].LevelEffect += 1;
+			if (mano[i].LevelEffect < 5)
+			{
+				mano[i].LevelEffect += 1;
+			}
 		}
 		GD.Print("Subieron de nivel las cartas.");
 	}

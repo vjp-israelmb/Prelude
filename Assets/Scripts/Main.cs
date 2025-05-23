@@ -162,6 +162,15 @@ public partial class Main : Node
 		string selectedName = Global.namePlayer ?? "Vagabundo";
 		datosPlayer = personajes.Find(p => p.name == selectedName);
 		datosPlayer.setMano();
+		// Settear armadura
+		var armorPoints = GetNodeOrNull<Label>("OnGame/ArmorPoints");
+		if (armorPoints != null)
+		{
+			armorPoints.Text = datosPlayer.armor.ToString();
+		} else
+		{
+			GD.PrintErr("No se obtubo el nodo ArmorPoints");
+		}
 
 		// Personaje
 		playerScene = GD.Load<PackedScene>(Global.SelectedCharacter);
@@ -222,20 +231,8 @@ public partial class Main : Node
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "GrilledBear");
 			enemigoActual.hp = 20;
-			enemigoActual.armor = 20;
-			manoEnemigo("GrilledBear");
-		} else if (enemigo.ToString().ToLower().Contains("maggotbrian"))
-		{
-			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
-			enemigoActual.hp = 10;
-			enemigoActual.armor = 5;
-			manoEnemigo("MaggotBrian");
-		} else if (enemigo.ToString().ToLower().Contains("mindy"))
-		{
-			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "Mindy");
-			enemigoActual.hp = 5;
 			enemigoActual.armor = 10;
-			manoEnemigo("Mindy");
+			manoEnemigo("GrilledBear");
 		}
 	}
 	

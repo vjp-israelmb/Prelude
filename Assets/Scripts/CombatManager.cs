@@ -22,19 +22,52 @@ public partial class CombatManager : Node2D
 
 	public void inicioCombate(Jugador Player, Jugador Enemy)
 	{
-		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
-		if(mainNode.isInCombat)
+		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
+		if (data != null)
 		{
-			return;
-		}else
+			if (data.nivel == 2)
+			{
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main2>("Main");
+				if (mainNode is Main2 main)
+				{
+					if(mainNode.isInCombat)
+					{
+						return;
+					}else
+					{
+						mainNode.isInCombat = true;
+					}
+				GD.Print("¡Inicio del combate!");
+				} else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde CombatManager.");
+				}
+			} else {
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+				if (mainNode is Main main)
+				{
+					if(mainNode.isInCombat)
+					{
+						return;
+					}else
+					{
+						mainNode.isInCombat = true;
+					}
+					GD.Print("¡Inicio del combate!");
+				} else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde CombatManager.");
+				}
+			} 
+		} else
 		{
-			mainNode.isInCombat = true;
+			GD.Print("No se encontró DataCarrier");
 		}
-		GD.Print("¡Inicio del combate!");
 		
 		enemies = new PackedScene[] { frogrosso, eagearl};
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
-		
 		player = Player;
 		hand = player.mano;
 		enemy = Enemy;
@@ -160,7 +193,7 @@ public partial class CombatManager : Node2D
 			for (int i = 0; i < handContainer.GetChildCount(); i++)
 			{
 				var child = handContainer.GetChild(i);
-				if (child is CardButton cb && cb.GetCard() == card)
+				if (child is CardButton cb && cb.GetCard() == card && cb.GetCard().LevelEffect <= 0)
 				{
 					cb.QueueFree();
 					break;
@@ -176,9 +209,9 @@ public partial class CombatManager : Node2D
 			EndCombat();
 		} else if(enemy.hp <= 0 )
 		{
-			if (enemy.name.Contains("GrilledBear"))
+			if (enemy.name.Contains("Verdugo"))
 			{
-				GD.Print("Victoria contra el Boss");
+				GD.Print("Victory Royale");
 				robarCarta();
 				
 				Node dataNode = GetTree().Root.GetNodeOrNull("DataCarrier");
@@ -192,15 +225,16 @@ public partial class CombatManager : Node2D
 					GD.Print("No se encontró DataCarrier");
 				}
 				
+				// Cambiar a escena de victoria
 				GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
-			} else if (enemy.name.ToLower().Contains("verdugo"))
-			{
-				
 			} else
 			{
 				robarCarta();
 				EndCombat();
 			}
+		} else
+		{
+			turnoEnemigo();
 		}
 	}
 
@@ -272,7 +306,6 @@ public partial class CombatManager : Node2D
 
 		card.LevelEffect -= 1;
 		UpdateUI();
-		turnoEnemigo();
 	}
 
 	private void robarCarta()
@@ -323,7 +356,7 @@ public partial class CombatManager : Node2D
 			}
 		} else
 		{
-			GD.PrintErr("Mano llena.");
+			GD.Print("La Mano llena, no se robo carta.");
 		}
 		
 		cagarMano();
@@ -341,7 +374,7 @@ public partial class CombatManager : Node2D
 		if (enemy.name.Contains("GrilledBear"))
 		{
 			turnoBoss = 2;
-		} else if (enemy.name.ToLower().Contains("verdugo"))
+		} else if (enemy.name.Contains("Verdugo"))
 		{
 			turnoBoss = 2;
 		}
@@ -352,13 +385,7 @@ public partial class CombatManager : Node2D
 			Card card = enemy.mano[index];
 
 			GD.Print($"Carta jugada por el enemigo: {card.Name}");
-
-			if (card.LevelEffect <= 0)
-			{
-				GD.Print("La carta no tiene efecto restante.");
-				return;
-			}
-
+			Label armorPoints;
 			switch (card.Type)
 			{
 				case "damage":
@@ -369,11 +396,27 @@ public partial class CombatManager : Node2D
 						{
 							int remainingDamage = -player.armor;
 							player.armor = 0;
+							armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+							if (armorPoints != null)
+							{
+								armorPoints.Text = "0";
+							} else
+							{
+								GD.PrintErr("No se obtubo el nodo ArmorPoints");
+							}
 							player.hp -= remainingDamage;
 							GD.Print($"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}");
 						}
 						else
 						{
+							armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+							if (armorPoints != null)
+							{
+								armorPoints.Text = player.armor.ToString();
+							} else
+							{
+								GD.PrintErr("No se obtubo el nodo ArmorPoints");
+							}
 							GD.Print($"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}");
 						}
 					}
@@ -391,6 +434,14 @@ public partial class CombatManager : Node2D
 
 				case "armor":
 					enemy.armor += card.Quantity;
+					armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+					if (armorPoints != null)
+					{
+						armorPoints.Text = player.armor.ToString();
+					} else
+					{
+						GD.PrintErr("No se obtubo el nodo ArmorPoints");
+					}
 					GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
 					break;
 
@@ -399,6 +450,14 @@ public partial class CombatManager : Node2D
 					if (player.armor < 0)
 					{
 						player.armor = 0;
+					}
+					armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+					if (armorPoints != null)
+					{
+						armorPoints.Text = player.armor.ToString();
+					} else
+					{
+						GD.PrintErr("No se obtubo el nodo ArmorPoints");
 					}
 					GD.Print($"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}");
 					break;
@@ -422,7 +481,35 @@ public partial class CombatManager : Node2D
 		//var enemyScene = GetNode<Node2D>("enemy");
 		//enemyScene.QueueFree();
 		GD.Print("Fin del combate");
-		var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
-		mainNode.EndCombat(player);
+		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
+		if (data != null)
+		{
+			if (data.nivel == 2)
+			{
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main2>("Main");
+				if (mainNode is Main2 main)
+				{
+					mainNode.EndCombat(player);
+		GD.Print("¡Inicio del combate!");
+				} else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde CombatManager.");
+				}
+			} else {
+				// Obtener el nodo padre y hacerle cast a tipo Main
+				var mainNode = GetTree().Root.GetNodeOrNull<Main>("Main");
+				if (mainNode is Main main)
+				{
+					mainNode.EndCombat(player);
+				} else
+				{
+					GD.PrintErr("No se pudo obtener el nodo Main desde CombatManager.");
+				}
+			} 
+		} else
+		{
+			GD.Print("No se encontró DataCarrier");
+		}
 	}
 }

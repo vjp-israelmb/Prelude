@@ -183,5 +183,42 @@
 	  "type": "damageArmor",
 	  "quantity": 5
 	}
+  ],
+  "Verdugo": [
+	{
+	  "effect": "Realiza 8 cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Martillo Abisal",
+	  "type": "damage",
+	  "quantity": 8
+	},
+	{
+	  "effect": "Realiza 12 cantidad de daño.",
+	  "levelEffect": 1,
+	  "name": "Cadena Torturadora",
+	  "type": "damage",
+	  "quantity": 12
+	},
+	{
+	  "effect": "Sube 6 cantidad de armadura.",
+	  "levelEffect": 1,
+	  "name": "Consumir Almas",
+	  "type": "armor",
+	  "quantity": 6
+	},
+	{
+	  "effect": "Cura 8 cantidad de vida.",
+	  "levelEffect": 1,
+	  "name": "Fuego del Infierno",
+	  "type": "heal",
+	  "quantity": 8
+	},
+	{
+	  "effect": "Reduce en 10 la armadura.",
+	  "levelEffect": 1,
+	  "name": "Desgarrar Almas",
+	  "type": "damageArmor",
+	  "quantity": 10
+	}
   ]
 }
