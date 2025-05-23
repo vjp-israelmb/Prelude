@@ -198,7 +198,8 @@ public partial class Main2 : Node
 	
 	public void setEnemy(String enemigo)
 	{
-		if (enemigo.ToString().ToLower().Contains("maggotbrian"))
+		GD.PrintErr(enemigo);
+		if (enemigo.ToString().ToLower().Contains("area2d"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
 			enemigoActual.hp = 10;

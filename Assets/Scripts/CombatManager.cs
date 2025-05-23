@@ -4,11 +4,6 @@ using System.Collections.Generic;
 
 public partial class CombatManager : Node2D
 {
-	// Precarga Enemigos
-	private PackedScene frogrosso = GD.Load<PackedScene>("res://Assets/Prefabs/frogrossoDisplay.tscn");
-	private PackedScene eagearl = GD.Load<PackedScene>("res://Assets/Prefabs/eagearl.tscn");
-	private PackedScene[] enemies;
-	
 	private Node2D backgroundContainer;
 	private HBoxContainer handContainer;
 	private List<Card> hand = new List<Card>();
@@ -66,39 +61,38 @@ public partial class CombatManager : Node2D
 			GD.Print("No se encontró DataCarrier");
 		}
 		
-		enemies = new PackedScene[] { frogrosso, eagearl};
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
 		player = Player;
 		hand = player.mano;
 		enemy = Enemy;
 		GD.Print("Instanciando enemigo: ", enemy.name);
 		
-		//int i = 0;
-		//if (enemy.name.ToLower().Contains("eagearl"))
-		//{
-			//i = 1;
-		//} else if (enemy.name.ToLower().Contains("frogrosso"))
-		//{
-			//i = 0;
-		//} else if (enemy.name.ToLower().Contains("GrilledBear"))
-		//{
-			//i = 2;
-		//} else
-		//{
-			//i = 3;
-		//}
-		//
-		//// Instanciar el enemigo
-		//var scene = enemies[i];
-		//var enemyScene = scene.Instantiate<Node2D>();
-		//var camera = mainNode.GetNode<Camera2D>("Camera2D");
-		//var ground = mainNode.GetNode<StaticBody2D>("Ground");
-		//float spawnX = camera.Position.X + Main.screen_size.X;
-		//float spawnY = ground.Position.Y - 100;
-		//enemyScene.Position = camera.Position;
-		//enemyScene.Name = "enemy";
-		//AddChild(enemyScene);
-		//GD.Print("Escena instanciada: ", scene);
+		// Cargar Enemigo
+		if (enemy.name.ToString().ToLower().Contains("eagearl"))
+		{
+			var eagearl = GetNode<Area2D>("eagearl");
+			eagearl.Visible = true;
+		} else if (enemy.name.ToString().ToLower().Contains("frogrosso"))
+		{
+			var Frogrosso = GetNode<Area2D>("Frogrosso");
+			Frogrosso.Visible = true;
+		} else if (enemy.name.ToString().ToLower().Contains("grilledbear"))
+		{
+			var bear = GetNode<Area2D>("Obviously_Grilled_Bear");
+			bear.Visible = true;
+		} else if (enemy.name.ToString().ToLower().Contains("maggotbrian"))
+		{
+			var maggotbrian = GetNode<Area2D>("MaggotBrain");
+			maggotbrian.Visible = true;
+		} else if (enemy.name.ToString().ToLower().Contains("mindy"))
+		{
+			var mindy = GetNode<Area2D>("mindy");
+			mindy.Visible = true;
+		} else if (enemy.name.ToString().ToLower().Contains("lackalcia"))
+		{
+			var lackalcia = GetNode<Area2D>("Lackalcia");
+			lackalcia.Visible = true;
+		}
 		
 		cagarMano();
 	}
@@ -212,8 +206,12 @@ public partial class CombatManager : Node2D
 			if (enemy.name.Contains("Verdugo"))
 			{
 				GD.Print("Victory Royale");
-				robarCarta();
 				
+				// Cambiar a escena de victoria
+				GetTree().ChangeSceneToFile("res://Assets/Prefabs/victory.tscn");
+			} else if(enemy.name.Contains("GrilledBear"))
+			{
+				robarCarta();
 				Node dataNode = GetTree().Root.GetNodeOrNull("DataCarrier");
 				if (dataNode != null && dataNode is DataCarrier data)
 				{
@@ -224,8 +222,9 @@ public partial class CombatManager : Node2D
 				{
 					GD.Print("No se encontró DataCarrier");
 				}
+				GD.Print("Venciste al Boss, pasas al nivel 2...");
 				
-				// Cambiar a escena de victoria
+				// Cambiar a escena de nivel 2
 				GetTree().ChangeSceneToFile("res://Assets/Prefabs/main2.tscn");
 			} else
 			{
@@ -396,7 +395,7 @@ public partial class CombatManager : Node2D
 						{
 							int remainingDamage = -player.armor;
 							player.armor = 0;
-							armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+							armorPoints = GetTree().Root.GetNodeOrNull<Label>("ArmorPoints");
 							if (armorPoints != null)
 							{
 								armorPoints.Text = "0";
@@ -409,7 +408,7 @@ public partial class CombatManager : Node2D
 						}
 						else
 						{
-							armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+							armorPoints = GetTree().Root.GetNodeOrNull<Label>("ArmorPoints");
 							if (armorPoints != null)
 							{
 								armorPoints.Text = player.armor.ToString();
@@ -434,7 +433,7 @@ public partial class CombatManager : Node2D
 
 				case "armor":
 					enemy.armor += card.Quantity;
-					armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+					armorPoints = GetTree().Root.GetNodeOrNull<Label>("ArmorPoints");
 					if (armorPoints != null)
 					{
 						armorPoints.Text = player.armor.ToString();
@@ -451,7 +450,7 @@ public partial class CombatManager : Node2D
 					{
 						player.armor = 0;
 					}
-					armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
+					armorPoints = GetTree().Root.GetNodeOrNull<Label>("ArmorPoints");
 					if (armorPoints != null)
 					{
 						armorPoints.Text = player.armor.ToString();
@@ -478,8 +477,33 @@ public partial class CombatManager : Node2D
 		{
 			child.QueueFree();
 		}
-		//var enemyScene = GetNode<Node2D>("enemy");
-		//enemyScene.QueueFree();
+		// Descargar Enemigo
+		if (enemy.name.ToString().ToLower().Contains("eagearl"))
+		{
+			var eagearl = GetNode<Area2D>("eagearl");
+			eagearl.Visible = false;
+		} else if (enemy.name.ToString().ToLower().Contains("frogrosso"))
+		{
+			var Frogrosso = GetNode<Area2D>("Frogrosso");
+			Frogrosso.Visible = false;
+		} else if (enemy.name.ToString().ToLower().Contains("GrilledBear"))
+		{
+			var bear = GetNode<Area2D>("Obviously_Grilled_Bear");
+			bear.Visible = false;
+		} else if (enemy.name.ToString().ToLower().Contains("maggotbrian"))
+		{
+			var maggotbrian = GetNode<Area2D>("MaggotBrain");
+			maggotbrian.Visible = false;
+		} else if (enemy.name.ToString().ToLower().Contains("mindy"))
+		{
+			var mindy = GetNode<Area2D>("mindy");
+			mindy.Visible = false;
+		} else if (enemy.name.ToString().ToLower().Contains("lackalcia"))
+		{
+			var lackalcia = GetNode<Area2D>("Lackalcia");
+			lackalcia.Visible = false;
+		}
+		
 		GD.Print("Fin del combate");
 		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
 		if (data != null)
@@ -491,7 +515,6 @@ public partial class CombatManager : Node2D
 				if (mainNode is Main2 main)
 				{
 					mainNode.EndCombat(player);
-		GD.Print("¡Inicio del combate!");
 				} else
 				{
 					GD.PrintErr("No se pudo obtener el nodo Main desde CombatManager.");
