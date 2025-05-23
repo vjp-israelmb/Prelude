@@ -178,6 +178,7 @@ parameters/looping = false
 
 [node name="Selection" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_ykpgj")
+volume_db = -27.814
 
 [connection signal="mouse_entered" from="CharacterSelector/vagabond/Area2D" to="." method="_on_vagabond_mouse_entered"]
 [connection signal="mouse_entered" from="CharacterSelector/Knight/Area2D" to="." method="_on_knigth_mouse_entered"]

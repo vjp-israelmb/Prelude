@@ -48,6 +48,11 @@ public partial class Main2 : Node
 
 	// Referencias a los nodos
 	private TextureProgressBar progress;
+	//barra para que se vea el lvl de las cartas
+	private TextureProgressBar lvlCardsProgress;
+	//Musica del juego
+	private AudioStreamPlayer ost;
+	private AudioStreamPlayer upCard;
 	private CharacterBody2D player;
 	private Player jugador;
 	private Jugador datosPlayer;
@@ -68,10 +73,18 @@ public partial class Main2 : Node
 		// Obtener referencias a los nodos
 		combatUI = GetNode<CombatManager>("Combate/Combat");
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
+		lvlCardsProgress = GetNode<TextureProgressBar>("OnGame/lvlCardsProgress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel 
 		progress.Value = 0;	
+		// Valor maximo de xp de cartas
+		lvlCardsProgress.MaxValue=5000;
+		lvlCardsProgress.Value = 0;	
+		//Musica del juego 
+		ost=GetNode<AudioStreamPlayer>("OST");
+		//Sonido de subida de nivel en las cartas
+		upCard=GetNode<AudioStreamPlayer>("UpCards");
 		//Cargamos jugador seleccionado y enemigos 
 		LoadPlayer();
 		loadEnemy();
@@ -97,7 +110,7 @@ public partial class Main2 : Node
 		if(jugador !=null){
 			jugador.canJump=false;
 		}
-
+		ost.Stop();
 		combatUI.inicioCombate(datosPlayer, enemigoActual);
 	}
 	
@@ -128,7 +141,7 @@ public partial class Main2 : Node
 			jugador.Hit();
 			GD.Print("Muerto en combate");
 		}
-		
+		ost.Play();
 	}
 //endregion
 	
@@ -198,7 +211,7 @@ public partial class Main2 : Node
 	
 	public void setEnemy(String enemigo)
 	{
-		GD.PrintErr(enemigo);
+		GD.Print("Seteo enemigo:  " + enemigo);
 		if (enemigo.ToString().ToLower().Contains("area2d"))
 		{
 			enemigoActual = listaEnemigos.FirstOrDefault(e => e.name == "MaggotBrian");
@@ -269,13 +282,13 @@ public partial class Main2 : Node
 //
 		//Posición: fuera de la cámara y a la altura del suelo
 		float spawnX = camera.Position.X + screen_size.X + 150;
-		float spawnY = ground.Position.Y-200;
+		float spawnY =470.21f;
 //
 		boss.Position = new Vector2(spawnX, spawnY);
 		setEnemy(boss.Name.ToString().ToLower());
 		AddChild(boss);
 
-		GD.Print("Boss spawned!");
+		GD.Print("Boss spawned!   " + boss.Name.ToString().ToLower());
 	}
 	//Spawn aleatoria de obstaculos
 	public void SpawnRandomObstacle()
@@ -389,6 +402,7 @@ public partial class Main2 : Node
 		}
 		//suma de progreso en el nivel 
 		progress.Value=score;		
+		lvlCardsProgress.Value=levelUp;
 		foreach (Node child in GetChildren())
 		{
 			// Solo nos interesa si está en el grupo "Obstacle"
@@ -430,8 +444,10 @@ public partial class Main2 : Node
 		}
 		
 		//Comprobacion nivel Cartas
-		if(levelUp == 50000)
+		if(levelUp == 5000)
 		{
+			upCard.Play();
+			lvlCardsProgress.Value=0;
 			levelUp = 0;
 			datosPlayer.subirNivelCartas();
 		}
@@ -445,6 +461,15 @@ public partial class Main2 : Node
 		// Espera 1.5 segundos para que la animación se vea
 		GetTree().CreateTimer(1.5).Timeout += () =>
 		{
+			Node dataNode = GetTree().Root.GetNodeOrNull("DataCarrier");
+				if (dataNode != null && dataNode is DataCarrier data)
+				{
+					data.nivel =1 ;
+				}
+				else
+				{
+					GD.Print("No se encontró DataCarrier");
+				}
 			GetTree().ChangeSceneToFile("res://Assets/Prefabs/game_over.tscn");
 		};
 	}

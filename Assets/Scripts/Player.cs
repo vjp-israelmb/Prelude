@@ -240,18 +240,23 @@ public partial class Player : CharacterBody2D
 		
 		GD.Print("Jugador golpeado");
 	if (armor > 0){
-		armor -= 1;
+		armor -= 10;
 		var armorPoints = GetNodeOrNull<Label>("../OnGame/ArmorPoints");
 		if (armorPoints != null)
 		{
-			armorPoints.Text = armor.ToString();
+			if(armor<=0){
+				armor=0;
+				armorPoints.Text =armor.ToString();
+			}else{
+				armorPoints.Text = armor.ToString();
+			}
 		} else
 		{
 			GD.PrintErr("No se obtubo el nodo ArmorPoints");
 		}
 		GD.Print("Armor restante: " + armor);
 	}else{
-		hp -= 1;
+		hp -= 10;
 		if (heart != null) UpdateHeart();
 		GD.Print("HP restante: " + hp);
 	}

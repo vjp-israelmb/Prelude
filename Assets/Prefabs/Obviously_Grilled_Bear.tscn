@@ -129,8 +129,7 @@ shape = SubResource("RectangleShape2D_d8j46")
 
 [node name="Attack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_olb2x")
-autoplay = true
-parameters/looping = true
+parameters/looping = false
 
 [node name="Hit" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_d0v8t")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://t7cqyyyk8q2e"]
+[gd_scene load_steps=13 format=3 uid="uid://t7cqyyyk8q2e"]
 
 [ext_resource type="Script" uid="uid://iqsmldc028ox" path="res://Assets/Scripts/Main2.cs" id="1_tpt61"]
 [ext_resource type="PackedScene" uid="uid://bjq74hnucmrdb" path="res://Assets/Prefabs/knight.tscn" id="2_pih06"]
@@ -9,7 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://csp4xiiekxsap" path="res://Assets/Prefabs/armor.tscn" id="5_voihx"]
 [ext_resource type="PackedScene" uid="uid://bwc17p1nr00v4" path="res://Assets/Prefabs/progress_lever_bar.tscn" id="6_voihx"]
 [ext_resource type="PackedScene" uid="uid://djgu43i0mti72" path="res://Assets/Scenes/Combat.tscn" id="8_gimir"]
-[ext_resource type="AudioStream" uid="uid://bef8tfkpc8y8" path="res://Assets/Music/Keep Moving.mp3" id="9_kqtrx"]
+[ext_resource type="AudioStream" uid="uid://dbpm3o6frjql3" path="res://Assets/Music/Keep Moving.mp3" id="9_kqtrx"]
+[ext_resource type="AudioStream" uid="uid://cxnohrkruw8oy" path="res://Assets/VFX/Cards_Levelup.mp3" id="11_voihx"]
 
 [sub_resource type="CSharpScript" id="CSharpScript_ptjad"]
 script/source = "using Godot;
@@ -70,10 +71,18 @@ scale = Vector2(0.645, 0.645)
 script = SubResource("CSharpScript_ptjad")
 
 [node name="Progress" parent="OnGame" instance=ExtResource("6_voihx")]
+visible = false
 offset_left = 117.829
 offset_top = 18.6047
 offset_right = 117.829
 offset_bottom = 18.6047
+scale = Vector2(0.645, 0.645)
+
+[node name="lvlCardsProgress" parent="OnGame" instance=ExtResource("6_voihx")]
+offset_left = 119.38
+offset_top = 20.155
+offset_right = 119.38
+offset_bottom = 20.155
 scale = Vector2(0.645, 0.645)
 
 [node name="Armor" parent="OnGame" instance=ExtResource("5_voihx")]
@@ -112,3 +121,8 @@ z_index = 1
 stream = ExtResource("9_kqtrx")
 autoplay = true
 parameters/looping = true
+
+[node name="UpCards" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_voihx")
+volume_db = -19.349
+parameters/looping = false

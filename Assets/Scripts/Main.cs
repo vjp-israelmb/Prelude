@@ -47,7 +47,12 @@ public partial class Main : Node
 	public const float MAX_SPEED = 900.0f;
 
 	// Referencias a los nodos
+	//barra para que aparezca el boss
 	private TextureProgressBar progress;
+	//barra para que se vea el lvl de las cartas
+	private TextureProgressBar lvlCardsProgress;
+	private AudioStreamPlayer ost;
+	private AudioStreamPlayer upCard;
 	private CharacterBody2D player;
 	private Player jugador;
 	private Jugador datosPlayer;
@@ -68,15 +73,21 @@ public partial class Main : Node
 		// Obtener referencias a los nodos
 		combatUI = GetNode<CombatManager>("Combate/Combat");
 		progress = GetNode<TextureProgressBar>("OnGame/Progress/ProgressBar");
+		lvlCardsProgress = GetNode<TextureProgressBar>("OnGame/lvlCardsProgress/ProgressBar");
 		menuOnGame = GetNode<CanvasLayer>("OnGame");
 		menuOnPause = GetNode<CanvasLayer>("MenuPause");
-		progress.MaxValue = 200000; // Valor maximo es decir donde acaba el nivel 
+		progress.MaxValue = 20000; // Valor maximo es decir donde acaba el nivel
 		progress.Value = 0;	
-		
+		// Valor maximo de xp de cartas
+		lvlCardsProgress.MaxValue=5000;
+		lvlCardsProgress.Value = 0;	
+		//Musica del juego 
+		ost=GetNode<AudioStreamPlayer>("OST");
+		//Sonido de subida de nivel en las cartas
+		upCard=GetNode<AudioStreamPlayer>("UpCards");
 		// Crear el portador de datos
 		DataCarrier data = new DataCarrier();
 		data.nivel = 1;
-
 		// Mantenerlo vivo tras el cambio de escena
 		data.Name = "DataCarrier";
 		//data.SetAsToplevel(true);
@@ -108,7 +119,7 @@ public partial class Main : Node
 		if(jugador !=null){
 			jugador.canJump=false;
 		}
-
+		ost.Stop();
 		combatUI.inicioCombate(datosPlayer, enemigoActual);
 	}
 	
@@ -139,7 +150,7 @@ public partial class Main : Node
 			jugador.Hit();
 			GD.Print("Muerto en combate");
 		}
-		
+		ost.Play();
 	}
 //endregion
 	
@@ -398,7 +409,8 @@ public partial class Main : Node
 			levelUp += 5;
 		}
 		//suma de progreso en el nivel 
-		progress.Value=score;		
+		progress.Value=score;
+		lvlCardsProgress.Value=levelUp;
 		foreach (Node child in GetChildren())
 		{
 			// Solo nos interesa si está en el grupo "Obstacle"
@@ -440,13 +452,14 @@ public partial class Main : Node
 		}
 		
 		//Comprobacion nivel Cartas
-		if(levelUp == 50000)
+		if(levelUp == 5000)
 		{
+			upCard.Play();
+			lvlCardsProgress.Value=0;
 			levelUp = 0;
 			datosPlayer.subirNivelCartas();
 		}
 	  }
-	
 	//Muerte del jugador 
 	private void OnPlayerDeath()
 	{

@@ -8,15 +8,27 @@ public partial class CombatManager : Node2D
 	private HBoxContainer handContainer;
 	private List<Card> hand = new List<Card>();
 	public bool Visible = false;
-	
-	//Para obtener la animacion del corazon
+	private AudioStreamPlayer combatOst;
+	//Animaciones y adio del enemigo
+	private AudioStreamPlayer audioHit;
+	private AudioStreamPlayer audioAttack;
+	private AnimatedSprite2D animEnemy;
+	//Datos enemigo y player en combate
+	private Label datosPlayer;
+	private Label datosEnemy;
+	//Para obtener la animacion del corazon y barra e vida enemigo
+	private TextureProgressBar lifeBarEnemy;
 	private Node2D heartBar;
 	private AnimatedSprite2D heart;
 	private Jugador player;
 	private Jugador enemy;
-
+	
 	public void inicioCombate(Jugador Player, Jugador Enemy)
 	{
+		datosPlayer=GetNode<Label>("datosPlayer");
+		datosEnemy=GetNode<Label>("datosEnemigo");
+		combatOst=GetNode<AudioStreamPlayer>("CombatOst");
+		combatOst.Play();
 		var data = GetNodeOrNull<DataCarrier>("/root/DataCarrier");
 		if (data != null)
 		{
@@ -60,11 +72,13 @@ public partial class CombatManager : Node2D
 		{
 			GD.Print("No se encontró DataCarrier");
 		}
-		
+		lifeBarEnemy=GetNode<TextureProgressBar>("LifeEnemyBar/ProgressBar");
 		handContainer = GetNode<HBoxContainer>("CombatUI/Mano");
 		player = Player;
 		hand = player.mano;
 		enemy = Enemy;
+		lifeBarEnemy.MaxValue=enemy.hp;
+		lifeBarEnemy.Value=enemy.hp;
 		GD.Print("Instanciando enemigo: ", enemy.name);
 		
 		// Cargar Enemigo
@@ -72,26 +86,50 @@ public partial class CombatManager : Node2D
 		{
 			var eagearl = GetNode<Area2D>("eagearl");
 			eagearl.Visible = true;
+			audioHit=GetNode<AudioStreamPlayer>("eagearl/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("eagearl/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("eagearl/AnimatedSprite2D");
+			animEnemy.Play("Idle");
 		} else if (enemy.name.ToString().ToLower().Contains("frogrosso"))
 		{
 			var Frogrosso = GetNode<Area2D>("Frogrosso");
 			Frogrosso.Visible = true;
+			audioHit=GetNode<AudioStreamPlayer>("Frogrosso/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("Frogrosso/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("Frogrosso/AnimatedSprite2D");
+			animEnemy.Play("Idle");
 		} else if (enemy.name.ToString().ToLower().Contains("grilledbear"))
 		{
 			var bear = GetNode<Area2D>("Obviously_Grilled_Bear");
 			bear.Visible = true;
+			audioHit=GetNode<AudioStreamPlayer>("Obviously_Grilled_Bear/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("Obviously_Grilled_Bear/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("Obviously_Grilled_Bear/AnimatedSprite2D");
+			animEnemy.Play("Idle");
 		} else if (enemy.name.ToString().ToLower().Contains("maggotbrian"))
 		{
 			var maggotbrian = GetNode<Area2D>("MaggotBrain");
 			maggotbrian.Visible = true;
+			audioHit=GetNode<AudioStreamPlayer>("MaggotBrain/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("MaggotBrain/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("MaggotBrain/AnimatedSprite2D");
+			animEnemy.Play("Idle");
 		} else if (enemy.name.ToString().ToLower().Contains("mindy"))
 		{
 			var mindy = GetNode<Area2D>("mindy");
 			mindy.Visible = true;
-		} else if (enemy.name.ToString().ToLower().Contains("lackalcia"))
+			audioHit=GetNode<AudioStreamPlayer>("mindy/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("mindy/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("mindy/AnimatedSprite2D");
+			animEnemy.Play("Idle");
+		} else if (enemy.name.ToString().ToLower().Contains("verdugo"))
 		{
 			var lackalcia = GetNode<Area2D>("Lackalcia");
 			lackalcia.Visible = true;
+			audioHit=GetNode<AudioStreamPlayer>("Lackalcia/Hit");
+			audioAttack=GetNode<AudioStreamPlayer>("Lackalcia/Attack");
+			animEnemy=GetNode<AnimatedSprite2D>("Lackalcia/AnimatedSprite2D");
+			animEnemy.Play("Idle");
 		}
 		
 		cagarMano();
@@ -206,7 +244,15 @@ public partial class CombatManager : Node2D
 			if (enemy.name.Contains("Verdugo"))
 			{
 				GD.Print("Victory Royale");
-				
+				Node dataNode = GetTree().Root.GetNodeOrNull("DataCarrier");
+				if (dataNode != null && dataNode is DataCarrier data)
+				{
+					data.nivel = 1;
+				}
+				else
+				{
+					GD.Print("No se encontró DataCarrier");
+				}
 				// Cambiar a escena de victoria
 				GetTree().ChangeSceneToFile("res://Assets/Prefabs/victory.tscn");
 			} else if(enemy.name.Contains("GrilledBear"))
@@ -248,55 +294,81 @@ public partial class CombatManager : Node2D
 				if (enemy.armor > 0)
 				{
 					enemy.armor -= card.Quantity;
+					audioHit.Play();
 					if (enemy.armor < 0)
 					{
 						int remainingDamage = -enemy.armor;
 						enemy.armor = 0;
 						enemy.hp -= remainingDamage;
+						animEnemy.Play("Hit");
+						lifeBarEnemy.Value=enemy.hp;
 						GD.Print($"Has atravesado la armadura y causado {remainingDamage} de daño a la salud. Salud restante: {enemy.hp}");
+						datosPlayer.Text=$"Has atravesado la armadura y causado {remainingDamage} de daño a la salud. Salud restante: {enemy.hp}";
+						GetTree().CreateTimer(1.5).Timeout += () =>
+						{
+							animEnemy.Play("Idle");
+						};
 					}
 					else
 					{
 						GD.Print($"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}");
+						datosPlayer.Text=$"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}";
 					}
 				}
 				else
 				{
 					enemy.hp -= card.Quantity;
+					audioHit.Play();
+					animEnemy.Play("Hit");
+					lifeBarEnemy.Value=enemy.hp;
 					GD.Print($"Has hecho {card.Quantity} de daño. Salud restante del enemigo: {enemy.hp}");
+					datosPlayer.Text=$"Has hecho {card.Quantity} de daño. Salud restante del enemigo: {enemy.hp}";
+					GetTree().CreateTimer(1.5).Timeout += () =>
+					{
+						animEnemy.Play("Idle");
+					};
+					
 				}
 				break;
 			case "damageArmor":
 				enemy.armor -= card.Quantity;
 				if (enemy.armor < 0) enemy.armor = 0;
+				audioHit.Play();
 				GD.Print($"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}");
+				datosPlayer.Text=$"Has hecho {card.Quantity} de daño a la armadura. Armadura restante del enemigo: {enemy.armor}";
 				break;
 			case "heal":
 				player.hp += card.Quantity;
 				GD.Print($"Te has curado {card.Quantity} de vida. Salud actual: {player.hp}");
+				datosPlayer.Text=$"Te has curado {card.Quantity} de vida. Salud actual: {player.hp}";
 				break;
 			case "armor":
 				player.armor += card.Quantity;
 				GD.Print($"Has ganado {card.Quantity} de armadura. Armadura actual: {player.armor}");
+				datosPlayer.Text=$"Has ganado {card.Quantity} de armadura. Armadura actual: {player.armor}";
 				break;
 			case "armorHeal":
 				player.armor += card.Quantity;
 				player.hp += card.Quantity;
 				GD.Print($"Has ganado {card.Quantity} de armadura y te has curado {card.Quantity} de vida.");
+				datosPlayer.Text=$"Has ganado {card.Quantity} de armadura y te has curado {card.Quantity} de vida.";
 				break;
 			case "armorDraw":
 				player.armor += card.Quantity;
 				robarCarta();
 				GD.Print($"Has ganado {card.Quantity} de armadura y robado una carta.");
+				datosPlayer.Text=$"Has ganado {card.Quantity} de armadura y robado una carta.";
 				break;
 			case "healDraw":
 				player.hp += card.Quantity;
 				robarCarta();
 				GD.Print($"Te has curado {card.Quantity} de vida y robado una carta.");
+				datosPlayer.Text=$"Te has curado {card.Quantity} de vida y robado una carta.";
 				break;
 			case "draw":
 				robarCarta();
 				GD.Print("Has robado una carta.");
+				datosPlayer.Text="Has robado una carta.";
 				break;
 			default:
 				GD.Print("Tipo de carta no reconocido.");
@@ -356,6 +428,7 @@ public partial class CombatManager : Node2D
 		} else
 		{
 			GD.Print("La Mano llena, no se robo carta.");
+			datosPlayer.Text="La Mano llena, no se robo carta.";
 		}
 		
 		cagarMano();
@@ -368,6 +441,7 @@ public partial class CombatManager : Node2D
 
 	private void turnoEnemigo()
 	{
+		audioAttack.Play();
 		// Doble turno del Boss
 		int turnoBoss = 1;
 		if (enemy.name.Contains("GrilledBear"))
@@ -405,6 +479,8 @@ public partial class CombatManager : Node2D
 							}
 							player.hp -= remainingDamage;
 							GD.Print($"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}");
+							datosEnemy.Text=$"La armadura fue superada y recibiste {remainingDamage} de daño. Salud actual: {player.hp}";
+							
 						}
 						else
 						{
@@ -417,18 +493,21 @@ public partial class CombatManager : Node2D
 								GD.PrintErr("No se obtubo el nodo ArmorPoints");
 							}
 							GD.Print($"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}");
+							datosPlayer.Text=$"Recibiste {card.Quantity} de daño a la armadura. Armadura restante: {player.armor}";
 						}
 					}
 					else
 					{
 						player.hp -= card.Quantity;
 						GD.Print($"Recibiste {card.Quantity} de daño. Salud restante: {player.hp}");
+						datosPlayer.Text=$"Recibiste {card.Quantity} de daño. Salud restante: {player.hp}";
 					}
 					break;
 
 				case "heal":
 					enemy.hp += card.Quantity;
 					GD.Print($"El enemigo se curó {card.Quantity} de vida. Salud del enemigo: {enemy.hp}");
+					datosEnemy.Text=$"El enemigo se curó {card.Quantity} de vida. Salud del enemigo: {enemy.hp}";
 					break;
 
 				case "armor":
@@ -442,6 +521,7 @@ public partial class CombatManager : Node2D
 						GD.PrintErr("No se obtubo el nodo ArmorPoints");
 					}
 					GD.Print($"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}");
+					datosEnemy.Text=$"El enemigo ganó {card.Quantity} de armadura. Armadura del enemigo: {enemy.armor}";
 					break;
 
 				case "damageArmor":
@@ -459,6 +539,7 @@ public partial class CombatManager : Node2D
 						GD.PrintErr("No se obtubo el nodo ArmorPoints");
 					}
 					GD.Print($"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}");
+					datosEnemy.Text=$"El enemigo redujo tu armadura en {card.Quantity}. Armadura restante: {player.armor}";
 					break;
 
 				default:
@@ -472,6 +553,9 @@ public partial class CombatManager : Node2D
 
 	private void EndCombat()
 	{
+		datosPlayer.Text="";
+		datosEnemy.Text="";
+		combatOst.Stop();
 		// Eliminar todos los botones hijos de handContainer
 		foreach (Node child in handContainer.GetChildren())
 		{

@@ -192,7 +192,6 @@ metadata/_edit_group_ = true
 sprite_frames = SubResource("SpriteFrames_nljno")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.9798
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-6, 2)

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cs0dp6tdrfi47" path="res://Assets/Sprites/UI/Enemy Lifebar/Enemy_Lifebar_Outline_Big.png" id="1_pht7p"]
 [ext_resource type="Texture2D" uid="uid://b7g4rmfiq1sw8" path="res://Assets/Sprites/UI/Enemy Lifebar/Enemy_Lifebar_Bar_Big.png" id="2_bv8wy"]
 
-[node name="ProgressLeverBar" type="Control"]
+[node name="LifeEnemyBar" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 
